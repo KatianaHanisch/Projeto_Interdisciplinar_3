@@ -75,7 +75,7 @@ export default function HeaderHome() {
                 </Link>
                 <Link
                   className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                  href=""
+                  href="/sobre"
                 >
                   <span>
                     <HiDotsCircleHorizontal className="text-gray-50" />
@@ -113,7 +113,7 @@ export default function HeaderHome() {
           >
             LIVROS
           </Link>
-          <Link className="text-gray-800 hover:text-gray-950" href="">
+          <Link className="text-gray-800 hover:text-gray-950" href="/sobre">
             SOBRE
           </Link>
         </div>
