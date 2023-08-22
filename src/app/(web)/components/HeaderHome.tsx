@@ -56,7 +56,7 @@ export default function HeaderHome() {
               <div className="flex flex-col items-center gap-4">
                 <Link
                   className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                  href=""
+                  href="/"
                 >
                   <span>
                     <AiFillHome className="text-gray-50" />
@@ -66,7 +66,7 @@ export default function HeaderHome() {
 
                 <Link
                   className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                  href=""
+                  href="/livros"
                 >
                   <span>
                     <BsFillBookFill className="text-gray-50" />
@@ -103,11 +103,14 @@ export default function HeaderHome() {
         <div className="group hidden md:flex">
           <Link
             className="mr-[35px] text-gray-800 hover:text-gray-950 "
-            href=""
+            href="/"
           >
             HOME
           </Link>
-          <Link className="mr-[35px] text-gray-800 hover:text-gray-950" href="">
+          <Link
+            className="mr-[35px] text-gray-800 hover:text-gray-950"
+            href="/livros"
+          >
             LIVROS
           </Link>
           <Link className="text-gray-800 hover:text-gray-950" href="">
