@@ -38,10 +38,10 @@ export default function ListAllBooks() {
         <FilterBooks />
         <div className="flex flex-col gap-8">
           {booksToDisplay.map((book, index) => (
-            <>
-              <CardBookDetailed key={index} />
+            <div key={index}>
+              <CardBookDetailed />
               <div className="border-b-[1px]"></div>
-            </>
+            </div>
           ))}
           <div className="flex justify-between mt-4">
             <button
