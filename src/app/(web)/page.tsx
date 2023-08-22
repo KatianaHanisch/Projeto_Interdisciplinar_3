@@ -1,8 +1,8 @@
 import Link from "next/link";
-import BannerHome from "./(web)/components/BannerHome";
-import Footer from "./(web)/components/Footer";
-import HeaderHome from "./(web)/components/HeaderHome";
-import ListRecentBooks from "./(web)/components/ListRecentBooks";
+import BannerHome from "./components/BannerHome";
+import Footer from "./components/Footer";
+import HeaderHome from "./components/HeaderHome";
+import ListRecentBooks from "./components/ListRecentBooks";
 
 import { RiArrowUpDoubleFill } from "react-icons/ri";
 
