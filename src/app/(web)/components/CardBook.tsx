@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function CardBook() {
   return (
     <Link
-      href=""
+      href="/livros/detalhes"
       className="flex flex-col relative w-[150px] transition-transform hover:scale-105 cursor-pointer"
     >
       <span className="absolute right-0 bg-slate-50 px-1">Status</span>
