@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 
 import HeaderHome from "./components/HeaderHome";
 import Footer from "./components/Footer";
-import Link from "next/link";
+import BannerPages from "./components/BannerPages";
 
 import { RiArrowUpDoubleFill } from "react-icons/ri";
 
@@ -29,9 +29,10 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${roboto.className}`}>
         <HeaderHome />
+        <BannerPages />
         {children}
         <a
-          href=""
+          href="#"
           className="text-2xl absolute right-5 mt-[-30px] bg-slate-300 p-2 animate-bounce rounded-full"
         >
           <RiArrowUpDoubleFill />

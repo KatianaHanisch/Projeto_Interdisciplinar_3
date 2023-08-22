@@ -1,9 +1,9 @@
-import BannerPages from "../components/BannerPages";
+import ListAllBooks from "../components/ListAllBooks";
 
 export default function Livros() {
   return (
     <section>
-      <BannerPages />
+      <ListAllBooks />
     </section>
   );
 }

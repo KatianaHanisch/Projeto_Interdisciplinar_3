@@ -1,6 +1,6 @@
 import CardBook from "./CardBook";
 
-export default function ListRecentBook() {
+export default function ListRecentBooks() {
   return (
     <section className="flex flex-col items-center justify-center">
       <h1 className="md:text-3xl text-2xl mb-16 m-auto text-slate-800 font-medium">

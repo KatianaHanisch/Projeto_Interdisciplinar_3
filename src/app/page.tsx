@@ -2,7 +2,7 @@ import Link from "next/link";
 import BannerHome from "./(web)/components/BannerHome";
 import Footer from "./(web)/components/Footer";
 import HeaderHome from "./(web)/components/HeaderHome";
-import ListRecentBook from "./(web)/components/ListRecentBook";
+import ListRecentBooks from "./(web)/components/ListRecentBooks";
 
 import { RiArrowUpDoubleFill } from "react-icons/ri";
 
@@ -14,7 +14,7 @@ export default function Home() {
         <BannerHome />
       </div>
       <div className="mt-24 md:mt-40 mb-40">
-        <ListRecentBook />
+        <ListRecentBooks />
       </div>
       <Link
         href=""
