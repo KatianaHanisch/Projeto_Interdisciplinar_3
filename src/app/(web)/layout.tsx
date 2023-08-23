@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 
@@ -11,7 +11,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Biblioteca",
-  description: "Projeto Interdisciplinar 3",
+  description: "Projeto interdisciplinar 3",
 };
 
 export default function RootLayout({
