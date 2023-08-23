@@ -24,13 +24,13 @@ export default function HeaderHome() {
         <div className="group ">
           <Link
             className="mr-[25px] text-gray-700 text-[14px] hover:text-gray-950"
-            href=""
+            href="/cadastro"
           >
             CADASTRAR
           </Link>
           <Link
             className="text-gray-700 text-[14px] hover:text-gray-950"
-            href=""
+            href="/login"
           >
             ENTRAR
           </Link>
@@ -87,7 +87,7 @@ export default function HeaderHome() {
               <div className="flex flex-col items-center">
                 <Link
                   className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                  href=""
+                  href="/login"
                 >
                   <span>
                     {" "}
