@@ -24,8 +24,8 @@ export default function DashLayout({
         </div>
         <main className="md:pl-56 bg-gray-300 h-screen w-full">
           <Navbar />
-          <div className="w-full h-5/6 pt-4 pr-10 ">
-            <div className="bg-gray-100 h-full w-full rounded-lg drop-shadow-2xl">
+          <div className="w-full h-5/6 pt-4  pr-10 pl-2">
+            <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
               {children}
             </div>
           </div>
