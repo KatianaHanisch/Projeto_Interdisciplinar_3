@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CardBook() {
+export default function CardLivro() {
+  const tituloLivro = "rebelde-do-deserto";
+
   return (
     <Link
-      href=""
+      href={`/dashboard/remover/${tituloLivro}`}
       className="flex flex-col relative w-[150px] transition-transform hover:scale-105 cursor-pointer"
     >
       <Image

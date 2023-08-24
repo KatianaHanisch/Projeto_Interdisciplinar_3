@@ -1,5 +1,4 @@
 import InputBusca from "./components/InputBusca";
-import Livro from "./components/Livro";
 import ListaLivros from "./components/ListaLivros";
 
 export default function Remover() {

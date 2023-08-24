@@ -4,10 +4,8 @@ type ButtonProps = {
 
 export default function Button({ tituloButton }: ButtonProps) {
   return (
-    <div className="w-full h-24 flex items-center justify-end">
-      <button className="text-xl text-gray-200 font-semibold rounded-md px-6 py-2 bg-gray-700 ">
-        {tituloButton}
-      </button>
-    </div>
+    <button className="text-xl text-gray-200 font-semibold rounded-md px-6 py-2 bg-gray-700 ">
+      {tituloButton}
+    </button>
   );
 }

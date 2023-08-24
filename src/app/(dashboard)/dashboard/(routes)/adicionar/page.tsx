@@ -28,7 +28,9 @@ export default function Adicionar() {
             <Input type="text" title="Categoria do livro" />
             <Textarea />
             <InputFile />
-            <Button tituloButton="Adicionar" />
+            <div className="w-full py-8 flex items-center justify-end">
+              <Button tituloButton="Adicionar" />
+            </div>
           </form>
         </div>
       </div>
