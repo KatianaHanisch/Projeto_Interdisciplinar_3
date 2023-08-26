@@ -1,4 +1,4 @@
-import TituloRelatorio from "../../components/TituloRelatorio";
+import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 import { IoClose } from "react-icons/io5";
 
@@ -23,7 +23,7 @@ const dados = [
 export default function Retiradas() {
   return (
     <div className="w-full h-full p-10">
-      <TituloRelatorio tituloPagina="Livros não retirados" />
+      <TituloPagina tituloPagina="Livros não retirados" />
       <ListaDashboard
         dados={dados}
         tituloButton="Retirado"
