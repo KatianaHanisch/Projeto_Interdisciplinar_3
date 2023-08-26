@@ -34,7 +34,19 @@ export default function Login() {
               <Link href="/cadastro" className="hover:text-black underline ">
                 Cadastrar-se
               </Link>
-              <Modal buttonContent="Esqueci a senha" />
+
+              <Modal
+                title="Esqueceu a senha?"
+                buttonContent="Esqueci a senha"
+                textButton="Enviar"
+              >
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    Informe seu e-mail para recuperação:
+                  </p>
+                  <Input type="email" title="E-mail" />
+                </div>
+              </Modal>
             </div>
           </div>
         </div>
