@@ -4,5 +4,5 @@ export type ListaProps = {
   dados: DadosListaProps[];
   tituloButton: string;
   corButton: string;
-  icone: any;
+  Icone: any;
 };

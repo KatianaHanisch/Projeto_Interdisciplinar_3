@@ -55,12 +55,12 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-gray-300">
-      <div className="px-3 py-2 flex-1">
+      <div className="px-3 py-2 flex-1 ">
         <Link
           href="/dashboard"
-          className="flex items-center justify-center pl-3 mb-7 flex-col"
+          className="flex items-center justify-start mb-7 flex-col "
         >
-          <div className="relative w-14 h-12">
+          <div className=" relative w-14 h-12 ">
             <Image fill alt="logo" src="/logo.png" />
           </div>
           <h1 className="font-semibold text-3xl md:text-3xl text-gray-800 tracking-wide">

@@ -3,7 +3,7 @@ import { ButtonTabelaProps } from "../types/ButtonTabelaProps";
 export default function ButtonTabela({
   tituloButton,
   corButton,
-  icone,
+  Icone,
 }: ButtonTabelaProps) {
   return (
     <button
@@ -11,7 +11,7 @@ export default function ButtonTabela({
         corButton === "verde" ? "bg-green-900" : "bg-red-900"
       }`}
     >
-      {icone}
+      {Icone}
       {tituloButton}
     </button>
   );

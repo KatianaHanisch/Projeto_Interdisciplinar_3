@@ -34,7 +34,7 @@ export default function Retiradas() {
         dados={dados}
         tituloButton="Retirado"
         corButton="vermelha"
-        icone={IoClose}
+        Icone={IoClose}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 export type TotalizadorProps = {
   tituloCard: string;
-  iconeCard: any;
+  IconeCard: any;
   informacaoCard: number;
 };

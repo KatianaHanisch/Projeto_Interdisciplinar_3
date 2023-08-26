@@ -7,7 +7,7 @@ export default function ListaDashboard({
   dados,
   tituloButton,
   corButton,
-  icone,
+  Icone,
 }: ListaProps) {
   return (
     <div className="w-full h-full py-6 px-4">
@@ -35,7 +35,7 @@ export default function ListaDashboard({
                 telefone={telefone}
                 tituloButton={tituloButton}
                 corButton={corButton}
-                Icone={icone}
+                Icone={Icone}
               />
             ))}
           </tbody>

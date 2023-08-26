@@ -34,7 +34,7 @@ export default function Retiradas() {
         dados={dados}
         tituloButton="Finalizado"
         corButton="verde"
-        icone={MdDone}
+        Icone={MdDone}
       />
     </div>
   );

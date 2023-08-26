@@ -8,17 +8,17 @@ export default function Dashboard() {
   return (
     <main className="grid grid-cols-3 grid-rows-3 gap-7 h-full p-11">
       <CardTotalizadorDashboard
-        iconeCard={<BiSolidBookOpen size={40} />}
+        IconeCard={BiSolidBookOpen}
         tituloCard="Empréstimos Pedentes"
         informacaoCard={5}
       />
       <CardTotalizadorDashboard
-        iconeCard={<BiSolidBookOpen size={40} />}
+        IconeCard={BiSolidBookOpen}
         tituloCard="Empréstimos Finalizados"
         informacaoCard={22}
       />
       <CardTotalizadorDashboard
-        iconeCard={<BiSolidBookOpen size={40} />}
+        IconeCard={BiSolidBookOpen}
         tituloCard="Livros Cadastrados"
         informacaoCard={222}
       />
