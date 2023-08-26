@@ -11,7 +11,7 @@ export default function InputBusca({ placeholderInput }: InputBuscaProps) {
       <input
         type="text"
         placeholder={placeholderInput}
-        className="w-full ml-2 bg-transparent text-base focus:outline-none  text-gray-600"
+        className="w-full ml-2 bg-transparent text-base focus:outline-none  text-gray-600 border-l border-gray-300 px-2"
       />
     </div>
   );

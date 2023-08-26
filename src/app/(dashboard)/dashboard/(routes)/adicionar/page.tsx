@@ -18,7 +18,7 @@ export default function Adicionar() {
             alt="imagem biblioteca"
           />
         </div>
-        <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300 rounded-lg -mx-2">
+        <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300">
           <form className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md">
             <h1 className="text-3xl font-semibold mb-4 text-gray-700">
               Adicionar livro
