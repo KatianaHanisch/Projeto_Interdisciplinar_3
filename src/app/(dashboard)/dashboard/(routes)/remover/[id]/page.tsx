@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import Button from "../../../components/Button";
+
+import { FaArrowLeft } from "react-icons/fa";
 
 import capaLivro from "../../../../../../../public/capaLivro.jpg";
 
@@ -8,6 +11,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="bg-gray-300 w-11/12 h-5/6 rounded-lg flex items-center justify-center shadow-md">
+        <div className=" h-full w-10 py-5">
+          <Link className="cursor-pointer" href="/dashboard/remover">
+            <FaArrowLeft size={25} color={"#374151"} />
+          </Link>
+        </div>
         <div className="h-4/5 w-3/12 ">
           <Image src={capaLivro} alt="capa livro" className="rounded-md" />
         </div>
