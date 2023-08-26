@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Input from "./components/Input";
+import Input from "../../../../components/Input";
 import Textarea from "./components/Textarea";
 import InputFile from "./components/InputFile";
 import Button from "../../components/Button";
@@ -19,7 +19,7 @@ export default function Adicionar() {
           />
         </div>
         <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300 rounded-lg -mx-2">
-          <form className="w-11/12 h-full p-5 bg-gray-100 flex items-center flex-col rounded-lg shadow-md">
+          <form className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md">
             <h1 className="text-3xl font-semibold mb-4 text-gray-700">
               Adicionar livro
             </h1>
@@ -28,7 +28,7 @@ export default function Adicionar() {
             <Input type="text" title="Categoria do livro" />
             <Textarea />
             <InputFile />
-            <div className="w-full py-8 flex items-center justify-end">
+            <div className="w-full py-1 flex items-center justify-end">
               <Button tituloButton="Adicionar" />
             </div>
           </form>

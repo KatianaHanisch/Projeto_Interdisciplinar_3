@@ -15,7 +15,7 @@ export default function Modal({ buttonContent }: Props) {
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="hover:text-black"
+        className="hover:text-black underline "
       >
         {buttonContent}
       </button>

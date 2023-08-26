@@ -1,21 +1,17 @@
 import Image from "next/image";
-import Input from "../../../(web)/components/Input";
 import Link from "next/link";
+
+import Input from "../../../components/Input";
+
+import imageBackground from "../../../../../public/banner-login.jpg";
 
 export default function Cadastro() {
   return (
-    <div className="flex h-screen justify-center items-center">
-      <div
-        className="w-1/2 hidden lg:block "
-        style={{
-          backgroundImage: 'url("/../../banner-login.jpg")',
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          height: "100%",
-        }}
-      ></div>
-      <div className="md:w-1/2 w-full flex justify-center -mt-12">
+    <div className="flex h-screen w-full justify-center items-center ">
+      <div className="w-1/2 h-full hidden lg:block ">
+        <Image src={imageBackground} alt="imagem de fundo" className="h-full" />
+      </div>
+      <div className="md:w-1/2 h-full w-full  flex justify-center ">
         <div className="w-[340px]  flex flex-col gap-7 px-2 md:px-0 my-auto">
           <Image
             className="m-auto"
@@ -36,7 +32,7 @@ export default function Cadastro() {
               </button>
             </form>
             <div className="text-sm flex justify-between mt-2 text-[#3B4251]">
-              <Link href="/login" className="hover:text-black">
+              <Link href="/login" className="hover:text-black underline ">
                 Já possuo conta
               </Link>
             </div>
