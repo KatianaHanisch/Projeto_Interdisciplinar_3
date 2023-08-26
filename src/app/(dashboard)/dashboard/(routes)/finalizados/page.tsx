@@ -2,6 +2,7 @@ import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 
 import { MdDone } from "react-icons/md";
+import { BsFiletypePdf } from "react-icons/bs";
 
 const dados = [
   {
@@ -12,7 +13,7 @@ const dados = [
   {
     nome: "Jakelie H. Hanisch",
     telefone: "(66) 996668855",
-    livro: "A rainha do nada",
+    livro: "Fourth wing",
   },
   {
     nome: "Iago F. Aparecido",
@@ -24,7 +25,11 @@ const dados = [
 export default function Retiradas() {
   return (
     <div className="w-full h-full p-10">
-      <TituloPagina tituloPagina="Empréstimos finalizados" />
+      <TituloPagina
+        tituloPagina="Empréstimos finalizados"
+        tituloButton="Gerar relatório"
+        Icone={BsFiletypePdf}
+      />
       <ListaDashboard
         dados={dados}
         tituloButton="Finalizado"

@@ -16,7 +16,7 @@ export default function ListaDashboard({
           <InputBusca placeholderInput="Digite o nome que procura" />
         </div>
       </div>
-      <div className="w-full mt-1">
+      <div className="w-full mt-1 shadow-md">
         <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
           <thead className="text-base font-medium text-gray-700  ">
             <tr>

@@ -19,7 +19,7 @@ export default function Adicionar() {
           />
         </div>
         <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300 rounded-lg -mx-2">
-          <form className="w-11/12 h-full p-5 bg-gray-100 flex items-center flex-col rounded-lg ">
+          <form className="w-11/12 h-full p-5 bg-gray-100 flex items-center flex-col rounded-lg shadow-md">
             <h1 className="text-3xl font-semibold mb-4 text-gray-700">
               Adicionar livro
             </h1>

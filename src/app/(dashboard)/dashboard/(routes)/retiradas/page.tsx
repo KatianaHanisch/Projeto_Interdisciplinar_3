@@ -1,6 +1,8 @@
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
+
 import { IoClose } from "react-icons/io5";
+import { BsFiletypePdf } from "react-icons/bs";
 
 const dados = [
   {
@@ -23,7 +25,11 @@ const dados = [
 export default function Retiradas() {
   return (
     <div className="w-full h-full p-10">
-      <TituloPagina tituloPagina="Livros não retirados" />
+      <TituloPagina
+        tituloPagina="Livros não retirados"
+        tituloButton="Gerar relatório"
+        Icone={BsFiletypePdf}
+      />
       <ListaDashboard
         dados={dados}
         tituloButton="Retirado"
