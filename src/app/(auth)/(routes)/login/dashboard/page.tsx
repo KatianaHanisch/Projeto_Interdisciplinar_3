@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import Input from "../../../../components/Input";
-import Modal from "../../../../components/ModalForgotPassword";
+import Modal from "../../../../components/Modal";
 
 import imagemBackground from "../../../../../../public/banner-login.jpg";
 
