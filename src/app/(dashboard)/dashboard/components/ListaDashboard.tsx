@@ -8,6 +8,7 @@ export default function ListaDashboard({
   tituloButton,
   corButton,
   Icone,
+  abrirModal,
 }: ListaProps) {
   return (
     <div className="w-full h-full py-6 px-4">
@@ -36,6 +37,7 @@ export default function ListaDashboard({
                 tituloButton={tituloButton}
                 corButton={corButton}
                 Icone={Icone}
+                abrirModal={abrirModal}
               />
             ))}
           </tbody>

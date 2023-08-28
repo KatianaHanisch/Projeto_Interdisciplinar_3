@@ -1,5 +1,10 @@
+"use client";
+
+import { useState } from "react";
+
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
+import Modal from "@/app/components/Modal";
 
 import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
@@ -23,6 +28,12 @@ const dados = [
 ];
 
 export default function Retiradas() {
+  const [abrirModal, setAbrirModal] = useState(false);
+
+  function abrirModalConfirmacao() {
+    setAbrirModal(!abrirModal);
+  }
+
   return (
     <div className="w-full h-full p-10">
       <TituloPagina
@@ -35,7 +46,26 @@ export default function Retiradas() {
         tituloButton="Retirado"
         corButton="vermelha"
         Icone={IoClose}
+        abrirModal={abrirModalConfirmacao}
       />
+      {abrirModal && (
+        <Modal
+          abrirModal={abrirModalConfirmacao}
+          title="Deseja confirmar?"
+          textButton="Confirmar"
+        >
+          <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
+            <p className="text-gray-600 text-lg font-normal leading-relaxed">
+              Você realmente deseja confirmar que o livro
+              <span className="font-medium text-gray-700">
+                {" "}
+                (nome do livro){" "}
+              </span>
+              foi retirado?
+            </p>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

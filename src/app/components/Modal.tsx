@@ -1,79 +1,58 @@
-"use client";
-
-import { useState } from "react";
-import Input from "./Input";
+import { IoCloseSharp } from "react-icons/io5";
 
 type Props = {
-  buttonContent: string;
+  abrirModal: () => void;
   title: string;
   children: any;
   textButton: string;
 };
 
 export default function Modal({
-  buttonContent,
+  abrirModal,
   title,
   children,
   textButton,
 }: Props) {
-  const [showModal, setShowModal] = useState(false);
-
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setShowModal(true)}
-        className="hover:text-black underline "
-      >
-        {buttonContent}
-      </button>
-      {showModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-[500px] my-6 mx-auto max-w-3xl">
-              {/*content*/}
-              <div className="border-0 rounded shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">{title}</h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                {children}
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Fechar
-                  </button>
-                  <button
-                    className={` text-white ${
-                      textButton === "Remover"
-                        ? "active:bg-red-600 bg-red-500"
-                        : "active:bg-emerald-600 bg-emerald-500"
-                    }  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    {textButton}
-                  </button>
-                </div>
-              </div>
-            </div>
+    <div className="justify-center items-center flex bg-black bg-opacity-20 backdrop-blur-sm overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="relative w-[500px] my-6 mx-auto max-w-3xl">
+        {/*content*/}
+        <div className="border-0 rounded shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          {/*header*/}
+          <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 className="text-3xl font-semibold text-gray-700">{title}</h3>
+            <button
+              className="p-1 ml-auto bg-transparent border-0 text-black   float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              onClick={abrirModal}
+            >
+              <IoCloseSharp color="#374151" />
+            </button>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-    </>
+          {/*body*/}
+          {children}
+          {/*footer*/}
+          <div className="flex items-center justify-end py-4 px-6 border-t border-solid border-slate-200 rounded-b">
+            <button
+              className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={abrirModal}
+            >
+              Cancelar
+            </button>
+            <button
+              className={` text-white ${
+                textButton === "Remover"
+                  ? "active:bg-red-700 bg-red-700"
+                  : "active:bg-emerald-600 bg-emerald-600"
+              }  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
+              type="button"
+              onClick={abrirModal}
+            >
+              {textButton}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

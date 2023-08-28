@@ -1,13 +1,24 @@
+"use client";
+
+import { useState } from "react";
+
 import Image from "next/image";
 
 import Input from "../../../../components/Input";
 import Textarea from "./components/Textarea";
 import InputFile from "./components/InputFile";
 import Button from "../../components/Button";
+import Modal from "@/app/components/Modal";
 
 import book from "../../../../../../public/banner-login.jpg";
 
 export default function Adicionar() {
+  const [abrirModal, setAbrirModal] = useState(false);
+
+  function abrirModalConfirmacao() {
+    setAbrirModal(!abrirModal);
+  }
+
   return (
     <div className="flex items-center justify-center h-full p-10 ">
       <div className="flex items-center justify-start rounded-lg  h-full w-full">
@@ -19,7 +30,7 @@ export default function Adicionar() {
           />
         </div>
         <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300">
-          <form className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md">
+          <div className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md">
             <h1 className="text-3xl font-semibold mb-4 text-gray-700">
               Adicionar livro
             </h1>
@@ -29,11 +40,33 @@ export default function Adicionar() {
             <Textarea />
             <InputFile />
             <div className="w-full py-1 flex items-center justify-end">
-              <Button tituloButton="Adicionar" />
+              <Button
+                tituloButton="Adicionar livro"
+                abrirModal={abrirModalConfirmacao}
+              />
             </div>
-          </form>
+          </div>
         </div>
       </div>
+
+      {abrirModal && (
+        <Modal
+          abrirModal={abrirModalConfirmacao}
+          title="Deseja confirmar?"
+          textButton="Adicionar"
+        >
+          <div className="relative p-6 flex-auto">
+            <p className="text-gray-600 text-lg font-normal leading-relaxed">
+              Você realmente deseja adicionar o livro
+              <span className="font-medium text-gray-700">
+                {" "}
+                (nome do livro){" "}
+              </span>
+              na biblioteca?
+            </p>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

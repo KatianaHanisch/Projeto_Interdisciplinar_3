@@ -9,6 +9,7 @@ export default function LinhasTabela({
   tituloButton,
   corButton,
   Icone,
+  abrirModal,
 }: LinhasTabelaProps) {
   return (
     <tr className="text-sm font-medium text-gray-700">
@@ -20,6 +21,7 @@ export default function LinhasTabela({
           tituloButton={tituloButton}
           corButton={corButton}
           Icone={<Icone size={20} color={"#ffffff"} />}
+          abrirModal={abrirModal}
         />
       </td>
     </tr>

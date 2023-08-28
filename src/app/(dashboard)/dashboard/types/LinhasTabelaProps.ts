@@ -5,4 +5,5 @@ export type LinhasTabelaProps = {
   tituloButton: string;
   corButton: string;
   Icone: any;
+  abrirModal?: () => void;
 };

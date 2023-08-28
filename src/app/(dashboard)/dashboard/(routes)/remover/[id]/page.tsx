@@ -1,6 +1,11 @@
+"use client";
+
+import { useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import Modal from "@/app/components/Modal";
 import Button from "../../../components/Button";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -8,6 +13,12 @@ import { FaArrowLeft } from "react-icons/fa";
 import capaLivro from "../../../../../../../public/capaLivro.jpg";
 
 export default function Page({ params }: { params: { slug: string } }) {
+  const [abrirModal, setAbrirModal] = useState(false);
+
+  const abrirModalConfirmacao = () => {
+    setAbrirModal(!abrirModal);
+  };
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="bg-gray-300 w-11/12 h-5/6 rounded-lg flex items-center justify-center shadow-md">
@@ -41,8 +52,30 @@ export default function Page({ params }: { params: { slug: string } }) {
             achava que conhecia e uma força que ela nem imaginava possuir.
           </p>
           <div className="w-full py-7 flex items-center justify-start">
-            <Button tituloButton="Remover livro" />
+            <Button
+              tituloButton="Remover livro"
+              abrirModal={abrirModalConfirmacao}
+            />
           </div>
+
+          {abrirModal && (
+            <Modal
+              abrirModal={abrirModalConfirmacao}
+              title="Deseja confirmar?"
+              textButton="Remover"
+            >
+              <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
+                <p className="text-gray-600 text-lg font-normal leading-relaxed">
+                  Você realmente deseja remover o livro
+                  <span className="font-medium text-gray-700">
+                    {" "}
+                    (nome do livro){" "}
+                  </span>
+                  da biblioteca?
+                </p>
+              </div>
+            </Modal>
+          )}
         </div>
       </div>
     </div>

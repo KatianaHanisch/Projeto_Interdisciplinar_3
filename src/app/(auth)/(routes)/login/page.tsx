@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,6 +11,12 @@ import Modal from "../../../components/Modal";
 import imageBackground from "../../../../../public/banner-login.jpg";
 
 export default function Login() {
+  const [abrirModal, setAbrirModal] = useState(false);
+
+  function abrirModalEsqueceuSenha() {
+    setAbrirModal(!abrirModal);
+  }
+
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="w-1/2 h-full hidden lg:block ">
@@ -34,19 +44,27 @@ export default function Login() {
               <Link href="/cadastro" className="hover:text-black underline ">
                 Cadastrar-se
               </Link>
-
-              <Modal
-                title="Esqueceu a senha?"
-                buttonContent="Esqueci a senha"
-                textButton="Enviar"
+              <button
+                onClick={abrirModalEsqueceuSenha}
+                className="hover:text-black underline"
               >
-                <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    Informe seu e-mail para recuperação:
-                  </p>
-                  <Input type="email" title="E-mail" />
-                </div>
-              </Modal>
+                Esqueceu a senha?
+              </button>
+
+              {abrirModal && (
+                <Modal
+                  abrirModal={abrirModalEsqueceuSenha}
+                  title="Esqueceu a senha?"
+                  textButton="Enviar"
+                >
+                  <div className="relative p-6 flex-auto">
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      Informe seu e-mail para recuperação:
+                    </p>
+                    <Input type="email" title="E-mail" />
+                  </div>
+                </Modal>
+              )}
             </div>
           </div>
         </div>

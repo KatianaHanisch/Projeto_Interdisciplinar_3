@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import Image from "next/image";
 
 import Input from "../../../../components/Input";
@@ -6,6 +10,12 @@ import Modal from "../../../../components/Modal";
 import imagemBackground from "../../../../../../public/banner-login.jpg";
 
 export default function Login() {
+  const [abrirModal, setAbrirModal] = useState(false);
+
+  function abrirModalEsqueceuSenha() {
+    setAbrirModal(!abrirModal);
+  }
+
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="w-1/2 h-full hidden lg:block ">
@@ -36,11 +46,31 @@ export default function Login() {
               </button>
             </form>
             <div className="text-sm flex justify-between mt-2 text-[#3B4251]">
-              <Modal buttonContent="Esqueci a senha" />
+              <button
+                onClick={abrirModalEsqueceuSenha}
+                className="hover:text-black underline"
+              >
+                Esqueceu a senha?
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {abrirModal && (
+        <Modal
+          abrirModal={abrirModalEsqueceuSenha}
+          title="Esqueceu a senha?"
+          textButton="Enviar"
+        >
+          <div className="relative p-6 flex-auto">
+            <p className="my-4 text-slate-500 text-lg leading-relaxed">
+              Informe seu e-mail para recuperação:
+            </p>
+            <Input type="email" title="E-mail" />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

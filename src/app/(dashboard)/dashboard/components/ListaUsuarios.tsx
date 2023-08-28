@@ -2,11 +2,17 @@ import { LinhaTabelaUsuariosProps } from "../types/LinhaTabelaUsuariosProps";
 
 type DadosTabelaUsuariosProps = {
   dados: LinhaTabelaUsuariosProps[];
+  abrirModalEditar: () => void;
+  abrirModalRemover: () => void;
 };
 
 import LinhaTabelaUsuarios from "./LinhaTabelaUsuarios";
 
-export default function ListaUsuarios({ dados }: DadosTabelaUsuariosProps) {
+export default function ListaUsuarios({
+  dados,
+  abrirModalEditar,
+  abrirModalRemover,
+}: DadosTabelaUsuariosProps) {
   return (
     <div className="w-full h-full py-6 px-4">
       <div className="w-full mt-6 shadow-md">
@@ -19,7 +25,13 @@ export default function ListaUsuarios({ dados }: DadosTabelaUsuariosProps) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {dados.map(({ nome, email }) => (
-              <LinhaTabelaUsuarios key={nome} nome={nome} email={email} />
+              <LinhaTabelaUsuarios
+                key={nome}
+                nome={nome}
+                email={email}
+                abrirModalEditar={abrirModalEditar}
+                abrirModalRemover={abrirModalRemover}
+              />
             ))}
           </tbody>
         </table>

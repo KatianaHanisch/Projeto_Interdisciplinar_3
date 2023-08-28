@@ -25,7 +25,7 @@ export default function Navbar() {
             <BiSolidUser className="w-8 h-8" color="#1f2937" />
           </button>
           {open && (
-            <div className="absolute  right-9 z-10 mt-24 w-48  rounded bg-white py-2 shadow-lg focus:outline-none">
+            <div className="absolute  right-10 z-10 mt-24 w-48  rounded bg-white py-2 shadow-xl  focus:outline-none">
               <Link
                 href=""
                 className="flex items-center text-base  font-medium text-gray-700 px-3 py-1 bg-white hover:bg-gray-200"
