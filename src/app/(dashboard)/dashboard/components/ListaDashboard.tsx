@@ -31,6 +31,8 @@ export default function ListaDashboard({
 
   const quantidadePaginas = Math.ceil(dados.length / itemPorPagina);
 
+  const pagination = quantidadePaginas > 1;
+
   return (
     <div className="w-full h-full py-6 px-4">
       <div className="w-full   flex items-center justify-end">
@@ -65,7 +67,9 @@ export default function ListaDashboard({
           </tbody>
         </table>
       </div>
-      <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
+      {pagination ? (
+        <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
+      ) : null}
     </div>
   );
 }

@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import ReactPaginate from "react-paginate";
 
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
@@ -8,9 +12,11 @@ type Props = {
 };
 
 export default function Pagination({ setPage, quantidadePaginas }: Props) {
+  const [pagina, setPagina] = useState(0);
   const handlePageClick = (selectedItem: { selected: number }) => {
     const selectedPage = selectedItem.selected;
     setPage(selectedPage);
+    setPagina(selectedPage);
   };
 
   return (
@@ -22,14 +28,18 @@ export default function Pagination({ setPage, quantidadePaginas }: Props) {
       pageCount={quantidadePaginas}
       breakLabel={<span className="mr-4">...</span>}
       previousLabel={
-        <span className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full mr-4">
-          <BsChevronLeft />
-        </span>
+        pagina === 0 ? null : (
+          <span className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full mr-4">
+            <BsChevronLeft />
+          </span>
+        )
       }
       nextLabel={
-        <span className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full">
-          <BsChevronRight />
-        </span>
+        pagina + 1 === quantidadePaginas ? null : (
+          <span className="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300">
+            <BsChevronRight />
+          </span>
+        )
       }
     />
   );
