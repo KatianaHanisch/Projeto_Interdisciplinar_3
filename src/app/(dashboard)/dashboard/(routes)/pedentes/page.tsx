@@ -45,7 +45,7 @@ export default function Retiradas() {
         dados={dados}
         tituloButton="Devolvido"
         corButton="vermelha"
-        Icone={IoClose}
+        Icone={<IoClose size={20} color={"#ffffff"} />}
         abrirModal={abrirModalConfirmacao}
       />
 

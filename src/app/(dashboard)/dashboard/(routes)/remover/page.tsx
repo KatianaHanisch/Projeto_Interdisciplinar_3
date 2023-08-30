@@ -90,15 +90,15 @@ export default function Remover() {
   const quantidadePaginas = Math.ceil(data.length / n);
 
   return (
-    <div className="w-full p-10 ">
-      <div className="w-full px-8">
+    <div className="w-full p-10 items-center flex flex-col ">
+      <div className="flex flex-col items-center justify-center py-8 px-8 h-[380px]  ">
         <InputBusca placeholderInput="Digite o nome do livro que procura" />
-      </div>
-      <div className="flex  py-8 px-8 h-[330px]  gap-10 ">
-        {filterData &&
-          filterData.map((item: Props, index: number) => (
-            <Livro key={index} {...item} />
-          ))}
+        <div className=" flex flex-row items-center gap-10 justify-center py-8">
+          {filterData &&
+            filterData.map((item: Props, index: number) => (
+              <Livro key={index} {...item} />
+            ))}
+        </div>
       </div>
       <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
     </div>

@@ -20,7 +20,7 @@ export default function LinhasTabela({
         <ButtonTabela
           tituloButton={tituloButton}
           corButton={corButton}
-          Icone={<Icone size={20} color={"#ffffff"} />}
+          Icone={Icone}
           abrirModal={abrirModal}
         />
       </td>

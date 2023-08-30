@@ -11,7 +11,7 @@ export default function CardLivro({ nome, autor, categoria }: Props) {
   return (
     <Link
       href={`/dashboard/remover/${nome}`}
-      className="flex flex-col relative w-[150px] transition-transform hover:scale-105 cursor-pointer"
+      className="flex flex-col relative w-[150px] transition-transform  cursor-pointer h-[286px]"
     >
       <Image
         src="/capa-livro.jpg"
