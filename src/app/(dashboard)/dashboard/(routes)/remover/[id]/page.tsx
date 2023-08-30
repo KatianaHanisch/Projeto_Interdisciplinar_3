@@ -19,6 +19,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     setAbrirModal(!abrirModal);
   };
 
+  console.log(params);
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="bg-gray-300 w-11/12 h-5/6 rounded-lg flex items-center justify-center shadow-md">

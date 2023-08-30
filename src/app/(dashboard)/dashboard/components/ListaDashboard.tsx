@@ -1,7 +1,12 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { ListaProps } from "../types/ListaProps";
+import { DadosListaProps } from "../types/DadosListaProps";
 
 import InputBusca from "./InputBusca";
 import LinhasTabela from "./LinhasTabela";
+import Pagination from "@/app/components/Pagination";
 
 export default function ListaDashboard({
   dados,
@@ -10,6 +15,22 @@ export default function ListaDashboard({
   Icone,
   abrirModal,
 }: ListaProps) {
+  const [page, setPage] = useState(0);
+  const [filterData, setFilterData] = useState<DadosListaProps[]>([]);
+  const itemPorPagina = 5;
+
+  useEffect(() => {
+    setFilterData(
+      dados.filter((item: DadosListaProps, index: number) => {
+        return (
+          index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
+        );
+      })
+    );
+  }, [page]);
+
+  const quantidadePaginas = Math.ceil(dados.length / itemPorPagina);
+
   return (
     <div className="w-full h-full py-6 px-4">
       <div className="w-full   flex items-center justify-end">
@@ -28,21 +49,23 @@ export default function ListaDashboard({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {dados.map(({ nome, livro, telefone }) => (
-              <LinhasTabela
-                key={nome}
-                nome={nome}
-                livro={livro}
-                telefone={telefone}
-                tituloButton={tituloButton}
-                corButton={corButton}
-                Icone={Icone}
-                abrirModal={abrirModal}
-              />
-            ))}
+            {filterData &&
+              filterData.map(({ nome, livro, telefone }, index) => (
+                <LinhasTabela
+                  key={index}
+                  nome={nome}
+                  livro={livro}
+                  telefone={telefone}
+                  tituloButton={tituloButton}
+                  corButton={corButton}
+                  Icone={Icone}
+                  abrirModal={abrirModal}
+                />
+              ))}
           </tbody>
         </table>
       </div>
+      <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
     </div>
   );
 }
