@@ -13,7 +13,7 @@ export default function ListaDashboard({
   tituloButton,
   corButton,
   Icone,
-  abrirModal,
+  tipo,
 }: ListaProps) {
   const [page, setPage] = useState(0);
   const [filterData, setFilterData] = useState<DadosListaProps[]>([]);
@@ -61,7 +61,7 @@ export default function ListaDashboard({
                   tituloButton={tituloButton}
                   corButton={corButton}
                   Icone={Icone}
-                  abrirModal={abrirModal}
+                  tipo={tipo}
                 />
               ))}
           </tbody>

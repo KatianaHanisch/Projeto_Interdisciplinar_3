@@ -5,5 +5,5 @@ export type ListaProps = {
   tituloButton: string;
   corButton: string;
   Icone: any;
-  abrirModal?: () => void;
+  tipo?: string;
 };

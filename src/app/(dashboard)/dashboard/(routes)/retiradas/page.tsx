@@ -58,12 +58,6 @@ const dados = [
 ];
 
 export default function Retiradas() {
-  const [abrirModal, setAbrirModal] = useState(false);
-
-  function abrirModalConfirmacao() {
-    setAbrirModal(!abrirModal);
-  }
-
   return (
     <div className="w-full h-full flex flex-col p-10">
       <TituloPagina
@@ -76,28 +70,9 @@ export default function Retiradas() {
         dados={dados}
         tituloButton="Retirado"
         corButton="vermelha"
+        tipo="retirado"
         Icone={<IoClose size={20} color={"#ffffff"} />}
-        abrirModal={abrirModalConfirmacao}
       />
-
-      {abrirModal && (
-        <Modal
-          abrirModal={abrirModalConfirmacao}
-          title="Deseja confirmar?"
-          textButton="Confirmar"
-        >
-          <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
-            <p className="text-gray-600 text-lg font-normal leading-relaxed">
-              Você realmente deseja confirmar que o livro
-              <span className="font-medium text-gray-700">
-                {" "}
-                (nome do livro){" "}
-              </span>
-              foi retirado?
-            </p>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 }

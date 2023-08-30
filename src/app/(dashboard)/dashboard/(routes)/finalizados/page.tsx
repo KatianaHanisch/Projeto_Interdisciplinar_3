@@ -64,6 +64,7 @@ export default function Retiradas() {
         dados={dados}
         tituloButton="Finalizado"
         corButton="verde"
+        tipo="finalizado"
         Icone={<MdDone size={20} color={"#ffffff"} />}
       />
     </div>
