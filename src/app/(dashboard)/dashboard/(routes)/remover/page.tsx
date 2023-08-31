@@ -6,6 +6,7 @@ import Pagination from "@/app/components/Pagination";
 import Livro from "./components/Livro";
 
 type Props = {
+  id: number;
   nome: string;
   autor: string;
   categoria: string;
@@ -13,61 +14,73 @@ type Props = {
 
 const data = [
   {
+    id: 1,
     nome: "Corte de espinhos e rosas",
     autor: "Sarah J. Mass",
     categoria: "ficção",
   },
   {
+    id: 2,
     nome: "Renegados",
     autor: "Marissa Meyer",
     categoria: "Ação e Aventura",
   },
   {
+    id: 3,
     nome: "A rainha vermelha",
     autor: "Victoria Aveyard",
     categoria: "ficção",
   },
   {
+    id: 4,
     nome: "O prícipe cruel",
     autor: "Holly Black",
     categoria: "Fantasia Épica",
   },
   {
+    id: 5,
     nome: "Os miseráveis",
     autor: "Victor Hugo",
     categoria: "Literatura e Ficção",
   },
   {
+    id: 6,
     nome: "Renegados",
     autor: "Marissa Meyer",
     categoria: "Ação e Aventura",
   },
   {
+    id: 7,
     nome: "A rainha vermelha",
     autor: "Victoria Aveyard",
     categoria: "ficção",
   },
   {
+    id: 8,
     nome: "O prícipe cruel",
     autor: "Holly Black",
     categoria: "Fantasia Épica",
   },
   {
+    id: 9,
     nome: "Os miseráveis",
     autor: "Victor Hugo",
     categoria: "Literatura e Ficção",
   },
   {
+    id: 10,
     nome: "A rainha vermelha",
     autor: "Victoria Aveyard",
     categoria: "ficção",
   },
   {
+    id: 11,
     nome: "O prícipe cruel",
     autor: "Holly Black",
     categoria: "Fantasia Épica",
   },
   {
+    id: 12,
     nome: "Os miseráveis",
     autor: "Victor Hugo",
     categoria: "Literatura e Ficção",

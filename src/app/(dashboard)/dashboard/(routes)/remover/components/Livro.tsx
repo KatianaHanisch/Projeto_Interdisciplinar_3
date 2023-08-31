@@ -2,15 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
+  id: number;
   nome: string;
   autor: string;
   categoria: string;
 };
 
-export default function CardLivro({ nome, autor, categoria }: Props) {
+export default function CardLivro({ id, nome, autor, categoria }: Props) {
   return (
     <Link
-      href={`/dashboard/remover/${nome}`}
+      href={`/dashboard/remover/${id}`}
       className="flex flex-col relative w-[150px] transition-transform  cursor-pointer h-[286px]"
     >
       <Image
