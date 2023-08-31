@@ -3,7 +3,6 @@ import { LinhaTabelaUsuariosProps } from "../types/LinhaTabelaUsuariosProps";
 type DadosTabelaUsuariosProps = {
   dados: LinhaTabelaUsuariosProps[];
   abrirModalEditar: () => void;
-  abrirModalRemover: () => void;
 };
 
 import LinhaTabelaUsuarios from "./LinhaTabelaUsuarios";
@@ -11,7 +10,6 @@ import LinhaTabelaUsuarios from "./LinhaTabelaUsuarios";
 export default function ListaUsuarios({
   dados,
   abrirModalEditar,
-  abrirModalRemover,
 }: DadosTabelaUsuariosProps) {
   return (
     <div className="w-full h-full py-6 px-4">
@@ -30,7 +28,6 @@ export default function ListaUsuarios({
                 nome={nome}
                 email={email}
                 abrirModalEditar={abrirModalEditar}
-                abrirModalRemover={abrirModalRemover}
               />
             ))}
           </tbody>

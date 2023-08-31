@@ -18,7 +18,6 @@ const dados = [
 export default function Usuarios() {
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
-  const [abrirModalRemover, setAbrirModalRemover] = useState(false);
 
   const abrirModalAdicionarUsuario = () => {
     setAbrirModalAdicionar(!abrirModalAdicionar);
@@ -26,10 +25,6 @@ export default function Usuarios() {
 
   const abrirModalEditarUsuario = () => {
     setAbrirModalEditar(!abrirModalEditar);
-  };
-
-  const abrirModalRemoverUsuario = () => {
-    setAbrirModalRemover(!abrirModalRemover);
   };
 
   return (
@@ -41,11 +36,7 @@ export default function Usuarios() {
         abrirModal={abrirModalAdicionarUsuario}
       />
 
-      <ListaUsuarios
-        dados={dados}
-        abrirModalEditar={abrirModalEditarUsuario}
-        abrirModalRemover={abrirModalRemoverUsuario}
-      />
+      <ListaUsuarios dados={dados} abrirModalEditar={abrirModalEditarUsuario} />
 
       {abrirModalAdicionar && (
         <Modal
@@ -76,25 +67,6 @@ export default function Usuarios() {
             </p>
             <Input title="Nome do usuário" type="text" />
             <Input title="Email do usuário" type="email" />
-          </div>
-        </Modal>
-      )}
-
-      {abrirModalRemover && (
-        <Modal
-          abrirModal={abrirModalRemoverUsuario}
-          title="Remover usuário"
-          textButton="Remover"
-        >
-          <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
-            <p className="text-gray-600 text-lg font-normal leading-relaxed">
-              Você realmente deseja remover o usuário{" "}
-              <span className="font-medium text-gray-700">
-                {" "}
-                (nome usuário){" "}
-              </span>
-              do sistema?
-            </p>
           </div>
         </Modal>
       )}

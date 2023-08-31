@@ -50,6 +50,36 @@ const dados = [
     telefone: "(66) 996668855",
     livro: "A rebelde do deserto",
   },
+  {
+    nome: "Katiana H. Hanisch",
+    telefone: "(66) 996668855",
+    livro: "Darkdawn",
+  },
+  {
+    nome: "Jakelie H. Hanisch",
+    telefone: "(66) 996668855",
+    livro: "Fourth wing",
+  },
+  {
+    nome: "Iago F. Aparecido",
+    telefone: "(66) 996668855",
+    livro: "A rebelde do deserto",
+  },
+  {
+    nome: "Katiana H. Hanisch",
+    telefone: "(66) 996668855",
+    livro: "Darkdawn",
+  },
+  {
+    nome: "Jakelie H. Hanisch",
+    telefone: "(66) 996668855",
+    livro: "Fourth wing",
+  },
+  {
+    nome: "Iago F. Aparecido",
+    telefone: "(66) 996668855",
+    livro: "A rebelde do deserto",
+  },
 ];
 
 export default function Retiradas() {
