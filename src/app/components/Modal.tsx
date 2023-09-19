@@ -1,9 +1,10 @@
+import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 type Props = {
   abrirModal: () => void;
   title: string;
-  children: any;
+  children: React.ReactNode;
   textButton: string;
 };
 

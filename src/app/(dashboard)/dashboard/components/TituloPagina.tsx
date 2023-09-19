@@ -1,9 +1,11 @@
+import { IconType } from "react-icons/lib";
+
 import ButtonRelatorio from "./ButtonTituloPagina";
 
 type TituloPaginaProps = {
   tituloPagina: string;
   tituloButton: string;
-  Icone: any;
+  Icone: IconType;
   abrirModal?: () => void;
 };
 

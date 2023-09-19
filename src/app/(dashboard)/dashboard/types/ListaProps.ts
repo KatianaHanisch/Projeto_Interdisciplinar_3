@@ -1,9 +1,11 @@
+import { ReactNode } from "react";
+
 import { DadosListaProps } from "./DadosListaProps";
 
 export type ListaProps = {
   dados: DadosListaProps[];
   tituloButton: string;
   corButton: string;
-  Icone: any;
+  Icone: ReactNode;
   tipo?: string;
 };
