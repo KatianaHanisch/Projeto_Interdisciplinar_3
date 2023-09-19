@@ -38,6 +38,7 @@ export default function LinhasTabela({
             corButton={corButton}
             Icone={Icone}
             abrirModal={abrirModalConfirmacao}
+            tipo={tipo}
           />
         </td>
       </tr>

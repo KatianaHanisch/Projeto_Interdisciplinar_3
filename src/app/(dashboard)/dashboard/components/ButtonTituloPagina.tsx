@@ -1,6 +1,8 @@
+import { IconType } from "react-icons/lib";
+
 type ButtonTituloPaginaProps = {
   tituloButton: string;
-  Icone: any;
+  Icone: IconType;
   abrirModal?: () => void;
 };
 
