@@ -1,13 +1,20 @@
 type Props = {
   title: string;
   type: string;
+  name?: string;
+  value?: string;
+  onChange?: any;
 };
 
-export default function Input({ title, type }: Props) {
+export default function Input({ title, type, name, value, onChange }: Props) {
   return (
     <div className="relative w-full ">
       <input
+        required
+        name={name}
         type={type}
+        value={value}
+        onChange={onChange}
         id="floating_outlined"
         className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
         placeholder=" "
