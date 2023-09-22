@@ -1,14 +1,7 @@
-// import { NextResponse } from "next/server";
-// import User from "../types";
-
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
-
-export async function GET() {
-  const allUsers = await prisma.users.findMany();
-  return new Response(JSON.stringify(allUsers));
-}
 
 export async function POST(request: Request) {
   const data = await request.json();
@@ -23,11 +16,13 @@ export async function POST(request: Request) {
       if (existingUser) {
         return new Response("E-mail já cadastrado.", { status: 409 });
       } else {
+        const hashedPassword = await bcrypt.hash(data.password, 12);
         const newUser = await prisma.users.create({
           data: {
             email: data.email,
             name: data.name,
-            password: data.password,
+            password: hashedPassword,
+            verification_email: false,
           },
         });
         return new Response(JSON.stringify(newUser), { status: 201 });

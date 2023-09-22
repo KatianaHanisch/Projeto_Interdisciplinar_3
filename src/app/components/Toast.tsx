@@ -6,8 +6,10 @@ type Props = {
 
 export default function Toast({ text }: Props) {
   return (
-    <div className="flex items-center bg-red-500 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2">
-      <div className="text-red-500 rounded-full bg-white mr-3">
+    <div
+      className={`flex items-center bg-red-500 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2 `}
+    >
+      <div className={`text-red-500 rounded-full bg-white mr-3`}>
         <svg
           width="1.8em"
           height="1.8em"

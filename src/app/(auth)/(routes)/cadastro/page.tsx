@@ -15,6 +15,7 @@ export default function Cadastro() {
   const router = useRouter();
 
   const [error, setError] = useState("");
+  const [sucesso, setSucesso] = useState("");
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<User>({
     name: "",
@@ -56,9 +57,13 @@ export default function Cadastro() {
         setLoading(false);
         return;
       } else if (response.status === 201) {
-        router.push("/login");
+        setSucesso("Cadastrado com sucesso!");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
       } else {
         setError("Erro ao cadastrar!");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Erro ao analisar JSON:", error);
