@@ -1,5 +1,3 @@
-import { IconType } from "react-icons/lib";
-
 import { ReactNode } from "react";
 
 export type LinhasTabelaProps = {
