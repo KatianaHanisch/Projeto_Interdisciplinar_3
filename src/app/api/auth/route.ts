@@ -120,7 +120,7 @@ export async function GET(request: Request) {
         },
       });
 
-      return Response.redirect(`${url}/login`);
+      return Response.redirect(`${url}/login?teste=1`);
     } else {
       throw new Error("Token inválido");
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import { HiMenu } from "react-icons/hi";
@@ -13,7 +13,11 @@ import { BiExit, BiSolidLogIn, BiSolidUser } from "react-icons/bi";
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated, validateToken, name } = useAuth();
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -33,7 +37,7 @@ export default function HeaderHome() {
         {isAuthenticated ? (
           <div className="flex  items-center justify-end ">
             <h4 className="text-[16px] font-medium mr-2 text-gray-800">
-              Usuário
+              {name}
             </h4>
             <div className="w-10 h-10 bg-white flex items-center justify-center rounded-full cursor-pointer">
               <button className="" onClick={abrirDropdown}>
