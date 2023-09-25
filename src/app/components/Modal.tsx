@@ -2,16 +2,22 @@ import React from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 type Props = {
-  abrirModal: () => void;
   title: string;
   children: React.ReactNode;
   textButton: string;
+  abrirModal?: () => void;
+  confirmarModal?: () => void;
+  cancelarModal?: () => void;
+  fecharModal?: () => void;
   onclick?: any;
   loading?: any;
 };
 
 export default function Modal({
   abrirModal,
+  confirmarModal,
+  cancelarModal,
+  fecharModal,
   title,
   children,
   textButton,
@@ -28,7 +34,7 @@ export default function Modal({
             <h3 className="text-3xl font-semibold text-gray-700">{title}</h3>
             <button
               className="p-1 ml-auto bg-transparent border-0 text-black   float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              onClick={abrirModal}
+              onClick={fecharModal}
             >
               <IoCloseSharp color="#374151" />
             </button>
@@ -40,7 +46,7 @@ export default function Modal({
             <button
               className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
-              onClick={abrirModal}
+              onClick={cancelarModal}
             >
               Cancelar
             </button>
@@ -50,18 +56,10 @@ export default function Modal({
                   ? "active:bg-red-700 bg-red-700"
                   : "active:bg-emerald-600 bg-emerald-600"
               }  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
-              type="submit"
-              onClick={onclick}
+              type="button"
+              onClick={abrirModal}
             >
-              {loading ? (
-                <div className="flex items-center justify-center space-x-2 p-1">
-                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
-                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
-                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
-                </div>
-              ) : (
-                `${textButton}`
-              )}
+              {textButton}
             </button>
           </div>
         </div>

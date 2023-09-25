@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { LinhasTabelaProps } from "../types/LinhasTabelaProps";
+import { LinhasTabelaProps } from "@/app/types/DashboardTypes";
 
 import ButtonTabela from "./ButtonTabela";
 import Modal from "@/app/components/Modal";
@@ -45,7 +45,8 @@ export default function LinhasTabela({
 
       {open && (
         <Modal
-          abrirModal={abrirModalConfirmacao}
+          fecharModal={abrirModalConfirmacao}
+          cancelarModal={abrirModalConfirmacao}
           title="Deseja confirmar?"
           textButton="Confirmar"
         >

@@ -12,20 +12,26 @@ interface InputProps {
 }
 
 interface HasFileProps {
-  file?: File;
+  file?: File | null;
   removeFile: () => void;
 }
 
-export const FileInput = () => {
-  const [file, setFile] = useState<File | null>(null);
+type FileInputProps = {
+  file?: File;
+  removeFile: () => void;
+  onDrop: (files: File[]) => void;
+};
 
-  const removeFile = useCallback(() => {
-    setFile(null);
-  }, [file]);
+export const FileInput = ({ file, removeFile, onDrop }: FileInputProps) => {
+  // const [file, setFile] = useState<File | null>(null);
 
-  const onDrop = useCallback((files: File[]) => {
-    setFile(files[0]);
-  }, []);
+  // const removeFile = useCallback(() => {
+  //   setFile(null);
+  // }, [file]);
+
+  // const onDrop = useCallback((files: File[]) => {
+  //   setFile(files[0]);
+  // }, []);
 
   const dropzone = useDropzone({
     onDrop,
@@ -34,7 +40,10 @@ export const FileInput = () => {
     },
   });
 
-  if (file) return <HasFile file={file} removeFile={removeFile} />;
+  if (file) {
+    // console.log(file);
+    return <HasFile file={file} removeFile={removeFile} />;
+  }
 
   return <Input dropzone={dropzone} />;
 };

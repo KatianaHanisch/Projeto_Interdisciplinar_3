@@ -1,10 +1,4 @@
-import { IconType } from "react-icons/lib";
-
-type ButtonTituloPaginaProps = {
-  tituloButton: string;
-  Icone: IconType;
-  abrirModal?: () => void;
-};
+import { ButtonTituloPaginaProps } from "@/app/types/DashboardTypes";
 
 export default function ButtonRelatorio({
   tituloButton,
