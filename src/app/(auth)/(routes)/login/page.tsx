@@ -47,7 +47,7 @@ export default function Login(request: Request) {
     setAbrirModal(!abrirModal);
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError("");
@@ -102,7 +102,7 @@ export default function Login(request: Request) {
           <div>
             <form
               className="flex flex-col gap-3 text-[#3B4251]"
-              onSubmit={onSubmit}
+              onSubmit={handleLogin}
             >
               <Input
                 type="email"
