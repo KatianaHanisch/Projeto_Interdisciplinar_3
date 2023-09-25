@@ -6,6 +6,8 @@ type Props = {
   title: string;
   children: React.ReactNode;
   textButton: string;
+  onclick?: any;
+  loading?: any;
 };
 
 export default function Modal({
@@ -13,6 +15,8 @@ export default function Modal({
   title,
   children,
   textButton,
+  onclick,
+  loading,
 }: Props) {
   return (
     <div className="justify-center items-center flex bg-black bg-opacity-20 backdrop-blur-sm overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -46,10 +50,18 @@ export default function Modal({
                   ? "active:bg-red-700 bg-red-700"
                   : "active:bg-emerald-600 bg-emerald-600"
               }  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
-              type="button"
-              onClick={abrirModal}
+              type="submit"
+              onClick={onclick}
             >
-              {textButton}
+              {loading ? (
+                <div className="flex items-center justify-center space-x-2 p-1">
+                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
+                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
+                  <div className="w-2 h-2 rounded-full animate-pulse dark:bg-[white]"></div>
+                </div>
+              ) : (
+                `${textButton}`
+              )}
             </button>
           </div>
         </div>
