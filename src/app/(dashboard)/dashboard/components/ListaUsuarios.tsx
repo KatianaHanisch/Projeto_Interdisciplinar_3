@@ -1,9 +1,4 @@
-import { LinhaTabelaUsuariosProps } from "../types/LinhaTabelaUsuariosProps";
-
-type DadosTabelaUsuariosProps = {
-  dados: LinhaTabelaUsuariosProps[];
-  abrirModalEditar: () => void;
-};
+import { DadosTabelaUsuariosProps } from "@/app/types/DashboardTypes";
 
 import LinhaTabelaUsuarios from "./LinhaTabelaUsuarios";
 

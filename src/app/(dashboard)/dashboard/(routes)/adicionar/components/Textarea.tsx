@@ -1,9 +1,21 @@
-export default function Textarea() {
+import { ChangeEvent } from "react";
+
+type TextareaProps = {
+  name: string;
+  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  value: string;
+};
+
+export default function Textarea({ name, value, onChange }: TextareaProps) {
   return (
     <div className="relative w-full ">
       <textarea
         id="floating_outlined"
         placeholder=""
+        name={name}
+        onChange={onChange}
+        value={value}
+        required
         className="block px-2.5 pb-2.5 pt-2 w-full   text-sm text-gray-800  rounded border border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-gray-600 peer"
       />
       <label

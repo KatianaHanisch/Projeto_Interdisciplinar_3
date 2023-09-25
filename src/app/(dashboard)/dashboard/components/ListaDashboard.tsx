@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ListaProps } from "../types/ListaProps";
-import { DadosListaProps } from "../types/DadosListaProps";
+
+import { ListaProps, DadosListaProps } from "@/app/types/DashboardTypes";
 
 import InputBusca from "./InputBusca";
 import LinhasTabela from "./LinhasTabela";

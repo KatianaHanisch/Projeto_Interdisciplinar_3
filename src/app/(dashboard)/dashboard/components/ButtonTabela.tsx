@@ -1,4 +1,4 @@
-import { ButtonTabelaProps } from "../types/ButtonTabelaProps";
+import { ButtonTabelaProps } from "@/app/types/DashboardTypes";
 
 export default function ButtonTabela({
   tituloButton,

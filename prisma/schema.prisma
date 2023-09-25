@@ -17,3 +17,12 @@ model users {
   password           String
   verification_email Boolean
 }
+
+model livros {
+  id Int @id @default(autoincrement())
+  titulo String @unique
+  autor String
+  categoria String
+  sinopse String
+  capaUrl String
+}

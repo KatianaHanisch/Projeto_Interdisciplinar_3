@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { LinhaTabelaUsuariosProps } from "../types/LinhaTabelaUsuariosProps";
+import { LinhaTabelaUsuariosProps } from "@/app/types/DashboardTypes";
 
 import Modal from "@/app/components/Modal";
 
