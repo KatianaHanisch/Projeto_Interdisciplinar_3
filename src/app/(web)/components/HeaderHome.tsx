@@ -10,6 +10,7 @@ import { BsFillBookFill } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { BiExit, BiSolidLogIn, BiSolidUser } from "react-icons/bi";
+import { BsFillGearFill } from "react-icons/bs";
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,13 +45,17 @@ export default function HeaderHome() {
                 <BiSolidUser className="w-7 h-7" color="#1f2937" />
               </button>
               {open && (
-                <div className="absolute z-[100] mt-24 w-48 rounded bg-gray-700 py-2 shadow-xl ">
+                <div className="absolute z-[100] mt-32 ml-[-150px] w-48 rounded bg-gray-800 py-2 shadow-xl ">
                   <div
                     onClick={() => logout()}
-                    className="flex items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-700 hover:bg-gray-600"
+                    className="flex mt-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600"
                   >
                     <BiExit size={20} color="white" />
                     Sair
+                  </div>
+                  <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
+                    <BsFillGearFill size={20} color="white" />
+                    Configurações
                   </div>
                 </div>
               )}
@@ -121,18 +126,53 @@ export default function HeaderHome() {
                 </Link>
               </div>
 
-              <div className="flex flex-col items-center">
-                <Link
-                  className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                  href="/login"
-                >
-                  <span>
-                    {" "}
-                    <BiSolidLogIn className="text-gray-50" />
-                  </span>{" "}
-                  ENTRAR
-                </Link>
-              </div>
+              {isAuthenticated ? (
+                <div className="flex flex-col items-center justify-end ">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer">
+                    <Link
+                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                      href="/"
+                    >
+                      <span>
+                        <BsFillGearFill className="text-gray-50" />
+                      </span>{" "}
+                      Configurações
+                    </Link>
+
+                    {/* <button className="" onClick={abrirDropdown}>
+                      <BiSolidUser className="w-7 h-7" color="white" />
+                    </button> */}
+                    {/* {open && (
+                      <div className="absolute z-[100] mt-32 w-48 rounded bg-gray-800 py-2 shadow-xl ">
+                        <div
+                          onClick={() => logout()}
+                          className="flex mt-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600"
+                        >
+                          <BiExit size={20} color="white" />
+                          Sair
+                        </div>
+                        <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
+                          <BsFillGearFill size={20} color="white" />
+                          Configurações
+                        </div>
+                      </div>
+                    )} */}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <Link
+                    className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                    href="/login"
+                  >
+                    <span>
+                      {" "}
+                      <BiSolidLogIn className="text-gray-50" />
+                    </span>{" "}
+                    ENTRAR
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

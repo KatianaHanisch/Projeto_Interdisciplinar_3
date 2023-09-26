@@ -216,6 +216,8 @@ export default function Login(request: Request) {
                   textButton="Enviar"
                   onclick={handleRecuperacaoPassword}
                   loading={loading}
+                  fecharModal={abrirModalEsqueceuSenha}
+                  cancelarModal={abrirModalEsqueceuSenha}
                 >
                   <div className="relative p-6 flex-auto">
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
