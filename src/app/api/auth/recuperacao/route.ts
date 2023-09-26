@@ -113,3 +113,39 @@ export async function GET(request: Request) {
     return new Response("Erro ao confirmar o e-mail.", { status: 500 });
   }
 }
+
+//ALTERAÇÃO DE SENHA
+export async function PUT(request: Request) {
+  const data = await request.json();
+  const hashedPassword = await bcrypt.hash(data.password, 12);
+
+  try {
+    const user = await prisma.users.findFirst({
+      where: {
+        id: data.id,
+      },
+    });
+
+    if (user) {
+      await prisma.users.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          password: hashedPassword,
+        },
+      });
+
+      return new Response("Senha alterada com sucesso.", {
+        status: 201,
+      });
+    } else {
+      return new Response("Usuário não encontrado.", {
+        status: 404,
+      });
+    }
+  } catch (error) {
+    console.error("Erro:", error);
+    return new Response("Erro.", { status: 500 });
+  }
+}

@@ -5,7 +5,7 @@ import { User } from "@/app/types";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Input from "../../../components/Input";
 import Modal from "../../../components/Modal";
@@ -25,9 +25,10 @@ export default function Login(request: Request) {
     email: "",
     password: "",
   });
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const token = new URLSearchParams(window.location.search).get("teste");
+    const token = searchParams.get("teste");
 
     if (token === "1") {
       setConfirm("E-mail confirmado com sucesso!");
