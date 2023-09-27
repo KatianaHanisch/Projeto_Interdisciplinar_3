@@ -10,19 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id                 Int     @id @default(autoincrement())
-  email              String  @unique
+model Users {
+  id                 Int      @id @default(autoincrement())
+  email              String   @unique
   name               String
   password           String
   verification_email Boolean
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
-model livros {
-  id Int @id @default(autoincrement())
-  titulo String @unique
-  autor String
+model UsersDashboard {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Roles?   @relation(fields: [role_id], references: [id])
+  role_id   Int?
+}
+
+model Roles {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users_dashboard UsersDashboard[]
+}
+
+model Livros {
+  id        Int      @id @default(autoincrement())
+  titulo    String   @unique
+  autor     String
   categoria String
-  sinopse String
-  capaUrl String
+  sinopse   String
+  capaUrl   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

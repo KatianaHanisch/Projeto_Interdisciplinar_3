@@ -110,6 +110,9 @@ export default function Login(request: Request) {
           setRecuperacao("");
         }, 5000);
         setLoading(false);
+      } else if (response.status === 404) {
+        setRecuperacao("E-mail não cadastrado!");
+        setLoading(false);
       } else {
         setRecuperacao("Erro");
         setLoading(false);
@@ -231,7 +234,7 @@ export default function Login(request: Request) {
                       onChange={(e: any) => setModalEmail(e.target.value)}
                     />
                   </div>
-                  {recuperacao === "E-mail enviado com sucesso!" ? (
+                  {recuperacao === "E-mail enviado com sucesso!" && (
                     <div
                       className={`flex mt-[-10px] items-center mx-6 rounded bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-3 `}
                     >
@@ -253,12 +256,17 @@ export default function Login(request: Request) {
 
                       <div className="text-white max-w-xs ">{recuperacao}</div>
                     </div>
-                  ) : (
-                    recuperacao === "Erro" && (
-                      <div className="mx-6 mt-[-10px] mb-1">
-                        <Toast text="Erro ao enviar e-mail!" />
-                      </div>
-                    )
+                  )}
+
+                  {recuperacao === "E-mail não cadastrado!" && (
+                    <div className="mx-6 mt-[-10px] mb-1">
+                      <Toast text="E-mail não cadastrado!" />
+                    </div>
+                  )}
+                  {recuperacao === "Erro" && (
+                    <div className="mx-6 mt-[-10px] mb-1">
+                      <Toast text="Erro ao enviar e-mail!" />
+                    </div>
                   )}
                 </Modal>
               )}

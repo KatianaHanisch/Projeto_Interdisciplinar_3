@@ -17,6 +17,9 @@ export default function HeaderHome() {
   const { logout, isAuthenticated, validateToken, name } = useAuth();
 
   useEffect(() => {
+    if (!name) {
+      sessionStorage.removeItem("d_token");
+    }
     validateToken();
   }, [validateToken]);
 
@@ -55,7 +58,7 @@ export default function HeaderHome() {
                   </div>
                   <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
                     <BsFillGearFill size={20} color="white" />
-                    Configurações
+                    <Link href="/configuracao">Configurações</Link>
                   </div>
                 </div>
               )}

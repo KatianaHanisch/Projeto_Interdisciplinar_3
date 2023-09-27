@@ -8,7 +8,7 @@ import nodemailer from "@/app/helpers/nodemailer";
 
 const prisma = new PrismaClient();
 
-//RECUPERAÇÃO DE SENHA
+//ENVIO DO EMAIL PARA A RECUPERAÇÃO DE SENHA
 export async function POST(request: Request) {
   const data = await request.json();
 

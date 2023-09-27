@@ -1,5 +1,6 @@
 import "../globals.css";
 import type { Metadata } from "next";
+import { AuthProvider } from "../context/AuthContext";
 
 import Navbar from "./dashboard/components/Navbar";
 import Sidebar from "./dashboard/components/Sidebar";
@@ -16,21 +17,23 @@ export default function DashLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body>
-        <div className="h-full relative">
-          <div className="hidden h-full md:flex md:flex-col md:fixed md:w-56 md:inset-y-0 z-[80] bg-gray-300">
-            <Sidebar />
-          </div>
-        </div>
-        <main className="md:pl-56 bg-gray-300 h-screen w-full">
-          <Navbar />
-          <div className="w-full h-5/6 pt-4  pr-10 pl-2">
-            <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
-              {children}
+      <AuthProvider>
+        <body>
+          <div className="h-full relative">
+            <div className="hidden h-full md:flex md:flex-col md:fixed md:w-56 md:inset-y-0 z-[80] bg-gray-300">
+              <Sidebar />
             </div>
           </div>
-        </main>
-      </body>
+          <main className="md:pl-56 bg-gray-300 h-screen w-full">
+            <Navbar />
+            <div className="w-full h-5/6 pt-4  pr-10 pl-2">
+              <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
+                {children}
+              </div>
+            </div>
+          </main>
+        </body>
+      </AuthProvider>
     </html>
   );
 }
