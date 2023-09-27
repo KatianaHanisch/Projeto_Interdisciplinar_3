@@ -89,8 +89,14 @@ const data = [
 
 export default function Remover() {
   const [page, setPage] = useState(0);
+  const [livros, setLivros] = useState<Props[]>([]);
   const [filterData, setFilterData] = useState<Props[]>([]);
   const n = 6;
+
+  // async function getLivros() {
+  //   const data = await fetch("/api/livro");
+  //   // console.log(data);
+  // }
 
   useEffect(() => {
     setFilterData(
@@ -99,6 +105,10 @@ export default function Remover() {
       })
     );
   }, [page]);
+
+  useEffect(() => {
+    // getLivros();
+  }, []);
 
   const quantidadePaginas = Math.ceil(data.length / n);
 

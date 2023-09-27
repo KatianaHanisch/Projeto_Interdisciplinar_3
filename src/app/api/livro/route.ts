@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     data.sinopse &&
     data.capaUrl
   ) {
-    console.log("teste");
     try {
       const livroExistente = await prisma.livros.findUnique({
         where: {
@@ -47,3 +46,19 @@ export async function POST(request: Request) {
     return new Response("Faltanto dados ao criar novo livro", { status: 400 });
   }
 }
+
+// export async function GET() {
+//   const data = await prisma.livros.findMany();
+//   return new NextResponse(JSON.stringify(data), { status: 200 });
+
+//   // const data = await prisma.livros.findMany();
+//   // return new Response(JSON.stringify(data), { status: 200 });
+// }
+// const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   const data = await res.json();
+
+//   return NextResponse.json({ data });
