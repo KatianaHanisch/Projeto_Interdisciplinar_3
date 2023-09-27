@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 import { AiOutlineHome } from "react-icons/ai";
 import { BiBookAdd } from "react-icons/bi";
@@ -11,6 +12,8 @@ import { IoBagRemoveOutline } from "react-icons/io5";
 import { LuBookUp } from "react-icons/lu";
 import { FaBook } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
+
+import { useAuth } from "@/app/context/AuthContext";
 
 const routes = [
   {
@@ -52,6 +55,16 @@ const routes = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-gray-300">

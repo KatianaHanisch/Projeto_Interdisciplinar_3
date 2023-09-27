@@ -1,10 +1,9 @@
 "use client";
-const jwt = require("jsonwebtoken");
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthData {
   isAuthenticated: boolean;
-  role: any;
   name: string;
   logout: () => void;
   validateToken: () => void;
@@ -14,8 +13,8 @@ const AuthContext = createContext<AuthData | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(false);
   const [name, setName] = useState(String);
+  const router = useRouter();
 
   const logout = () => {
     sessionStorage.removeItem("token");
@@ -27,13 +26,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const validateToken = () => {
     const token = sessionStorage.getItem("token");
     const name = sessionStorage.getItem("name");
-
     if (!token) {
       setIsAuthenticated(false);
     }
-
     setName(name!);
-
     if (isTokenExpired(token)) {
       setIsAuthenticated(false);
       sessionStorage.removeItem("token");
@@ -44,21 +40,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const validateTokenRoleFunction = () => {
+  const validateTokenRoleFunction = async () => {
     const tokendash = sessionStorage.getItem("d_token");
 
     if (!tokendash) {
       setIsAuthenticated(false);
+      router.push("/not-found");
     }
 
-    if (validateTokenRole(tokendash)) {
-      setRole(true);
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("name");
-      sessionStorage.removeItem("d_token");
-      console.log("aaa");
+    if (tokendash) {
+      const tokenData = JSON.parse(atob(tokendash.split(".")[1]));
+      console.log(tokenData);
+      if (tokenData.role) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+        router.push("/not-found");
+      }
     } else {
-      setRole(false);
+      console.log("Erro");
+      router.push("/not-found");
+
+      setIsAuthenticated(false);
     }
   };
 
@@ -67,7 +70,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     validateToken,
     name,
-    role,
     validateTokenRoleFunction,
   };
 
@@ -84,21 +86,6 @@ function isTokenExpired(token: any) {
   const tokenExpiration = tokenPayload.exp * 1000;
   const currentTime = Date.now();
   return tokenExpiration <= currentTime;
-}
-
-function validateTokenRole(token: any) {
-  try {
-    const decodedToken = jwt.verify(token, "sua_chave_secreta");
-
-    console.log(decodedToken);
-    if (decodedToken && decodedToken.role_id) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
 }
 
 export function useAuth() {
