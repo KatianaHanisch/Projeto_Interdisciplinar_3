@@ -7,9 +7,10 @@ import Livro from "./components/Livro";
 
 type Props = {
   id: number;
-  nome: string;
+  titulo: string;
   autor: string;
   categoria: string;
+  capaUrl?: string;
 };
 
 const data = [
@@ -93,25 +94,28 @@ export default function Remover() {
   const [filterData, setFilterData] = useState<Props[]>([]);
   const n = 6;
 
-  // async function getLivros() {
-  //   const data = await fetch("/api/livro");
-  //   // console.log(data);
-  // }
+  async function getLivros() {
+    const res = await fetch("/api/livro");
+    const data = await res.json();
+
+    setLivros(data);
+  }
 
   useEffect(() => {
     setFilterData(
-      data.filter((item: Props, index: number) => {
+      livros.filter((item: Props, index: number) => {
         return index >= page * n && index < (page + 1) * n;
       })
     );
-  }, [page]);
+  }, [page, livros]);
 
   useEffect(() => {
-    // getLivros();
+    getLivros();
   }, []);
 
-  const quantidadePaginas = Math.ceil(data.length / n);
+  const quantidadePaginas = Math.ceil(livros.length / n);
 
+  console.log(livros);
   return (
     <div className="w-full p-10 items-center flex flex-col ">
       <div className="flex flex-col items-center justify-center py-8 px-8 h-[380px]  ">

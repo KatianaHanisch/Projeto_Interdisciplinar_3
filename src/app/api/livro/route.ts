@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
@@ -47,18 +47,7 @@ export async function POST(request: Request) {
   }
 }
 
-// export async function GET() {
-//   const data = await prisma.livros.findMany();
-//   return new NextResponse(JSON.stringify(data), { status: 200 });
-
-//   // const data = await prisma.livros.findMany();
-//   // return new Response(JSON.stringify(data), { status: 200 });
-// }
-// const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   const data = await res.json();
-
-//   return NextResponse.json({ data });
+export async function GET() {
+  const livros = await prisma.livros.findMany();
+  return new Response(JSON.stringify(livros), { status: 200 });
+}
