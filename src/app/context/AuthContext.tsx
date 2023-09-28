@@ -9,6 +9,7 @@ interface AuthData {
   validateToken: () => void;
   validateTokenRoleFunction: () => void;
   validateIfExists: () => void;
+  validateTokenForPageEmprestimos: () => void;
 }
 const AuthContext = createContext<AuthData | undefined>(undefined);
 
@@ -41,6 +42,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("name");
       sessionStorage.removeItem("d_token");
+    } else {
+      setIsAuthenticated(true);
+    }
+  };
+
+  const validateTokenForPageEmprestimos = () => {
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+      setIsAuthenticated(false);
+      router.push("/");
+      return;
+    }
+    setName(name!);
+    if (isTokenExpired(token)) {
+      setIsAuthenticated(false);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("name");
+      sessionStorage.removeItem("d_token");
+      router.push("/");
     } else {
       setIsAuthenticated(true);
     }
@@ -93,6 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     validateToken,
     validateTokenRoleFunction,
     validateIfExists,
+    validateTokenForPageEmprestimos,
   };
 
   return (

@@ -1,11 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import CardBook from "./CardBook";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function ListBorrowed() {
+  const router = useRouter();
   const itemsPerPage = 12; // Define quantos itens você deseja mostrar por página.
   const [currentPage, setCurrentPage] = useState(1); // Página atual, começa em 1.
+  const { isAuthenticated, validateTokenForPageEmprestimos } = useAuth();
 
   // Sua lista de livros (substitua isso por sua própria lista).
   const allBooks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
@@ -30,6 +35,14 @@ export default function ListBorrowed() {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  useEffect(() => {
+    validateTokenForPageEmprestimos();
+  }, [validateTokenForPageEmprestimos]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="max-w-[1200px] m-auto mt-32 mb-32 px-2">

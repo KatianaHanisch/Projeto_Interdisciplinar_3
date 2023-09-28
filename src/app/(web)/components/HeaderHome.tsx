@@ -58,7 +58,7 @@ export default function HeaderHome() {
                   </div>
                   <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
                     <BsFillGearFill size={20} color="white" />
-                    <Link href="/configuracao">Configurações</Link>
+                    <button>Configurações</button>
                   </div>
                 </div>
               )}
@@ -116,7 +116,7 @@ export default function HeaderHome() {
                   <span>
                     <BsFillBookFill className="text-gray-50" />
                   </span>{" "}
-                  LIVROS
+                  TODOS OS LIVROS
                 </Link>
                 <Link
                   className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
@@ -127,20 +127,28 @@ export default function HeaderHome() {
                   </span>{" "}
                   SOBRE
                 </Link>
+                {isAuthenticated && (
+                  <Link
+                    className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                    href="/emprestimos"
+                  >
+                    <span>
+                      <BsFillBookFill className="text-gray-50" />
+                    </span>{" "}
+                    MEUS LIVROS
+                  </Link>
+                )}
               </div>
 
               {isAuthenticated ? (
                 <div className="flex flex-col items-center justify-end ">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer">
-                    <Link
-                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
-                      href="/"
-                    >
+                    <button className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2">
                       <span>
                         <BsFillGearFill className="text-gray-50" />
                       </span>{" "}
                       Configurações
-                    </Link>
+                    </button>
 
                     {/* <button className="" onClick={abrirDropdown}>
                       <BiSolidUser className="w-7 h-7" color="white" />
@@ -193,9 +201,18 @@ export default function HeaderHome() {
           >
             LIVROS
           </Link>
-          <Link className="text-gray-800 hover:text-gray-950" href="/sobre">
+          <Link className="text-gray-800  hover:text-gray-950" href="/sobre">
             SOBRE
           </Link>
+
+          {isAuthenticated && (
+            <Link
+              className="text-gray-800 ml-[35px] hover:text-gray-950"
+              href="/emprestimos"
+            >
+              MEUS LIVROS
+            </Link>
+          )}
         </div>
       </div>
     </nav>
