@@ -6,6 +6,7 @@ import { User } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 import Input from "../../../components/Input";
 import Modal from "../../../components/Modal";
@@ -13,6 +14,8 @@ import Toast from "@/app/components/Toast";
 import imageBackground from "../../../../../public/banner-login.jpg";
 
 export default function Login(request: Request) {
+  const { validateToken, isAuthenticated } = useAuth();
+
   const [abrirModal, setAbrirModal] = useState(false);
   const [modalEmail, setModalEmail] = useState(String);
   const router = useRouter();
@@ -36,7 +39,14 @@ export default function Login(request: Request) {
         setConfirm("");
       }, 5000);
     }
+
+    validateToken();
   }, []);
+
+  if (isAuthenticated) {
+    router.push("/");
+    return null;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -74,8 +84,8 @@ export default function Login(request: Request) {
       } else if (response.status === 201) {
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("name", name);
-        setLoading(false);
         router.push("/");
+        setLoading(false);
       } else {
         setError("Erro ao logar! Tente novamente mais tarde.");
         console.log(response.status);

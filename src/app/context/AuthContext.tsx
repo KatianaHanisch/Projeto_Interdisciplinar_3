@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthData {
@@ -8,6 +8,7 @@ interface AuthData {
   logout: () => void;
   validateToken: () => void;
   validateTokenRoleFunction: () => void;
+  validateIfExists: () => void;
 }
 const AuthContext = createContext<AuthData | undefined>(undefined);
 
@@ -20,7 +21,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("name");
     setIsAuthenticated(false);
-    window.location.reload();
+
+    router.push("/");
+    setTimeout(() => {
+      sessionStorage.removeItem("d_token");
+    }, 1000);
   };
 
   const validateToken = () => {
@@ -28,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const name = sessionStorage.getItem("name");
     if (!token) {
       setIsAuthenticated(false);
+      return;
     }
     setName(name!);
     if (isTokenExpired(token)) {
@@ -46,15 +52,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!tokendash) {
       setIsAuthenticated(false);
       router.push("/not-found");
+      return;
     }
 
     if (tokendash) {
+      if (isTokenExpired(tokendash)) {
+        setIsAuthenticated(false);
+      }
+
       const tokenData = JSON.parse(atob(tokendash.split(".")[1]));
-      console.log(tokenData);
       if (tokenData.role) {
         setIsAuthenticated(true);
+        setName(tokenData.name);
       } else {
         setIsAuthenticated(false);
+        setName("");
         router.push("/not-found");
       }
     } else {
@@ -65,12 +77,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const validateIfExists = async () => {
+    const tokendash = sessionStorage.getItem("d_token");
+
+    if (tokendash) {
+      router.push("/dashboard");
+      return;
+    }
+  };
+
   const authData: AuthData = {
     isAuthenticated,
+    name,
     logout,
     validateToken,
-    name,
     validateTokenRoleFunction,
+    validateIfExists,
   };
 
   return (

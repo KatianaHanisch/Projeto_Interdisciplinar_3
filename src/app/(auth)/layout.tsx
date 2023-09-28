@@ -1,3 +1,4 @@
+import { AuthProvider } from "../context/AuthContext";
 import "../globals.css";
 import type { Metadata } from "next";
 
@@ -13,7 +14,9 @@ export default function DashLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body>{children}</body>
+      <AuthProvider>
+        <body>{children}</body>
+      </AuthProvider>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/app/types";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -10,9 +10,11 @@ import { useRouter } from "next/navigation";
 import Input from "../../../components/Input";
 import Toast from "@/app/components/Toast";
 import imageBackground from "../../../../../public/banner-login.jpg";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function Cadastro() {
   const router = useRouter();
+  const { validateToken, isAuthenticated } = useAuth();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,6 +67,15 @@ export default function Cadastro() {
       console.error("Erro ao analisar JSON:", error);
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken]);
+
+  if (isAuthenticated) {
+    router.push("/");
+    return null;
   }
 
   return (
