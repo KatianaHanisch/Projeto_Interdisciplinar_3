@@ -6,7 +6,7 @@ import { BsSearch } from "react-icons/bs";
 
 export default function InputBusca({ placeholderInput }: InputBuscaProps) {
   return (
-    <div className="w-full flex items-center justify-center bg-gray-50 py-2 px-3 border border-gray-400 rounded-md">
+    <div className="w-11/12 flex items-center justify-center bg-gray-50 py-2 px-3 border border-gray-400 rounded-md">
       <BsSearch color="#89909b" size={20} />
       <input
         type="text"

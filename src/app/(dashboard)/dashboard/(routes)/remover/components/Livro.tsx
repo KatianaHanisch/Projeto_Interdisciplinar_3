@@ -1,13 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type Props = {
-  id: number;
-  titulo: string;
-  autor: string;
-  categoria: string;
-  capaUrl?: string;
-};
+import { LivroProps } from "@/app/types/DashboardTypes";
 
 export default function CardLivro({
   id,
@@ -15,16 +9,14 @@ export default function CardLivro({
   autor,
   categoria,
   capaUrl,
-}: Props) {
-  console.log("CardLivro", id, titulo, autor, categoria);
+}: LivroProps) {
   return (
     <Link
       href={`/dashboard/remover/${id}`}
       className="flex flex-col relative w-[150px] transition-transform  cursor-pointer h-[286px]"
     >
       <Image
-        // src={capaUrl}
-        src="/capa-livro.jpg"
+        src={capaUrl || "/capa-livro.jpg"}
         width={150}
         height={220}
         alt="Capa do livro"

@@ -9,8 +9,7 @@ type Props = {
   confirmarModal?: () => void;
   cancelarModal?: () => void;
   fecharModal?: () => void;
-  onclick?: any;
-  loading?: any;
+  loading?: () => void;
 };
 
 export default function Modal({
@@ -21,7 +20,6 @@ export default function Modal({
   title,
   children,
   textButton,
-  onclick,
   loading,
 }: Props) {
   return (

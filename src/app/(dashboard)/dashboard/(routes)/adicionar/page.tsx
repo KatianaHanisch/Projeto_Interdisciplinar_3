@@ -107,6 +107,7 @@ export default function Adicionar() {
         setMensagem("Não foi possível cadastrar o livro");
         setAbrirSnackBar(true);
         setLoading(false);
+        setFormularioConfirmado(false);
         return;
       }
 
@@ -124,12 +125,14 @@ export default function Adicionar() {
       });
 
       setFile(null);
+      setFormularioConfirmado(false);
 
       setTimeout(() => {
         setAbrirSnackBar(false);
       }, 3000);
     } catch (error) {
       setLoading(false);
+      setFormularioConfirmado(false);
       setTipoSnackBar("error");
       setMensagem("Não foi possível cadastrar o livro");
       setAbrirSnackBar(true);
@@ -264,7 +267,6 @@ export default function Adicionar() {
         <SnackBar
           mensagem={mensagem}
           fecharSnackBar={fecharSnackBar}
-          // Icone={<TbAlertCircle size={28} color={"#ffffff"} />}
           tipo={tipoSnackBar}
         />
       )}
