@@ -13,7 +13,7 @@ export default function CardLivro({
   return (
     <Link
       href={`/dashboard/remover/${id}`}
-      className="flex flex-col relative w-[150px] transition-transform  cursor-pointer h-[286px]"
+      className="flex flex-col relative w-[150px] transition-transform cursor-pointer h-[286px]"
     >
       <Image
         src={capaUrl || "/capa-livro.jpg"}

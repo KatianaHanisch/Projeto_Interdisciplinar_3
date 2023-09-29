@@ -94,7 +94,7 @@ export default function Adicionar() {
   async function cadastroLivro() {
     setLoading(true);
     try {
-      const response = await fetch("/api/livro", {
+      const response = await fetch("/api/dashboard/livros", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

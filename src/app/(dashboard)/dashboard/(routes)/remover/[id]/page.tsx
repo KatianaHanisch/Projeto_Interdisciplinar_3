@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { id: string } }) {
   async function getLivro() {
     setCarregando(true);
     try {
-      const res = await fetch(`/api/filterLivro?id=${idLivro}`, {
+      const res = await fetch(`/api/dashboard/filtroLivro?id=${idLivro}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function Page({ params }: { params: { id: string } }) {
     setAbrirModal(false);
     setLoadingDelete(true);
     try {
-      const response = await fetch(`/api/filterLivro?id=${idLivro}`, {
+      const response = await fetch(`/api/dashboard/filtroLivro?id=${idLivro}`, {
         method: "DELETE",
       });
       setMensagemSnackBar("O livro foi removido com sucesso");
