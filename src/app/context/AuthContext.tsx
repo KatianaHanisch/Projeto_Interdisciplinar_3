@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface AuthData {
   isAuthenticated: boolean;
   name: string;
+  email: string;
   logout: () => void;
   validateToken: () => void;
   validateTokenRoleFunction: () => void;
@@ -16,11 +17,11 @@ const AuthContext = createContext<AuthData | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [name, setName] = useState(String);
+  const [email, setEmail] = useState(String);
   const router = useRouter();
 
   const logout = () => {
     sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
     setIsAuthenticated(false);
 
     router.push("/");
@@ -31,19 +32,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const validateToken = () => {
     const token = sessionStorage.getItem("token");
-    const name = sessionStorage.getItem("name");
+
     if (!token) {
       setIsAuthenticated(false);
       return;
-    }
-    setName(name!);
-    if (isTokenExpired(token)) {
-      setIsAuthenticated(false);
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("name");
-      sessionStorage.removeItem("d_token");
     } else {
-      setIsAuthenticated(true);
+      const tokenData = JSON.parse(atob(token!.split(".")[1]));
+      setName(tokenData.name);
+      setEmail(tokenData.email);
+      if (isTokenExpired(token)) {
+        setIsAuthenticated(false);
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("d_token");
+      } else {
+        setIsAuthenticated(true);
+      }
     }
   };
 
@@ -59,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (isTokenExpired(token)) {
       setIsAuthenticated(false);
       sessionStorage.removeItem("token");
-      sessionStorage.removeItem("name");
+
       sessionStorage.removeItem("d_token");
       router.push("/");
     } else {
@@ -110,6 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const authData: AuthData = {
     isAuthenticated,
     name,
+    email,
     logout,
     validateToken,
     validateTokenRoleFunction,

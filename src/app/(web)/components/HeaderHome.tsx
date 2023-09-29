@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 import { HiMenu } from "react-icons/hi";
@@ -11,26 +11,98 @@ import { AiFillHome } from "react-icons/ai";
 import { HiDotsCircleHorizontal } from "react-icons/hi";
 import { BiExit, BiSolidLogIn, BiSolidUser } from "react-icons/bi";
 import { BsFillGearFill } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+
+import Modal from "@/app/components/Modal";
+import Input from "@/app/components/Input";
+import Toast from "@/app/components/Toast";
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { logout, isAuthenticated, validateToken, name } = useAuth();
+  const [abrirModal, setAbrirModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(String);
+  const [success, setSuccess] = useState(String);
+
+  const [newName, setNewName] = useState(String);
+  const [newPassword, setNewPassword] = useState(String);
+
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingPassword, setIsEditingPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const { logout, isAuthenticated, validateToken, name, email } = useAuth();
 
   useEffect(() => {
     if (!name) {
       sessionStorage.removeItem("d_token");
     }
     validateToken();
-  }, [validateToken]);
+  }, [validateToken, name]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const [open, setOpen] = useState(false);
-
   function abrirDropdown() {
     setOpen(!open);
+  }
+
+  function abrirModalConfig() {
+    setAbrirModal(!abrirModal);
+  }
+
+  async function handleChangeInfo(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!newName && !newPassword) {
+      return;
+    }
+
+    const userData = {
+      email: email,
+      name: newName,
+      password: newPassword,
+    };
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      const token = data.token;
+
+      if (response.status === 201) {
+        setSuccess("Informações alteradas com sucesso!");
+
+        sessionStorage.setItem("token", token);
+        validateToken();
+
+        setTimeout(() => {
+          setSuccess("");
+        }, 5000);
+
+        setLoading(false);
+      } else {
+        setError("Erro ao alterar as informações!");
+        setLoading(false);
+
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    } catch (error) {
+      console.error("Erro: ", error);
+      setLoading(false);
+    }
   }
 
   return (
@@ -49,16 +121,18 @@ export default function HeaderHome() {
               </button>
               {open && (
                 <div className="absolute z-[100] mt-32 ml-[-150px] w-48 rounded bg-gray-800 py-2 shadow-xl ">
+                  <div className="flex mt-1 mb-4 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
+                    <BsFillGearFill size={20} color="white" />
+                    <button onClick={() => abrirModalConfig()}>
+                      Configurações
+                    </button>
+                  </div>
                   <div
                     onClick={() => logout()}
                     className="flex mt-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600"
                   >
                     <BiExit size={20} color="white" />
                     Sair
-                  </div>
-                  <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
-                    <BsFillGearFill size={20} color="white" />
-                    <button>Configurações</button>
                   </div>
                 </div>
               )}
@@ -143,31 +217,15 @@ export default function HeaderHome() {
               {isAuthenticated ? (
                 <div className="flex flex-col items-center justify-end ">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer">
-                    <button className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2">
+                    <button
+                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                      onClick={() => abrirModalConfig()}
+                    >
                       <span>
                         <BsFillGearFill className="text-gray-50" />
                       </span>{" "}
                       Configurações
                     </button>
-
-                    {/* <button className="" onClick={abrirDropdown}>
-                      <BiSolidUser className="w-7 h-7" color="white" />
-                    </button> */}
-                    {/* {open && (
-                      <div className="absolute z-[100] mt-32 w-48 rounded bg-gray-800 py-2 shadow-xl ">
-                        <div
-                          onClick={() => logout()}
-                          className="flex mt-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600"
-                        >
-                          <BiExit size={20} color="white" />
-                          Sair
-                        </div>
-                        <div className="flex mt-4 mb-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
-                          <BsFillGearFill size={20} color="white" />
-                          Configurações
-                        </div>
-                      </div>
-                    )} */}
                   </div>
                 </div>
               ) : (
@@ -214,6 +272,116 @@ export default function HeaderHome() {
             </Link>
           )}
         </div>
+
+        {abrirModal && (
+          <Modal
+            abrirModal={abrirModalConfig}
+            title="Configurações"
+            textButton="Atualizar"
+            confirmarModal={handleChangeInfo}
+            loading={loading}
+            fecharModal={abrirModalConfig}
+            cancelarModal={abrirModalConfig}
+          >
+            <div className="relative p-6 flex-auto">
+              {error && <Toast text={error} />}
+
+              {success && (
+                <div
+                  className={`flex items-center bg-green-500 rounded border-l-4 border-green-700 py-2 px-3 shadow-md mb-2 `}
+                >
+                  <div className={`text-green-500 rounded-full bg-white mr-3`}>
+                    <svg
+                      width="1.8em"
+                      height="1.8em"
+                      viewBox="0 0 16 16"
+                      className="bi bi-info"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                      <circle cx="8" cy="4.5" r="1" />
+                    </svg>
+                  </div>
+
+                  <div className="text-white max-w-xs ">{success}</div>
+                </div>
+              )}
+              <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                Suas informações:
+              </p>
+
+              <div className="flex flex-col gap-5">
+                <div>
+                  <span>Nome:</span>
+                  <div className="flex items-center gap-3">
+                    {isEditingName ? (
+                      <div className="flex w-full items-center gap-3">
+                        <Input
+                          type="text"
+                          value={newName}
+                          onChange={(e: any) => setNewName(e.target.value)}
+                        />
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingName(false)}
+                        >
+                          <IoClose color="red" size={28} />
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <h1 className="text-gray-800">{name}</h1>
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingName(true)}
+                        >
+                          <FaEdit color="#1f2937" size={20} />
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <span>E-mail:</span>
+                  <div className="flex items-center gap-3">
+                    <h1 className="text-gray-800">{email}</h1>
+                  </div>
+                </div>
+                <div>
+                  <span>Senha:</span>
+                  <div className="flex items-center gap-3">
+                    {isEditingPassword ? (
+                      <div className="flex w-full items-center gap-3">
+                        <Input
+                          type="password"
+                          value={newPassword}
+                          onChange={(e: any) => setNewPassword(e.target.value)}
+                        />
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingPassword(false)}
+                        >
+                          <IoClose color="red" size={28} />
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <h1 className="text-gray-800">********</h1>
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingPassword(true)}
+                        >
+                          <FaEdit color="#1f2937" size={20} />
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     </nav>
   );

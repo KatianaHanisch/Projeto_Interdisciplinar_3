@@ -6,10 +6,10 @@ type Props = {
   children: React.ReactNode;
   textButton: string;
   abrirModal?: () => void;
-  confirmarModal?: () => void;
+  confirmarModal?: any;
   cancelarModal?: () => void;
   fecharModal?: () => void;
-  loading?: () => void;
+  loading?: any;
 };
 
 export default function Modal({

@@ -57,7 +57,6 @@ export default function Login(request: Request) {
         setLoading(false);
       } else if (response.status === 201) {
         sessionStorage.removeItem("token");
-        sessionStorage.removeItem("name");
         sessionStorage.setItem("d_token", token);
         router.push("/dashboard");
         setLoading(false);

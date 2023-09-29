@@ -76,14 +76,12 @@ export default function Login(request: Request) {
 
       const data = await response.json();
       const token = data.token;
-      const name = data.name;
 
       if (response.status === 404) {
         setError("Credenciais inválidas!");
         setLoading(false);
       } else if (response.status === 201) {
         sessionStorage.setItem("token", token);
-        sessionStorage.setItem("name", name);
         router.push("/");
         setLoading(false);
       } else {
@@ -227,7 +225,7 @@ export default function Login(request: Request) {
                   abrirModal={abrirModalEsqueceuSenha}
                   title="Esqueceu a senha?"
                   textButton="Enviar"
-                  onclick={handleRecuperacaoPassword}
+                  confirmarModal={handleRecuperacaoPassword}
                   loading={loading}
                   fecharModal={abrirModalEsqueceuSenha}
                   cancelarModal={abrirModalEsqueceuSenha}
