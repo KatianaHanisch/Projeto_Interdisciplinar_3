@@ -1,12 +1,12 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+import { prisma } from "@/app/utils/Prisma"
 
 import { url } from "@/app/url";
 
 import nodemailer from "@/app/helpers/nodemailer";
 
-const prisma = new PrismaClient();
 
 //CADASTRO DE USUÁRIO
 export async function POST(request: Request) {

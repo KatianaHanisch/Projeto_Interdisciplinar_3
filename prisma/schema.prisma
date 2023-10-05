@@ -18,6 +18,10 @@ model Users {
   verification_email Boolean
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+
+  Emprestimos Emprestimos[]
+  Reservas Reservas[]
+  EmprestimosFinalizados EmprestimosFinalizados[]
 }
 
 model UsersDashboard {
@@ -48,6 +52,49 @@ model Livros {
   categoria String
   sinopse   String
   capaUrl   String
+
+  quantidadeDisponivel Int @default(1)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Emprestimos Emprestimos[]
+  Reservas Reservas[]
+  EmprestimosFinalizados EmprestimosFinalizados[]
+}
+
+model Emprestimos {
+  id      Int    @id @unique @default(autoincrement())
+
+  livroId Int
+  livro Livros @relation(fields: [livroId], references: [id])
+
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
+  status Int @default(1)
+
+  dataEmprestimo DateTime @default(now())
+  
+
+}
+
+model Reservas {
+  id Int @id @unique @default(autoincrement())
+  livroId Int
+  livro Livros @relation(fields: [livroId], references: [id])
+
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
+  status Int @default(4)
+}
+
+model EmprestimosFinalizados{
+  id Int @id @unique @default(autoincrement())
+  livroId Int
+  livro Livros @relation(fields: [livroId], references: [id])
+
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
+  status Int
+  dataDevolucao DateTime 
 }

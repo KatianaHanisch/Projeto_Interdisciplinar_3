@@ -1,6 +1,6 @@
 type InputBuscaProps = {
   placeholderInput: string;
-  value: string;
+  value?: string;
   onClick?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -11,13 +11,9 @@ export default function InputBusca({
   placeholderInput,
   value,
   onChange,
-  onClick,
 }: InputBuscaProps) {
   return (
     <>
-      {/* <button className="bg-red-500 w-7" onClick={onClick}>
-        Teste
-      </button> */}
       <div className="w-11/12 flex items-center justify-center bg-gray-50 py-2 px-3 border border-gray-400 rounded-md">
         <BsSearch color="#89909b" size={20} />
         <input

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-const prisma = new PrismaClient();
+
+import { prisma } from "@/app/utils/Prisma"
 
 // ALTERAÇÃO DAS INFORMAÇÕES DO USUÁRIO
 export async function PUT(request: Request) {

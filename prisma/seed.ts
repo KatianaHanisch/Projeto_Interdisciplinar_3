@@ -1,5 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+import { prisma } from "@/app/utils/Prisma";
 
 async function main() {
   const role = await prisma.roles.upsert({

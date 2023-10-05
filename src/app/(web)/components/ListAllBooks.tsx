@@ -1,71 +1,86 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardBookDetailed from "./CardBookDetailed";
 import FilterBooks from "./FilterBooks";
 
-export default function ListAllBooks() {
-  const itemsPerPage = 5; // Define quantos itens você deseja mostrar por página.
-  const [currentPage, setCurrentPage] = useState(1); // Página atual, começa em 1.
+import Pagination from "@/app/components/Pagination";
 
-  // Sua lista de livros (substitua isso por sua própria lista).
-  const allBooks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { LivroProps } from "@/app/types/WebTypes";
 
-  // Calcula o índice de início e fim com base na página atual.
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+export default function TodosLivros() {
+  const [livros, setLivros] = useState<LivroProps[]>([]);
+  const [filterData, setFilterData] = useState<LivroProps[]>([]);
+  const [carregando, setCarregando] = useState(false);
+  const [quantidadePaginas, setQuantidadePaginas] = useState(0);
+  const [page, setPage] = useState(0);
+  const itemPorPagina = 5;
 
-  // Filtra os livros com base na página atual e na quantidade de itens por página.
-  const booksToDisplay = allBooks.slice(startIndex, endIndex);
+  useEffect(() => {
+    setFilterData(
+      livros.filter((item: LivroProps, index: number) => {
+        return (
+          index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
+        );
+      })
+    );
+  }, [page, livros]);
 
-  // Função para avançar para a próxima página.
-  const nextPage = () => {
-    if (endIndex < allBooks.length) {
-      setCurrentPage(currentPage + 1);
+  const pagination = quantidadePaginas > 1;
+
+  async function getLivros() {
+    setCarregando(true);
+    try {
+      const response = await fetch("/api/dashboard/livros");
+      const data = await response.json();
+      setLivros(data);
+      setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));
+      setCarregando(false);
+    } catch (error) {
+      console.log(error);
+      setCarregando(false);
     }
-  };
+  }
 
-  // Função para retroceder para a página anterior.
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  useEffect(() => {
+    getLivros();
+  }, []);
 
   return (
     <div className="mt-40 mb-40 max-w-[1200px] m-auto">
-      <div className="flex flex-col gap-8 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
+      <div className="flex flex-col gap-8 xl:flex-row px-8 xl:p-0  max-w-[1200px] m-auto justify-between">
         <FilterBooks />
-        <div className="flex flex-col gap-8">
-          {booksToDisplay.map((book, index) => (
-            <div key={index}>
-              <CardBookDetailed />
-              <div className="border-b-[1px]"></div>
-            </div>
-          ))}
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={prevPage}
-              disabled={currentPage === 1}
-              className={`${
-                currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
-              Anterior
-            </button>
-            <button
-              onClick={nextPage}
-              disabled={endIndex >= allBooks.length}
-              className={`${
-                endIndex >= allBooks.length
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
-            >
-              Próxima
-            </button>
+        {carregando ? (
+          <div className="w-full  flex items-center justify-center">
+            <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col gap-8  items-center">
+            {filterData.map(
+              ({ id, titulo, autor, categoria, sinopse, capaUrl }, index) => (
+                <div key={index}>
+                  <CardBookDetailed
+                    id={id}
+                    titulo={titulo}
+                    autor={autor}
+                    categoria={categoria}
+                    sinopse={sinopse}
+                    capaUrl={capaUrl}
+                  />
+                  <div className="border-b-[1px]"></div>
+                </div>
+              )
+            )}
+            <div className="flex justify-between mt-4">
+              {pagination ? (
+                <Pagination
+                  quantidadePaginas={quantidadePaginas}
+                  setPage={setPage}
+                />
+              ) : null}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

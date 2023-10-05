@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/app/utils/Prisma"
 
 //ROTA DE LOGIN DA DASHBOARD
 export async function POST(request: Request) {

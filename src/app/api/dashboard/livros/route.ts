@@ -1,12 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "@/app/utils/Prisma"
+
 
 export async function POST(request: Request) {
   const data = await request.json();
-
-  //id_usuario
-  //livro_reservado
-  //livro_emprestado
 
   if (
     data.titulo &&
@@ -23,7 +19,17 @@ export async function POST(request: Request) {
       });
 
       if (livroExistente) {
-        return new Response("Livro já cadastrado.", { status: 409 });
+        const novaQuantidade = livroExistente.quantidadeDisponivel + 1;
+
+        await prisma.livros.update({
+          where: {
+            titulo: livroExistente.titulo,
+          },
+          data: {
+            quantidadeDisponivel: novaQuantidade,
+          },
+        });
+        return new Response("Livro atualizado com sucesso.", { status: 200 });
       } else {
         const novoLivro = await prisma.livros.create({
           data: {
