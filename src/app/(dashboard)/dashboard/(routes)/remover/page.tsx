@@ -85,7 +85,6 @@ export default function Remover() {
         placeholderInput="Digite o nome do livro que procura"
         value={livroBusca}
         onChange={handleChange}
-        onClick={() => getLivroBusca(livroBusca)}
       />
       <div className="flex flex-col items-center justify-center py-8  h-[380px]  w-11/12 ">
         {carregando ? (

@@ -94,7 +94,6 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       const data = await response.json();
       setLivro(data);
       setCarregando(false);
-      console.log(data);
     } catch (error) {
       console.log(error);
       setCarregando(false);

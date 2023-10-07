@@ -35,7 +35,7 @@ export default function RootLayout({
           href="#"
           className="text-2xl absolute right-5 mt-[-30px] bg-slate-300 p-2 animate-bounce rounded-full"
         >
-          <RiArrowUpDoubleFill />
+          <RiArrowUpDoubleFill color="#565656" />
         </a>
         <Footer />
       </body>

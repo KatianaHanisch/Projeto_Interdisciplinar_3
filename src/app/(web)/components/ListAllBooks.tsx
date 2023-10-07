@@ -1,16 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
 import CardBookDetailed from "./CardBookDetailed";
 import FilterBooks from "./FilterBooks";
-
 import Pagination from "@/app/components/Pagination";
+
+import { VscSearchStop } from "react-icons/vsc";
 
 import { LivroProps } from "@/app/types/Types";
 
 export default function TodosLivros() {
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [filterData, setFilterData] = useState<LivroProps[]>([]);
+  const [livrosFiltrados, setLivrosFiltrados] = useState<LivroProps[]>([]);
+  const [livroBusca, setLivroBusca] = useState("");
   const [carregando, setCarregando] = useState(false);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
   const [page, setPage] = useState(0);
@@ -28,6 +32,13 @@ export default function TodosLivros() {
 
   const pagination = quantidadePaginas > 1;
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    const formattedValue =
+      inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
+    setLivroBusca(formattedValue);
+  };
+
   async function getLivros() {
     setCarregando(true);
     try {
@@ -42,34 +53,90 @@ export default function TodosLivros() {
     }
   }
 
+  async function getLivroBusca(livroBusca: string) {
+    setCarregando(true);
+    try {
+      const res = await fetch(`/api/buscaLivro?search=${livroBusca}`);
+      const data = await res.json();
+      setLivrosFiltrados(data);
+      setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));
+      setCarregando(false);
+    } catch (error) {
+      setCarregando(false);
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    <>
+      {livroBusca !== ""
+        ? setFilterData(
+            livrosFiltrados.filter((item: LivroProps, index: number) => {
+              return (
+                index >= page * itemPorPagina &&
+                index < (page + 1) * itemPorPagina
+              );
+            })
+          )
+        : setFilterData(
+            livros.filter((item: LivroProps, index: number) => {
+              return (
+                index >= page * itemPorPagina &&
+                index < (page + 1) * itemPorPagina
+              );
+            })
+          )}
+    </>;
+  }, [page, livros, livrosFiltrados]);
+
+  useEffect(() => {
+    getLivroBusca(livroBusca);
+  }, [livroBusca]);
+
   useEffect(() => {
     getLivros();
   }, []);
 
   return (
-    <div className="mt-40 mb-40 max-w-[1200px] m-auto">
-      <div className="flex flex-col gap-8 xl:flex-row px-8 xl:p-0  max-w-[1200px] m-auto justify-between">
-        <FilterBooks />
+    <div className="mt-40 mb-40 max-w-[1200px] mx-40">
+      <div className="flex flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0  max-w-[1200px] m-auto justify-between">
+        <FilterBooks onChange={handleChange} value={livroBusca} />
         {carregando ? (
-          <div className="w-full  flex items-center justify-center">
+          <div className="w-full flex  items-center justify-center">
             <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
           </div>
         ) : (
-          <div className="flex flex-col gap-8  items-center">
-            {filterData.map(
-              ({ id, titulo, autor, categoria, sinopse, capaUrl }, index) => (
-                <div key={index}>
-                  <CardBookDetailed
-                    id={id}
-                    titulo={titulo}
-                    autor={autor}
-                    categoria={categoria}
-                    sinopse={sinopse}
-                    capaUrl={capaUrl}
-                  />
-                  <div className="border-b-[1px]"></div>
+          <>
+            {filterData.length === 0 ? (
+              <div className="w-full h-11/12 flex flex-col items-center justify-center ">
+                <VscSearchStop color="#8a9099" size={35} />
+                <p className="text-gray-400 text-lg">
+                  O livro buscado não foi encontrado
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="flex flex-col gap-8 items-center">
+                  {filterData.map(
+                    (
+                      { id, titulo, autor, categoria, sinopse, capaUrl },
+                      index
+                    ) => (
+                      <div key={index}>
+                        <CardBookDetailed
+                          id={id}
+                          titulo={titulo}
+                          autor={autor}
+                          categoria={categoria}
+                          sinopse={sinopse}
+                          capaUrl={capaUrl}
+                        />
+                        <div className="border-b-[1px]"></div>
+                      </div>
+                    )
+                  )}
                 </div>
-              )
+              </>
             )}
             <div className="flex justify-between mt-4">
               {pagination ? (
@@ -79,7 +146,7 @@ export default function TodosLivros() {
                 />
               ) : null}
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

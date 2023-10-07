@@ -2,21 +2,26 @@ import React from "react";
 
 import { BiSearch } from "react-icons/bi";
 
-export default function FilterBooks() {
+type LivroBuscaProps = {
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function FilterBooks({ value, onChange }: LivroBuscaProps) {
   return (
     <div className="">
-      <div className="relative flex items-center">
+      <div className="flex items-center justify-center w-[300px] bg-gray-50 px-3 py-1 border border-gray-400 rounded-md">
+        <BiSearch color="#89909b" size={22} />
         <input
           type="text"
           placeholder="Pesquisar..."
-          className="w-[300px] h-8 pl-8 border-[1px] rounded border-gray-500"
+          onChange={onChange}
+          value={value}
+          className="w-full h-6 ml-2 text-gray-600 bg-transparent focus:outline-none border-l border-gray-300 px-2"
         />
-        <label className="flex absolute top-0 text-2xl mt-1 ml-1">
-          <BiSearch />
-        </label>
       </div>
       <div className="mt-8 hidden xl:block">
-        <h3>CATEGORIAS</h3>
+        <h3 className="font-semibold">CATEGORIAS</h3>
         <ul className="mt-4">
           <li className=" ml-2">ROMANCE</li>
           <div className="border-b-[1px]"></div>
