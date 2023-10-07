@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect } from "react";
-import { User } from "@/app/types";
+import { User } from "@/app/types/Types";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";

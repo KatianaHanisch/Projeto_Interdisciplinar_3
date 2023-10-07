@@ -10,7 +10,7 @@ import {
 
 import Image from "next/image";
 
-import { LivroProps } from "@/app/types/DashboardTypes";
+import { LivroProps } from "@/app/types/Types";
 
 import Input from "../../../../components/Input";
 import Textarea from "./components/Textarea";
@@ -94,7 +94,7 @@ export default function Adicionar() {
   async function cadastroLivro() {
     setLoading(true);
     try {
-      const response = await fetch("/api/dashboard/livros", {
+      const response = await fetch("/api/dashboard/createLivro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -273,7 +273,6 @@ export default function Adicionar() {
 
       {abrirModal && (
         <Modal
-          abrirModal={abrirModalConfirmacao}
           title="Deseja confirmar?"
           textButton="Adicionar"
           confirmarModal={confirmarModal}

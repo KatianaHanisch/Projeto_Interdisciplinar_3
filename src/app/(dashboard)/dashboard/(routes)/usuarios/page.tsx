@@ -40,7 +40,9 @@ export default function Usuarios() {
 
       {abrirModalAdicionar && (
         <Modal
-          abrirModal={abrirModalAdicionarUsuario}
+        cancelarModal={abrirModalAdicionarUsuario}
+        confirmarModal={abrirModalAdicionarUsuario}
+        fecharModal={abrirModalAdicionarUsuario}
           title="Adicionar usuário"
           textButton="Adicionar"
         >
@@ -57,9 +59,11 @@ export default function Usuarios() {
 
       {abrirModalEditar && (
         <Modal
-          abrirModal={abrirModalEditarUsuario}
           title="Editar usuário"
           textButton="Editar"
+          cancelarModal={abrirModalEditarUsuario}
+          confirmarModal={abrirModalEditarUsuario}
+          fecharModal={abrirModalEditarUsuario}
         >
           <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
             <p className="text-gray-700 text-lg font-medium leading-relaxed">

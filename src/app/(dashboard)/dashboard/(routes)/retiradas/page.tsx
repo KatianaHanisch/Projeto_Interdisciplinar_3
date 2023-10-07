@@ -1,10 +1,5 @@
-"use client";
-
-import { useState } from "react";
-
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
-import Modal from "@/app/components/Modal";
 
 import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";

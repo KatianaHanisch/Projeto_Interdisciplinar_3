@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 
 import Image from "next/image";
 
-import { LivroProps } from "@/app/types/DashboardTypes";
+import { LivroProps } from "@/app/types/Types";
+
+import SnackBar from "@/app/components/SnackBar";
 
 type DataPostProps = {
   userId: number;
@@ -15,6 +17,9 @@ type DataPostProps = {
 export default function Detalhes({ params }: { params: { id: string } }) {
   const [carregando, setCarregando] = useState(false);
   const [carregandoEmprestimo, setCaregandoEmprestimo] = useState(false);
+  const [mensagemSnackBar, setMensagemSnackBar] = useState("");
+  const [abrirSnackBar, setAbrirSnackBar] = useState(false);
+  const [tipoSnackBar, setTipoSnackBar] = useState("");
   const [livro, setLivro] = useState<LivroProps>({
     titulo: "",
     autor: "",
@@ -23,42 +28,55 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     categoria: "",
   });
 
-  const [dataPost, setDataPost] = useState<DataPostProps>({
-    userId: 0,
-    livroId: 0,
-    status: 0,
-  });
-
   const idLivro = parseInt(params.id);
 
+  function fecharSnackBar() {
+    setAbrirSnackBar(false);
+  }
+
   async function cadastroEmprestimo() {
-    setCaregandoEmprestimo(true)
+    setCaregandoEmprestimo(true);
     const token = await sessionStorage.getItem("token");
 
     if (!token) {
-      console.log("Erro");
-      setCaregandoEmprestimo(false)
+      setCaregandoEmprestimo(false);
       return;
     }
 
-    setDataPost({
-      userId: dataPost.userId,
-      livroId: idLivro,
-      status: 1,
-    });
-
     try {
-      const response = await fetch("/api/web/emprestimo", {
+      const response = await fetch(`/api/web/emprestimo?id=${idLivro}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(dataPost),
       });
-      setCaregandoEmprestimo(false)
+
+      if (response.status === 400) {
+        setTipoSnackBar("erro");
+        setMensagemSnackBar(
+          "Você já realizou o empréstimo desse livro e ainda não fez a devolução"
+        );
+        setAbrirSnackBar(true);
+
+        setTimeout(() => {
+          setAbrirSnackBar(false);
+        }, 4000);
+      }
+
+      if (response.status === 201) {
+        setTipoSnackBar("sucesso");
+        setMensagemSnackBar(
+          "Empréstimo realizado com sucesso. Agora você precisa ir retirar-lo"
+        );
+        setAbrirSnackBar(true);
+
+        setTimeout(() => {
+          setAbrirSnackBar(false);
+        }, 4000);
+      }
+      setCaregandoEmprestimo(false);
     } catch (error) {
-      setCaregandoEmprestimo(false)
+      setCaregandoEmprestimo(false);
       console.log(error);
     }
   }
@@ -66,7 +84,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
   async function getLivro() {
     setCarregando(true);
     try {
-      const response = await fetch(`/api/dashboard/filtroLivro?id=${idLivro}`, {
+      const response = await fetch(`/api/filtroLivro?id=${idLivro}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -76,6 +94,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       const data = await response.json();
       setLivro(data);
       setCarregando(false);
+      console.log(data);
     } catch (error) {
       console.log(error);
       setCarregando(false);
@@ -93,6 +112,13 @@ export default function Detalhes({ params }: { params: { id: string } }) {
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         ) : (
           <>
+            {abrirSnackBar && (
+              <SnackBar
+                fecharSnackBar={fecharSnackBar}
+                mensagem={mensagemSnackBar}
+                tipo={tipoSnackBar}
+              />
+            )}
             <div className="w-full flex flex-col justify-center items-center ">
               <Image
                 src={livro.capaUrl!}
@@ -101,15 +127,22 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 alt="Capa do livro"
                 className="shadow-lg"
               />
-              <button
-                onClick={cadastroEmprestimo}
-                className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500"
-              >
-               {carregandoEmprestimo ? (
-                <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
-               ):  "Pegar Livro emprestado"}
-              </button>
-              ou
+              {livro.quantidadeDisponivel !== undefined &&
+              livro.quantidadeDisponivel < 1 ? null : (
+                <>
+                  <button
+                    onClick={cadastroEmprestimo}
+                    className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500"
+                  >
+                    {carregandoEmprestimo ? (
+                      <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+                    ) : (
+                      "Pegar Livro emprestado"
+                    )}
+                  </button>
+                  <p>ou</p>
+                </>
+              )}
               <button className="text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500">
                 Reservar Livro
               </button>
@@ -134,7 +167,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 <p>
                   Livro indisponível para empréstimo, faltam 2 dias para que o
                   livro seja devolvido. Ao solicitar empréstimo, retire o livro
-                  em nossa biblioteca em até 2h.
+                  em nossa biblioteca.
                 </p>
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { LivroProps } from "@/app/types/DashboardTypes";
+import { LivroProps } from "@/app/types/Types";
 
 import InputBusca from "../../components/InputBusca";
 import Pagination from "@/app/components/Pagination";
@@ -16,6 +16,7 @@ export default function Remover() {
   const [livrosFiltrados, setLivrosFiltrados] = useState<LivroProps[]>([]);
   const [filterData, setFilterData] = useState<LivroProps[]>([]);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
+
   const n = 6;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ export default function Remover() {
   async function getLivroBusca(livroBusca: string) {
     setCarregando(true);
     try {
-      const res = await fetch(`/api/dashboard/buscaLivro?search=${livroBusca}`);
+      const res = await fetch(`/api/buscaLivro?search=${livroBusca}`);
       const data = await res.json();
       setLivrosFiltrados(data);
       setQuantidadePaginas(Math.ceil(data.length / n));
@@ -38,10 +39,11 @@ export default function Remover() {
       console.log(error);
     }
   }
+
   async function getLivros() {
     setCarregando(true);
     try {
-      const res = await fetch("/api/dashboard/livros");
+      const res = await fetch("/api/todosLivros");
       const data = await res.json();
 
       setLivros(data);

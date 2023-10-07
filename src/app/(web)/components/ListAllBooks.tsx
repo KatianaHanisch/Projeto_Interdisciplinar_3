@@ -6,7 +6,7 @@ import FilterBooks from "./FilterBooks";
 
 import Pagination from "@/app/components/Pagination";
 
-import { LivroProps } from "@/app/types/WebTypes";
+import { LivroProps } from "@/app/types/Types";
 
 export default function TodosLivros() {
   const [livros, setLivros] = useState<LivroProps[]>([]);
@@ -31,7 +31,7 @@ export default function TodosLivros() {
   async function getLivros() {
     setCarregando(true);
     try {
-      const response = await fetch("/api/dashboard/livros");
+      const response = await fetch("/api/todosLivros");
       const data = await response.json();
       setLivros(data);
       setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));

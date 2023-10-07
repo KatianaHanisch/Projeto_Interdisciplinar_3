@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { LivroProps } from "@/app/types/DashboardTypes";
+import { LivroProps } from "@/app/types/Types";
 
 export default function CardLivro({
   id,

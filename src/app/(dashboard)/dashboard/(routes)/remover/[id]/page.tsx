@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { LivroProps } from "@/app/types/DashboardTypes";
+import { LivroProps } from "@/app/types/Types";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { id: string } }) {
   async function getLivro() {
     setCarregando(true);
     try {
-      const res = await fetch(`/api/dashboard/filtroLivro?id=${idLivro}`, {
+      const res = await fetch(`/api/filtroLivro?id=${idLivro}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function Page({ params }: { params: { id: string } }) {
     setAbrirModal(false);
     setLoadingDelete(true);
     try {
-      const response = await fetch(`/api/dashboard/filtroLivro?id=${idLivro}`, {
+      const response = await fetch(`/api/filtroLivro?id=${idLivro}`, {
         method: "DELETE",
       });
       setMensagemSnackBar("O livro foi removido com sucesso");

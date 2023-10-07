@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect } from "react";
-import { User } from "@/app/types";
+import { User } from "@/app/types/Types";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -222,7 +222,6 @@ export default function Login(request: Request) {
 
               {abrirModal && (
                 <Modal
-                  abrirModal={abrirModalEsqueceuSenha}
                   title="Esqueceu a senha?"
                   textButton="Enviar"
                   confirmarModal={handleRecuperacaoPassword}

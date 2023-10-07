@@ -4,7 +4,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function POST(request: Request) {
   const secretKey = process.env.SECRETKEY;
-  const data = await request.json();
 
   //Status = 1 - livro não retirado
   //Status = 2 - livro não devolvido
@@ -17,6 +16,9 @@ export async function POST(request: Request) {
 
   try {
     const authorizationHeader = request.headers.get("Authorization");
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
 
     if (!authorizationHeader) {
       return new Response("Token de autenticação ausente", { status: 401 });
@@ -34,9 +36,8 @@ export async function POST(request: Request) {
 
       const emprestimoExistente = await prisma.emprestimos.findFirst({
         where: {
-          livroId: data.livroId,
+          livroId: Number(id),
           userId: userId,
-          status: 1,
         },
       });
 
@@ -47,12 +48,11 @@ export async function POST(request: Request) {
       } else {
         const livroExistente = await prisma.livros.findUnique({
           where: {
-            id: data.livroId,
+            id: Number(id),
           },
         });
 
         if (livroExistente) {
-          console.log(livroExistente);
           if (livroExistente.quantidadeDisponivel < 1) {
             return new Response("Livro disponível apenas para reservas", {
               status: 200,
@@ -60,11 +60,22 @@ export async function POST(request: Request) {
           } else {
             const novoRegistro = await prisma.emprestimos.create({
               data: {
-                livroId: data.livroId,
+                livroId: Number(id),
                 status: 1,
                 userId: userId,
               },
             });
+
+            // const novaQuantidade = livroExistente.quantidadeDisponivel - 1
+
+            // await prisma.livros.update({
+            //   where: {
+            //     titulo: livroExistente.titulo,
+            //   },
+            //   data: {
+            //     quantidadeDisponivel: novaQuantidade,
+            //   },
+            // });
 
             return new Response(JSON.stringify(novoRegistro), { status: 201 });
           }
@@ -72,8 +83,8 @@ export async function POST(request: Request) {
       }
     }
   } catch (error) {
-    return new Response("Erro de autenticação: " + error, {
-      status: 401,
+    return new Response("Erro no serviodr" + error, {
+      status: 500,
     });
   }
 }
