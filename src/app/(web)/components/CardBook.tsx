@@ -9,7 +9,6 @@ export default function CardBook({
   autor,
   categoria,
   capaUrl,
-  sinopse,
 }: LivroProps) {
   return (
     <Link

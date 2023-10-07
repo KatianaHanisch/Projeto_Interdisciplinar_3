@@ -40,7 +40,7 @@ export default function ListRecentBooks({ livros, carregando }: Props) {
           <>
             {filterData &&
               filterData.map(
-                ({ id, titulo, autor, categoria, sinopse, capaUrl }, index) => (
+                ({ id, titulo, autor, categoria, capaUrl }, index) => (
                   <CardBook
                     key={index}
                     id={id}
@@ -48,7 +48,6 @@ export default function ListRecentBooks({ livros, carregando }: Props) {
                     titulo={titulo}
                     categoria={categoria}
                     capaUrl={capaUrl}
-                    sinopse={sinopse}
                   />
                 )
               )}

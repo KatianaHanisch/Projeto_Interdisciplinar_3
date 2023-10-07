@@ -10,7 +10,7 @@ export type LivroProps = {
   titulo: string;
   autor: string;
   categoria: string;
-  sinopse: string;
+  sinopse?: string;
   capaUrl: string;
   quantidadeDisponivel?: number;
 };
