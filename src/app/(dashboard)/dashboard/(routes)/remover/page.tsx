@@ -9,15 +9,15 @@ import Pagination from "@/app/components/Pagination";
 import Livro from "./components/Livro";
 
 export default function Remover() {
-  const [page, setPage] = useState(0);
   const [carregando, setCarregando] = useState(false);
   const [livroBusca, setLivroBusca] = useState("");
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [livrosFiltrados, setLivrosFiltrados] = useState<LivroProps[]>([]);
+  const [page, setPage] = useState(0);
   const [filterData, setFilterData] = useState<LivroProps[]>([]);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
 
-  const n = 6;
+  const itemPorPagina = 6;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -32,7 +32,7 @@ export default function Remover() {
       const res = await fetch(`/api/buscaLivro?search=${livroBusca}`);
       const data = await res.json();
       setLivrosFiltrados(data);
-      setQuantidadePaginas(Math.ceil(data.length / n));
+      setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -47,7 +47,7 @@ export default function Remover() {
       const data = await res.json();
 
       setLivros(data);
-      setQuantidadePaginas(Math.ceil(data.length / n));
+      setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -60,12 +60,18 @@ export default function Remover() {
       {livroBusca !== ""
         ? setFilterData(
             livrosFiltrados.filter((item: LivroProps, index: number) => {
-              return index >= page * n && index < (page + 1) * n;
+              return (
+                index >= page * itemPorPagina &&
+                index < (page + 1) * itemPorPagina
+              );
             })
           )
         : setFilterData(
             livros.filter((item: LivroProps, index: number) => {
-              return index >= page * n && index < (page + 1) * n;
+              return (
+                index >= page * itemPorPagina &&
+                index < (page + 1) * itemPorPagina
+              );
             })
           )}
     </>;
