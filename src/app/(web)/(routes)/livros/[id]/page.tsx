@@ -64,6 +64,25 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       }
 
       if (response.status === 201) {
+        await atualizarQuantidadeDisponivel();
+      }
+      setCaregandoEmprestimo(false);
+    } catch (error) {
+      setCaregandoEmprestimo(false);
+      console.log(error);
+    }
+  }
+
+  async function atualizarQuantidadeDisponivel() {
+    try {
+      const response = await fetch(
+        `/api/web/atualizarQuantidade?id=${idLivro}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (response.status === 200) {
         setTipoSnackBar("sucesso");
         setMensagemSnackBar(
           "Empréstimo realizado com sucesso. Agora você precisa ir retirar-lo"
@@ -74,9 +93,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
           setAbrirSnackBar(false);
         }, 4000);
       }
-      setCaregandoEmprestimo(false);
     } catch (error) {
-      setCaregandoEmprestimo(false);
       console.log(error);
     }
   }

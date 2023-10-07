@@ -21,12 +21,16 @@ export async function POST(request: Request) {
     const id = searchParams.get("id");
 
     if (!authorizationHeader) {
+      await prisma.$disconnect();
+
       return new Response("Token de autenticação ausente", { status: 401 });
     } else {
       const token = authorizationHeader.split(" ")[1];
       const decodedToken = jwt.verify(token, secretKey) as JwtPayload;
 
       if (!decodedToken.userId) {
+        await prisma.$disconnect();
+
         return new Response("Token JWT inválido, 'userId' ausente", {
           status: 401,
         });
@@ -42,6 +46,8 @@ export async function POST(request: Request) {
       });
 
       if (emprestimoExistente) {
+        await prisma.$disconnect();
+
         return new Response("Você já pegou este livro emprestado", {
           status: 400,
         });
@@ -54,6 +60,7 @@ export async function POST(request: Request) {
 
         if (livroExistente) {
           if (livroExistente.quantidadeDisponivel < 1) {
+            await prisma.$disconnect();
             return new Response("Livro disponível apenas para reservas", {
               status: 200,
             });
@@ -66,23 +73,14 @@ export async function POST(request: Request) {
               },
             });
 
-            // const novaQuantidade = livroExistente.quantidadeDisponivel - 1
-
-            // await prisma.livros.update({
-            //   where: {
-            //     titulo: livroExistente.titulo,
-            //   },
-            //   data: {
-            //     quantidadeDisponivel: novaQuantidade,
-            //   },
-            // });
-
+            await prisma.$disconnect();
             return new Response(JSON.stringify(novoRegistro), { status: 201 });
           }
         }
       }
     }
   } catch (error) {
+    await prisma.$disconnect();
     return new Response("Erro no serviodr" + error, {
       status: 500,
     });
