@@ -12,15 +12,17 @@ export default function ListaUsuarios({
         <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
           <thead className="text-base font-medium text-gray-700  ">
             <tr>
+              <th className="px-6 py-3">ID</th>
               <th className="px-6 py-3">Nome</th>
               <th className="px-6 py-3">Email</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {dados.map(({ nome, email }) => (
+            {dados.map(({ id, name, email }) => (
               <LinhaTabelaUsuarios
-                key={nome}
-                nome={nome}
+                key={id}
+                id={id}
+                name={name}
                 email={email}
                 abrirModalEditar={abrirModalEditar}
               />

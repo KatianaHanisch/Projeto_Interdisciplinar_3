@@ -10,7 +10,8 @@ import { MdModeEditOutline } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
 
 export default function LinhaTabelaUsuarios({
-  nome,
+  id,
+  name,
   email,
   abrirModalEditar,
 }: LinhaTabelaUsuariosProps) {
@@ -23,7 +24,8 @@ export default function LinhaTabelaUsuarios({
   return (
     <>
       <tr className="text-sm font-medium text-gray-700">
-        <td className="px-6 py-3">{nome}</td>
+        <td className="px-6 py-3">{id}</td>
+        <td className="px-6 py-3">{name}</td>
         <td className="px-6 py-3">{email}</td>
         <td className="px-6 py-3">
           <button onClick={abrirModalEditar} className="p-1">
@@ -38,14 +40,15 @@ export default function LinhaTabelaUsuarios({
       </tr>
       {abrirModalRemover && (
         <Modal
-          abrirModal={abrirModal}
+          fecharModal={abrirModal}
+          cancelarModal={abrirModal}
           title="Remover usuário"
           textButton="Remover"
         >
           <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
             <p className="text-gray-600 text-lg font-normal leading-relaxed">
               Você realmente deseja remover o usuário
-              <span className="font-medium text-gray-700"> {nome} </span>
+              <span className="font-medium text-gray-700"> {name} </span>
               do sistema?
             </p>
           </div>

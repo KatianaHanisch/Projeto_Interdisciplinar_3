@@ -34,7 +34,8 @@ export type LinhasTabelaProps = {
 };
 
 export type LinhaTabelaUsuariosProps = {
-  nome: string;
+  id?: number;
+  name: string;
   email: string;
   abrirModalEditar?: () => void;
   abrirModalRemover?: () => void;

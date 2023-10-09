@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import TituloPagina from "../../components/TituloPagina";
 import ListaUsuarios from "../../components/ListaUsuarios";
@@ -9,15 +9,11 @@ import Input from "@/app/components/Input";
 
 import { MdPersonAddAlt1 } from "react-icons/md";
 
-const dados = [
-  { nome: "Katiana H. Hanisch", email: "katiana.teste@gmail.com" },
-  { nome: "Jakeline H. Hanisch", email: "jakeline.teste@gmail.com" },
-  { nome: "Iago F. Aparecido", email: "iago.teste@gmail.com" },
-];
-
 export default function Usuarios() {
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
+
+  const [dados, setDados] = useState([]);
 
   const abrirModalAdicionarUsuario = () => {
     setAbrirModalAdicionar(!abrirModalAdicionar);
@@ -26,6 +22,25 @@ export default function Usuarios() {
   const abrirModalEditarUsuario = () => {
     setAbrirModalEditar(!abrirModalEditar);
   };
+
+  const fetchDataUsers = async () => {
+    const response = await fetch("/api/dashboard/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    setDados(data);
+  };
+
+  useEffect(() => {
+    fetchDataUsers();
+  }, []);
+
+  console.log(dados);
 
   return (
     <div className="w-full h-full p-10">
@@ -40,7 +55,8 @@ export default function Usuarios() {
 
       {abrirModalAdicionar && (
         <Modal
-          abrirModal={abrirModalAdicionarUsuario}
+          fecharModal={abrirModalAdicionarUsuario}
+          cancelarModal={abrirModalAdicionarUsuario}
           title="Adicionar usuário"
           textButton="Adicionar"
         >
@@ -57,7 +73,8 @@ export default function Usuarios() {
 
       {abrirModalEditar && (
         <Modal
-          abrirModal={abrirModalEditarUsuario}
+          fecharModal={abrirModalEditarUsuario}
+          cancelarModal={abrirModalEditarUsuario}
           title="Editar usuário"
           textButton="Editar"
         >

@@ -275,7 +275,7 @@ export default function HeaderHome() {
 
         {abrirModal && (
           <Modal
-            abrirModal={abrirModalConfig}
+            // abrirModal={abrirModalConfig}
             title="Configurações"
             textButton="Atualizar"
             confirmarModal={handleChangeInfo}
