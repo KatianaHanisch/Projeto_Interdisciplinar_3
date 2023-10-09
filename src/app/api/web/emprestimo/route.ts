@@ -4,7 +4,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function POST(request: Request) {
   const secretKey = process.env.SECRETKEY;
-  const data = await request.json();
 
   //Status = 1 - livro não retirado
   //Status = 2 - livro não devolvido
@@ -18,13 +17,20 @@ export async function POST(request: Request) {
   try {
     const authorizationHeader = request.headers.get("Authorization");
 
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
     if (!authorizationHeader) {
+      await prisma.$disconnect();
+
       return new Response("Token de autenticação ausente", { status: 401 });
     } else {
       const token = authorizationHeader.split(" ")[1];
       const decodedToken = jwt.verify(token, secretKey) as JwtPayload;
 
       if (!decodedToken.userId) {
+        await prisma.$disconnect();
+
         return new Response("Token JWT inválido, 'userId' ausente", {
           status: 401,
         });
@@ -34,46 +40,49 @@ export async function POST(request: Request) {
 
       const emprestimoExistente = await prisma.emprestimos.findFirst({
         where: {
-          livroId: data.livroId,
+          livroId: Number(id),
           userId: userId,
-          status: 1,
         },
       });
 
       if (emprestimoExistente) {
+        await prisma.$disconnect();
+
         return new Response("Você já pegou este livro emprestado", {
           status: 400,
         });
       } else {
         const livroExistente = await prisma.livros.findUnique({
           where: {
-            id: data.livroId,
+            id: Number(id),
           },
         });
 
         if (livroExistente) {
-          console.log(livroExistente);
           if (livroExistente.quantidadeDisponivel < 1) {
+            await prisma.$disconnect();
             return new Response("Livro disponível apenas para reservas", {
               status: 200,
             });
           } else {
             const novoRegistro = await prisma.emprestimos.create({
               data: {
-                livroId: data.livroId,
+                livroId: Number(id),
                 status: 1,
                 userId: userId,
               },
             });
 
+            await prisma.$disconnect();
             return new Response(JSON.stringify(novoRegistro), { status: 201 });
           }
         }
       }
     }
   } catch (error) {
-    return new Response("Erro de autenticação: " + error, {
-      status: 401,
+    await prisma.$disconnect();
+    return new Response("Erro no serviodr" + error, {
+      status: 500,
     });
   }
 }

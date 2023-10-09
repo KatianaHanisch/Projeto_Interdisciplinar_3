@@ -1,5 +1,4 @@
-import { prisma } from "@/app/utils/Prisma"
-
+import { prisma } from "@/app/utils/Prisma";
 
 export async function POST(request: Request) {
   const data = await request.json();
@@ -29,6 +28,7 @@ export async function POST(request: Request) {
             quantidadeDisponivel: novaQuantidade,
           },
         });
+        await prisma.$disconnect();
         return new Response("Livro atualizado com sucesso.", { status: 200 });
       } else {
         const novoLivro = await prisma.livros.create({
@@ -40,19 +40,16 @@ export async function POST(request: Request) {
             capaUrl: data.capaUrl,
           },
         });
-
+        await prisma.$disconnect();
         return new Response(JSON.stringify(novoLivro), { status: 201 });
       }
     } catch (error) {
       console.error("Erro ao criar novo livro: ", error);
+      await prisma.$disconnect();
       return new Response("Erro ao criar novo livro", { status: 500 });
     }
   } else {
+    await prisma.$disconnect();
     return new Response("Faltanto dados ao criar novo livro", { status: 400 });
   }
-}
-
-export async function GET() {
-  const livros = await prisma.livros.findMany();
-  return new Response(JSON.stringify(livros), { status: 200 });
 }

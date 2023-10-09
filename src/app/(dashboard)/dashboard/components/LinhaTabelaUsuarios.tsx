@@ -40,8 +40,9 @@ export default function LinhaTabelaUsuarios({
       </tr>
       {abrirModalRemover && (
         <Modal
-          fecharModal={abrirModal}
           cancelarModal={abrirModal}
+          confirmarModal={abrirModal}
+          fecharModal={abrirModal}
           title="Remover usuário"
           textButton="Remover"
         >

@@ -1,4 +1,11 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
+
+import { LivroProps } from "../types/Types";
+
 import BannerHome from "./components/BannerHome";
 import Footer from "./components/Footer";
 import HeaderHome from "./components/HeaderHome";
@@ -7,6 +14,27 @@ import ListRecentBooks from "./components/ListRecentBooks";
 import { RiArrowUpDoubleFill } from "react-icons/ri";
 
 export default function Home() {
+  const [livros, setLivros] = useState<LivroProps[]>([]);
+  const [carregando, setCarregando] = useState(false);
+
+  async function getLivros() {
+    setCarregando(true);
+    try {
+      const response = await fetch("/api/todosLivros");
+      const data = await response.json();
+      setLivros(data);
+
+      setCarregando(false);
+    } catch (error) {
+      console.log(error);
+      setCarregando(false);
+    }
+  }
+
+  useEffect(() => {
+    getLivros();
+  }, []);
+
   return (
     <main>
       <HeaderHome />
@@ -14,7 +42,7 @@ export default function Home() {
         <BannerHome />
       </div>
       <div className="mt-24 md:mt-40 mb-40">
-        <ListRecentBooks />
+        <ListRecentBooks livros={livros} carregando={carregando} />
       </div>
       <Link
         href=""

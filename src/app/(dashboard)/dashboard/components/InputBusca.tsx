@@ -1,7 +1,6 @@
 type InputBuscaProps = {
   placeholderInput: string;
   value?: string;
-  onClick?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

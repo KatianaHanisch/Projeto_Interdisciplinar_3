@@ -2,15 +2,6 @@ import { ReactNode } from "react";
 
 import { IconType } from "react-icons/lib";
 
-export type LivroProps = {
-  id?: number;
-  titulo: string;
-  autor: string;
-  categoria: string;
-  sinopse: string;
-  capaUrl: string;
-};
-
 export type TotalizadorProps = {
   tituloCard: string;
   IconeCard: IconType;

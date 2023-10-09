@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@/app/types";
+import { User } from "@/app/types/Types";
 import { useState, FormEvent, useEffect } from "react";
 
 import Image from "next/image";
