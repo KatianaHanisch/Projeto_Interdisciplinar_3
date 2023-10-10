@@ -1,88 +1,36 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+import { DadosListaProps } from "@/app/types/DashboardTypes";
+
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 
 import { MdDone } from "react-icons/md";
 import { BsFiletypePdf } from "react-icons/bs";
 
-const dados = [
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Darkdawn",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Fourth wing",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A rebelde do deserto",
-  },
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Darkdawn",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Fourth wing",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A rebelde do deserto",
-  },
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Darkdawn",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Fourth wing",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A rebelde do deserto",
-  },
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Darkdawn",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Fourth wing",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A rebelde do deserto",
-  },
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Darkdawn",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Fourth wing",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A rebelde do deserto",
-  },
-];
-
 export default function Retiradas() {
+  const [dados, setDados] = useState<DadosListaProps[]>([]);
+  const [carregando, setCarregando] = useState(false);
+
+  async function getEmprestimosFinalizados() {
+    setCarregando(true);
+    try {
+      const res = await fetch("/api/dashboard/emprestimosFinalizados");
+      const data = await res.json();
+
+      setDados(data);
+      setCarregando(false);
+    } catch (error) {
+      setCarregando(false);
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getEmprestimosFinalizados();
+  }, []);
   return (
     <div className="w-full h-full p-10">
       <TituloPagina
@@ -92,6 +40,7 @@ export default function Retiradas() {
       />
       <ListaDashboard
         dados={dados}
+        recarregarDados={getEmprestimosFinalizados}
         tituloButton="Finalizado"
         corButton="verde"
         tipo="finalizado"
