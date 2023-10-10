@@ -12,18 +12,33 @@ export async function GET() {
       },
     });
 
-    const emprestimosFinalizados = emprestimos.map((emprestimo) => ({
-      id: emprestimo.id,
-      livro: emprestimo.livro.titulo,
-      usuario: emprestimo.user.name,
-      status: emprestimo.status,
-      dataEmprestimo: emprestimo.dataEmprestimo,
-    }));
+    for (const emprestimo of emprestimos) {
+      const dataDevolucao = new Date();
 
-    return new Response(JSON.stringify(emprestimosFinalizados), {
+      await prisma.emprestimosFinalizados.create({
+        data: {
+          livro: {
+            connect: { id: emprestimo.livroId },
+          },
+          user: {
+            connect: { id: emprestimo.userId },
+          },
+          status: emprestimo.status,
+          dataDevolucao: dataDevolucao,
+        },
+      });
+
+      await prisma.emprestimos.delete({
+        where: {
+          id: emprestimo.id,
+        },
+      });
+    }
+
+    return new Response(JSON.stringify(emprestimos), {
       status: 200,
     });
   } catch (error) {
-    return new Response("Erro ao ler os dados", { status: 500 });
+    return new Response("Erro ao processar os dados", { status: 500 });
   }
 }
