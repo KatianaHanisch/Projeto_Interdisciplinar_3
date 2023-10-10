@@ -6,8 +6,10 @@ import { LinhasTabelaProps } from "@/app/types/DashboardTypes";
 
 import ButtonTabela from "./ButtonTabela";
 import Modal from "@/app/components/Modal";
+import SnackBar from "@/app/components/SnackBar";
 
 export default function LinhasTabela({
+  id,
   nome,
   telefone,
   livro,
@@ -15,14 +17,61 @@ export default function LinhasTabela({
   corButton,
   Icone,
   tipo,
+  recarregarDados,
 }: LinhasTabelaProps) {
-  const [open, setOpen] = useState(false);
+  const [abrirModal, setAbrirModal] = useState(false);
+  const [tipoSnackBar, setTipoSnackBar] = useState("");
+  const [mensagemSnackBar, setMensagemSnackBar] = useState("");
+  const [abrirSnackBar, setAbrirSnackBar] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   function abrirModalConfirmacao() {
     if (tipo === "finalizado") {
-      setOpen(false);
+      setAbrirModal(false);
     } else {
-      setOpen(!open);
+      setAbrirModal(!abrirModal);
+    }
+  }
+
+  function fecharSnack() {
+    setAbrirSnackBar(false);
+  }
+
+  async function atualizarStatusLivro() {
+    setAbrirModal(false);
+    setCarregando(true);
+
+    try {
+      const response = await fetch(
+        `/api/dashboard/retiradasPendentes?id=${id}`,
+        {
+          method: "PUT",
+        }
+      );
+
+      if (response.status === 200) {
+        setTipoSnackBar("sucesso");
+        setMensagemSnackBar("Status do livro atualizado com sucesso");
+        setAbrirSnackBar(true);
+
+        setCarregando(false);
+
+        setTimeout(() => {
+          recarregarDados?.();
+          setAbrirSnackBar(false);
+        }, 2000);
+      }
+    } catch (error) {
+      setTipoSnackBar("erro");
+      setMensagemSnackBar("Não foi possíevl atualizar o status do livro");
+      setAbrirSnackBar(true);
+
+      setCarregando(false);
+
+      setTimeout(() => {
+        setAbrirSnackBar(false);
+      }, 3000);
+      console.error("Erro ao atualizar o status do livro:", error);
     }
   }
 
@@ -43,10 +92,21 @@ export default function LinhasTabela({
         </td>
       </tr>
 
-      {open && (
+      {abrirSnackBar && (
+        <div className="w-full ml-52">
+          <SnackBar
+            mensagem={mensagemSnackBar}
+            tipo={tipoSnackBar}
+            fecharSnackBar={fecharSnack}
+          />
+        </div>
+      )}
+
+      {abrirModal && (
         <Modal
           fecharModal={abrirModalConfirmacao}
           cancelarModal={abrirModalConfirmacao}
+          confirmarModal={atualizarStatusLivro}
           title="Deseja confirmar?"
           textButton="Confirmar"
         >

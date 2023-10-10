@@ -9,19 +9,23 @@ export type TotalizadorProps = {
 };
 
 export type DadosListaProps = {
-  nome: string;
-  telefone: string;
+  id?: number;
   livro: string;
+  usuario: string;
+  status?: number;
+  dataEmprestimo: Date;
 };
 
 export type LinhasTabelaProps = {
+  id?: number;
   nome: string;
-  telefone: string;
+  telefone?: string;
   livro: string;
   tituloButton: string;
   corButton: string;
   Icone: ReactNode;
   tipo?: string;
+  recarregarDados?: () => void;
 };
 
 export type LinhaTabelaUsuariosProps = {
@@ -56,6 +60,7 @@ export type ListaProps = {
   corButton: string;
   Icone: ReactNode;
   tipo?: string;
+  recarregarDados?: () => void;
 };
 
 export type ButtonTabelaProps = {
