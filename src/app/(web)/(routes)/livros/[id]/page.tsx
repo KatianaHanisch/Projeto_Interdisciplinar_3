@@ -3,20 +3,16 @@
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { LivroProps } from "@/app/types/Types";
 
 import SnackBar from "@/app/components/SnackBar";
 
-type DataPostProps = {
-  userId: number;
-  livroId: number;
-  status: number;
-};
-
 export default function Detalhes({ params }: { params: { id: string } }) {
   const [carregando, setCarregando] = useState(false);
-  const [carregandoEmprestimo, setCaregandoEmprestimo] = useState(false);
+  const [carregandoEmprestimo, setCarregandoEmprestimo] = useState(false);
+  const [carregandoReserva, setCarregandoReserva] = useState(false);
   const [mensagemSnackBar, setMensagemSnackBar] = useState("");
   const [abrirSnackBar, setAbrirSnackBar] = useState(false);
   const [tipoSnackBar, setTipoSnackBar] = useState("");
@@ -28,18 +24,85 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     categoria: "",
   });
 
+  const router = useRouter();
+
   const idLivro = parseInt(params.id);
 
   function fecharSnackBar() {
     setAbrirSnackBar(false);
   }
 
-  async function cadastroEmprestimo() {
-    setCaregandoEmprestimo(true);
+  async function cadastroReserva() {
+    setCarregandoReserva(true);
     const token = await sessionStorage.getItem("token");
 
     if (!token) {
-      setCaregandoEmprestimo(false);
+      setCarregandoReserva(false);
+      setTipoSnackBar("erro");
+      setMensagemSnackBar(
+        "Você precisa realizar o login para realizar essa ação. Redirecionando..."
+      );
+      setAbrirSnackBar(true);
+
+      setTimeout(() => {
+        setAbrirSnackBar(false);
+        router.push("/login");
+      }, 3000);
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/web/reserva?id=${idLivro}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 400) {
+        setTipoSnackBar("erro");
+        setMensagemSnackBar("Você já realizou a reserva desse livro");
+        setAbrirSnackBar(true);
+
+        setTimeout(() => {
+          setAbrirSnackBar(false);
+        }, 4000);
+      }
+
+      if (response.status === 201) {
+        setTipoSnackBar("sucesso");
+        setMensagemSnackBar(
+          "Reserva cadastrada com sucesso. Quando o livro estiver disponível entraremos em contato."
+        );
+        setAbrirSnackBar(true);
+
+        setTimeout(() => {
+          setAbrirSnackBar(false);
+        }, 3000);
+      }
+      setCarregandoReserva(false);
+    } catch (error) {
+      setCarregandoReserva(false);
+      console.log(error);
+    }
+  }
+
+  async function cadastroEmprestimo() {
+    setCarregandoEmprestimo(true);
+    const token = await sessionStorage.getItem("token");
+
+    if (!token) {
+      setCarregandoEmprestimo(false);
+      setTipoSnackBar("erro");
+      setMensagemSnackBar(
+        "Você precisa realizar o login para realizar essa ação. Redirecionando..."
+      );
+      setAbrirSnackBar(true);
+
+      setTimeout(() => {
+        setAbrirSnackBar(false);
+        router.push("/login");
+      }, 3000);
       return;
     }
 
@@ -66,9 +129,9 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       if (response.status === 201) {
         await atualizarQuantidadeDisponivel();
       }
-      setCaregandoEmprestimo(false);
+      setCarregandoEmprestimo(false);
     } catch (error) {
-      setCaregandoEmprestimo(false);
+      setCarregandoEmprestimo(false);
       console.log(error);
     }
   }
@@ -159,8 +222,15 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                   <p>ou</p>
                 </>
               )}
-              <button className="text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500">
-                Reservar Livro
+              <button
+                onClick={cadastroReserva}
+                className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500"
+              >
+                {carregandoReserva ? (
+                  <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+                ) : (
+                  "Reservar livro"
+                )}
               </button>
             </div>
             <div className="flex flex-col pl-3 mt-3 xl:ml-0 text-slate-900">
