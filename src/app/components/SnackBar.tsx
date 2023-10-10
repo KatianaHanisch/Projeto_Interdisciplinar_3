@@ -19,7 +19,7 @@ export default function SnackBar({
 }: SnackBarProps) {
   return (
     <div
-      className={`fixed flex flex-row items-center justify-between top-0 w-2/5 mt-4 p-2  text-white rounded-lg shadow-xl ${
+      className={` fixed flex flex-row items-center justify-between top-0 w-2/5 mt-4 p-2  text-white rounded-lg shadow-xl ${
         tipo === "sucesso" ? "bg-green-800" : "bg-red-800"
       }`}
     >

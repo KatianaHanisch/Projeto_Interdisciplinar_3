@@ -98,3 +98,5 @@ model EmprestimosFinalizados{
   status Int
   dataDevolucao DateTime 
 }
+
+

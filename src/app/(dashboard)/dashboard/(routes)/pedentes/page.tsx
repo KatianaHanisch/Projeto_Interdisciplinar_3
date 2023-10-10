@@ -1,31 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { LivroProps } from "@/app/types/Types";
 
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
-import Modal from "@/app/components/Modal";
 
 import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
 
-const dados = [
-  {
-    nome: "Katiana H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "O rei cruel",
-  },
-  {
-    nome: "Jakelie H. Hanisch",
-    telefone: "(66) 996668855",
-    livro: "Corte de asas e ruínas",
-  },
-  {
-    nome: "Iago F. Aparecido",
-    telefone: "(66) 996668855",
-    livro: "A traidora do trono",
-  },
-];
+// const dados = [
+//   {
+//     nome: "Katiana H. Hanisch",
+//     telefone: "(66) 996668855",
+//     livro: "O rei cruel",
+//   },
+//   {
+//     nome: "Jakelie H. Hanisch",
+//     telefone: "(66) 996668855",
+//     livro: "Corte de asas e ruínas",
+//   },
+//   {
+//     nome: "Iago F. Aparecido",
+//     telefone: "(66) 996668855",
+//     livro: "A traidora do trono",
+//   },
+// ];
 
 export default function Retiradas() {
   return (
@@ -35,13 +36,13 @@ export default function Retiradas() {
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}
       />
-      <ListaDashboard
+      {/* <ListaDashboard
         dados={dados}
         tituloButton="Devolvido"
         corButton="vermelha"
         tipo="pedente"
         Icone={<IoClose size={20} color={"#ffffff"} />}
-      />
+      /> */}
     </div>
   );
 }

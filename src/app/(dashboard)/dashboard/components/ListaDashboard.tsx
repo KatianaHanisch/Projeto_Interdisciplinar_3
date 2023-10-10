@@ -14,9 +14,11 @@ export default function ListaDashboard({
   corButton,
   Icone,
   tipo,
+  recarregarDados,
 }: ListaProps) {
   const [page, setPage] = useState(0);
   const [filterData, setFilterData] = useState<DadosListaProps[]>([]);
+  const [textoBusca, setTextoBusca] = useState("");
   const itemPorPagina = 5;
 
   useEffect(() => {
@@ -33,14 +35,23 @@ export default function ListaDashboard({
 
   const pagination = quantidadePaginas > 1;
 
+  const filteredData = filterData.filter((item: DadosListaProps) =>
+    item.livro.toLowerCase().includes(textoBusca.toLowerCase())
+  );
+
   return (
-    <div className="w-full h-full py-6 px-4">
-      <div className="w-full   flex items-center justify-end">
+    <div className="w-full h-full py-6 px-4 ">
+      <div className="w-full flex items-center justify-end">
         <div className="w-1/2 py-4 ">
-          <InputBusca placeholderInput="Digite o nome que procura" />
+          <InputBusca
+            placeholderInput="Digite o livro que procura"
+            value={textoBusca}
+            onChange={(e) => setTextoBusca(e.target.value)}
+          />
         </div>
       </div>
-      <div className="w-full mt-1 shadow-md">
+
+      <div className=" flex items-start justify-center w-full  mt-1 shadow-md">
         <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
           <thead className="text-base font-medium text-gray-700  ">
             <tr>
@@ -51,13 +62,15 @@ export default function ListaDashboard({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filterData &&
-              filterData.map(({ nome, livro, telefone }, index) => (
+            {filteredData &&
+              filteredData.map(({ usuario, livro, id }, index) => (
                 <LinhasTabela
                   key={index}
-                  nome={nome}
+                  nome={usuario}
                   livro={livro}
-                  telefone={telefone}
+                  id={id}
+                  recarregarDados={recarregarDados}
+                  // telefone={telefone}
                   tituloButton={tituloButton}
                   corButton={corButton}
                   Icone={Icone}
