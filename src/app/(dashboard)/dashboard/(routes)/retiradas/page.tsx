@@ -14,7 +14,7 @@ export default function Retiradas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
-  async function getLivrosPendentes() {
+  async function getRetiradasPendentes() {
     setCarregando(true);
     try {
       const res = await fetch("/api/dashboard/retiradasPendentes");
@@ -29,7 +29,7 @@ export default function Retiradas() {
   }
 
   useEffect(() => {
-    getLivrosPendentes();
+    getRetiradasPendentes();
   }, []);
   return (
     <div className="w-full h-full flex flex-col p-10">
@@ -44,7 +44,7 @@ export default function Retiradas() {
         </div>
       ) : (
         <ListaDashboard
-          recarregarDados={getLivrosPendentes}
+          recarregarDados={getRetiradasPendentes}
           dados={dados}
           tituloButton="Retirado"
           corButton="vermelha"

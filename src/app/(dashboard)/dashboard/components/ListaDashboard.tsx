@@ -70,7 +70,6 @@ export default function ListaDashboard({
                   livro={livro}
                   id={id}
                   recarregarDados={recarregarDados}
-                  // telefone={telefone}
                   tituloButton={tituloButton}
                   corButton={corButton}
                   Icone={Icone}
