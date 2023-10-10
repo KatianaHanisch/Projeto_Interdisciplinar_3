@@ -40,8 +40,6 @@ export default function Usuarios() {
     fetchDataUsers();
   }, []);
 
-  console.log(dados);
-
   return (
     <div className="w-full h-full p-10">
       <TituloPagina

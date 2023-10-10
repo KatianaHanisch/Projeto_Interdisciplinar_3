@@ -1,4 +1,9 @@
-import { prisma } from "@/app/utils/Prisma";
+// Não estava encontrando o caminho
+// import { prisma } from "@/app/utils/Prisma";
+
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 async function main() {
   const role = await prisma.roles.upsert({
@@ -6,6 +11,13 @@ async function main() {
     update: {},
     create: {
       name: "admin",
+      adicionar_livro: true,
+      remover_livro: true,
+      confirmar_retirada: true,
+      confirmar_devolucao: true,
+      adicionar_usuario: true,
+      remover_usuario: true,
+      editar_usuario: true,
     },
   });
 

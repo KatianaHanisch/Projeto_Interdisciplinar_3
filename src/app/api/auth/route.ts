@@ -1,12 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { prisma } from "@/app/utils/Prisma"
+import { prisma } from "@/app/utils/Prisma";
 
 import { url } from "@/app/url";
 
 import nodemailer from "@/app/helpers/nodemailer";
-
 
 //CADASTRO DE USUÁRIO
 export async function POST(request: Request) {
@@ -27,6 +26,7 @@ export async function POST(request: Request) {
           data: {
             email: data.email,
             name: data.name,
+            phone: data.phone,
             password: hashedPassword,
             verification_email: false,
           },

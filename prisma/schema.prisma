@@ -11,16 +11,18 @@ datasource db {
 }
 
 model Users {
-  id                 Int      @id @default(autoincrement())
-  email              String   @unique
+  id                 Int     @id @default(autoincrement())
+  email              String  @unique
   name               String
   password           String
+  phone              String
   verification_email Boolean
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
 
-  Emprestimos Emprestimos[]
-  Reservas Reservas[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Emprestimos            Emprestimos[]
+  Reservas               Reservas[]
   EmprestimosFinalizados EmprestimosFinalizados[]
 }
 
@@ -36,18 +38,24 @@ model UsersDashboard {
 }
 
 model Roles {
-  id   Int    @id @default(autoincrement())
-  name String
+  id                  Int     @id @default(autoincrement())
+  name                String
+  adicionar_livro     Boolean
+  remover_livro       Boolean
+  confirmar_retirada  Boolean
+  confirmar_devolucao Boolean
+  adicionar_usuario   Boolean
+  remover_usuario     Boolean
+  editar_usuario      Boolean
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   users_dashboard UsersDashboard[]
 }
 
 model Livros {
-  id        Int      @id @default(autoincrement())
-  titulo    String   @unique
+  id        Int    @id @default(autoincrement())
+  titulo    String @unique
   autor     String
   categoria String
   sinopse   String
@@ -58,43 +66,41 @@ model Livros {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Emprestimos Emprestimos[]
-  Reservas Reservas[]
+  Emprestimos            Emprestimos[]
+  Reservas               Reservas[]
   EmprestimosFinalizados EmprestimosFinalizados[]
 }
 
 model Emprestimos {
-  id      Int    @id @unique @default(autoincrement())
+  id Int @id @unique @default(autoincrement())
 
   livroId Int
-  livro Livros @relation(fields: [livroId], references: [id])
+  livro   Livros @relation(fields: [livroId], references: [id])
 
   userId Int
-  user Users @relation(fields: [userId], references: [id])
-  status Int @default(1)
+  user   Users @relation(fields: [userId], references: [id])
+  status Int   @default(1)
 
   dataEmprestimo DateTime @default(now())
-  
-
 }
 
 model Reservas {
-  id Int @id @unique @default(autoincrement())
+  id      Int    @id @unique @default(autoincrement())
   livroId Int
-  livro Livros @relation(fields: [livroId], references: [id])
+  livro   Livros @relation(fields: [livroId], references: [id])
 
   userId Int
-  user Users @relation(fields: [userId], references: [id])
-  status Int @default(4)
+  user   Users @relation(fields: [userId], references: [id])
+  status Int   @default(4)
 }
 
-model EmprestimosFinalizados{
-  id Int @id @unique @default(autoincrement())
+model EmprestimosFinalizados {
+  id      Int    @id @unique @default(autoincrement())
   livroId Int
-  livro Livros @relation(fields: [livroId], references: [id])
+  livro   Livros @relation(fields: [livroId], references: [id])
 
-  userId Int
-  user Users @relation(fields: [userId], references: [id])
-  status Int
-  dataDevolucao DateTime 
+  userId        Int
+  user          Users    @relation(fields: [userId], references: [id])
+  status        Int
+  dataDevolucao DateTime
 }

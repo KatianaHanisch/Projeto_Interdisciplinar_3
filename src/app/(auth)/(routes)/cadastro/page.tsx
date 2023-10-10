@@ -21,12 +21,14 @@ export default function Cadastro() {
   const [userData, setUserData] = useState<User>({
     name: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setUserData({
       ...userData,
       [name]: value,
@@ -110,6 +112,13 @@ export default function Cadastro() {
                 title="E-mail"
                 name="email"
                 value={userData.email}
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                title="Telefone"
+                name="phone"
+                value={userData.phone}
                 onChange={handleChange}
               />
               <Input
