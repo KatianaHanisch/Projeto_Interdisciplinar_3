@@ -50,9 +50,11 @@ export default function Retiradas() {
       ) : (
         <>
           {dados.length < 1 ? (
-            <div className="w-full h-full flex items-center justify-center flex-col  ">
+            <div className="w-full h-80 flex items-center justify-center flex-col  ">
               <VscSearchStop size={40} color="#8a9099" />
-              <p className="text-gray-600">Não há nenhum empréstimo pendente</p>
+              <p className="text-gray-600 text-lg">
+                Não há nenhum empréstimo pendente
+              </p>
             </div>
           ) : (
             <ListaDashboard

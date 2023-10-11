@@ -8,6 +8,8 @@ import InputBusca from "./InputBusca";
 import LinhasTabela from "./LinhasTabela";
 import Pagination from "@/app/components/Pagination";
 
+import { VscSearchStop } from "react-icons/vsc";
+
 export default function ListaDashboard({
   dados,
   tituloButton,
@@ -53,35 +55,42 @@ export default function ListaDashboard({
         </div>
       </div>
 
-      <div className=" flex items-start justify-center w-full  mt-1 shadow-md">
-        <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
-          <thead className="text-base font-medium text-gray-700  ">
-            <tr>
-              <th className="px-6 py-3">Nome</th>
-              <th className="px-6 py-3">Telefone</th>
-              <th className="px-6 py-3">Livro</th>
-              <th className="px-6 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredData &&
-              filteredData.map(({ usuario, telefone, livro, id }, index) => (
-                <LinhasTabela
-                  key={index}
-                  id={id}
-                  nome={usuario}
-                  livro={livro}
-                  telefone={telefone}
-                  recarregarDados={recarregarDados}
-                  tituloButton={tituloButton}
-                  corButton={corButton}
-                  Icone={Icone}
-                  tipo={tipo}
-                />
-              ))}
-          </tbody>
-        </table>
-      </div>
+      {filteredData.length < 1 ? (
+        <div className="w-full h-52 flex items-center justify-center flex-col  ">
+          <VscSearchStop size={40} color="#8a9099" />
+          <p className="text-gray-600 text-lg">Nenhum item encontrado</p>
+        </div>
+      ) : (
+        <div className=" flex items-start justify-center w-full  mt-1 shadow-md">
+          <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
+            <thead className="text-base font-medium text-gray-700  ">
+              <tr>
+                <th className="px-6 py-3">Nome</th>
+                <th className="px-6 py-3">Telefone</th>
+                <th className="px-6 py-3">Livro</th>
+                <th className="px-6 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredData &&
+                filteredData.map(({ usuario, telefone, livro, id }, index) => (
+                  <LinhasTabela
+                    key={index}
+                    id={id}
+                    nome={usuario}
+                    livro={livro}
+                    telefone={telefone}
+                    recarregarDados={recarregarDados}
+                    tituloButton={tituloButton}
+                    corButton={corButton}
+                    Icone={Icone}
+                    tipo={tipo}
+                  />
+                ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       {pagination ? (
         <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
       ) : null}
