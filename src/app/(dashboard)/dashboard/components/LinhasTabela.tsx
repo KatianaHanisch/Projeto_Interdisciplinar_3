@@ -37,6 +37,18 @@ export default function LinhasTabela({
     setAbrirSnackBar(false);
   }
 
+  async function devolverLivro() {
+    try {
+      const response = await fetch(`/api/dashboard/emprestimosFinalizados`, {
+        method: "PUT",
+      });
+
+      recarregarDados?.();
+    } catch (error) {
+      console.log("Erro ao devolver livro: ", error);
+    }
+  }
+
   async function atualizarStatusLivro() {
     setAbrirModal(false);
     setCarregando(true);
@@ -50,16 +62,7 @@ export default function LinhasTabela({
       );
 
       if (response.status === 200) {
-        setTipoSnackBar("sucesso");
-        setMensagemSnackBar("Status do livro atualizado com sucesso");
-        setAbrirSnackBar(true);
-
-        setCarregando(false);
-
-        setTimeout(() => {
-          recarregarDados?.();
-          setAbrirSnackBar(false);
-        }, 2000);
+        devolverLivro();
       }
     } catch (error) {
       setTipoSnackBar("erro");

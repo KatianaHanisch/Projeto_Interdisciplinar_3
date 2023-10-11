@@ -33,8 +33,6 @@ export default function Retiradas() {
     getEmprestimosPendentes();
   }, []);
 
-  console.log(dados.length);
-
   return (
     <div className="w-full h-full p-10">
       <TituloPagina

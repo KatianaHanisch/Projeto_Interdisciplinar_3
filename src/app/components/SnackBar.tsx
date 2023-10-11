@@ -1,14 +1,9 @@
-import { IconType } from "react-icons/lib";
-
-import { ReactNode } from "react";
-
 import { TbAlertCircle } from "react-icons/tb";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 type SnackBarProps = {
   mensagem: string;
   fecharSnackBar: () => void;
-  // Icone: ReactNode;
   tipo: string;
 };
 

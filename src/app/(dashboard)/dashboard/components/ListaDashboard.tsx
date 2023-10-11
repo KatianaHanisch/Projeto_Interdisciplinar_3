@@ -35,8 +35,10 @@ export default function ListaDashboard({
 
   const pagination = quantidadePaginas > 1;
 
-  const filteredData = filterData.filter((item: DadosListaProps) =>
-    item.livro.toLowerCase().includes(textoBusca.toLowerCase())
+  const filteredData = filterData.filter(
+    (item: DadosListaProps) =>
+      typeof item.livro === "string" &&
+      item.livro.toLowerCase().includes(textoBusca.toLowerCase())
   );
 
   return (

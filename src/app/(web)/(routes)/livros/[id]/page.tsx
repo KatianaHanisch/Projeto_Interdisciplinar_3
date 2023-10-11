@@ -154,7 +154,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
 
         setTimeout(() => {
           setAbrirSnackBar(false);
-        }, 4000);
+          getLivro();
+        }, 3000);
       }
     } catch (error) {
       console.log(error);
