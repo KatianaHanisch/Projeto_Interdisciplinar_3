@@ -12,6 +12,7 @@ export type DadosListaProps = {
   id?: number;
   livro: string;
   usuario: string;
+  telefone?: string;
   status?: number;
   dataEmprestimo: Date;
 };

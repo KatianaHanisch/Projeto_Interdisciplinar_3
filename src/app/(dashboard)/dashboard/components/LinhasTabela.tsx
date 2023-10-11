@@ -37,6 +37,20 @@ export default function LinhasTabela({
     setAbrirSnackBar(false);
   }
 
+  function formatarTelefone(telefone: string | undefined) {
+    if (telefone) {
+      telefone = telefone.replace(/\D/g, "");
+
+      if (telefone.length === 11) {
+        return `(${telefone.slice(0, 2)}) ${telefone.slice(
+          2,
+          7
+        )}-${telefone.slice(7, 11)}`;
+      }
+    }
+    return "";
+  }
+
   async function devolverLivro() {
     try {
       const response = await fetch(`/api/dashboard/emprestimosFinalizados`, {
@@ -82,7 +96,7 @@ export default function LinhasTabela({
     <>
       <tr className="text-sm font-medium text-gray-700">
         <td className="px-6 py-3">{nome}</td>
-        <td className="px-6 py-3">{telefone}</td>
+        <td className="px-6 py-3">{formatarTelefone(telefone)}</td>
         <td className="px-6 py-3">{livro}</td>
         <td className="px-6 py-3">
           <ButtonTabela

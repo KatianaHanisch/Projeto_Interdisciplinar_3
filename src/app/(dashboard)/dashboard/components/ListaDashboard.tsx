@@ -65,12 +65,13 @@ export default function ListaDashboard({
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredData &&
-              filteredData.map(({ usuario, livro, id }, index) => (
+              filteredData.map(({ usuario, telefone, livro, id }, index) => (
                 <LinhasTabela
                   key={index}
+                  id={id}
                   nome={usuario}
                   livro={livro}
-                  id={id}
+                  telefone={telefone}
                   recarregarDados={recarregarDados}
                   tituloButton={tituloButton}
                   corButton={corButton}

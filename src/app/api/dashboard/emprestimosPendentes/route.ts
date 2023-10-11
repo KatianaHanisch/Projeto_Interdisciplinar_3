@@ -8,7 +8,12 @@ export async function GET() {
       },
       include: {
         livro: true,
-        user: true,
+        user: {
+          select: {
+            name: true,
+            phone: true,
+          },
+        },
       },
     });
 
@@ -16,6 +21,7 @@ export async function GET() {
       id: emprestimo.id,
       livro: emprestimo.livro.titulo,
       usuario: emprestimo.user.name,
+      telefone: emprestimo.user.phone,
       status: emprestimo.status,
       dataEmprestimo: emprestimo.dataEmprestimo,
     }));
