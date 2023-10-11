@@ -47,10 +47,55 @@ export async function PUT(request: Request) {
           status: novoStatus,
         },
       });
+
+      if (novoStatus === 3) {
+        const dataDevolucao = new Date();
+
+        await prisma.emprestimosFinalizados.create({
+          data: {
+            livro: {
+              connect: { id: emprestimoExiste.livroId },
+            },
+            user: {
+              connect: { id: emprestimoExiste.userId },
+            },
+            status: emprestimoExiste.status,
+            dataDevolucao: dataDevolucao,
+          },
+        });
+
+        await prisma.emprestimos.delete({
+          where: {
+            id: emprestimoExiste.id,
+          },
+        });
+
+        const livroDevolvido = await prisma.livros.findUnique({
+          where: {
+            id: Number(id),
+          },
+        });
+
+        if (livroDevolvido) {
+          const novaQuantidade = livroDevolvido.quantidadeDisponivel + 1;
+
+          await prisma.livros.update({
+            where: {
+              id: Number(id),
+            },
+            data: {
+              quantidadeDisponivel: novaQuantidade,
+            },
+          });
+        }
+      }
+
+      return new Response("Status do livro atualizado com sucesso", {
+        status: 200,
+      });
+    } else {
+      return new Response("Emprestimo não encontrado", { status: 404 });
     }
-    return new Response("Status do livro atualizado com sucesso", {
-      status: 200,
-    });
   } catch (error) {
     return new Response("Erro ao atualizar o status do livro", { status: 500 });
   }

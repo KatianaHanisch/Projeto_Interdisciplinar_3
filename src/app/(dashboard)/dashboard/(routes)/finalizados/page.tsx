@@ -9,6 +9,7 @@ import ListaDashboard from "../../components/ListaDashboard";
 
 import { MdDone } from "react-icons/md";
 import { BsFiletypePdf } from "react-icons/bs";
+import { VscSearchStop } from "react-icons/vsc";
 
 export default function Retiradas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
@@ -17,7 +18,10 @@ export default function Retiradas() {
   async function getEmprestimosFinalizados() {
     setCarregando(true);
     try {
-      const res = await fetch("/api/dashboard/emprestimosFinalizados");
+      const res = await fetch("/api/dashboard/emprestimosFinalizados", {
+        method: "GET",
+      });
+
       const data = await res.json();
 
       setDados(data);
@@ -38,14 +42,29 @@ export default function Retiradas() {
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}
       />
-      <ListaDashboard
-        dados={dados}
-        recarregarDados={getEmprestimosFinalizados}
-        tituloButton="Finalizado"
-        corButton="verde"
-        tipo="finalizado"
-        Icone={<MdDone size={20} color={"#ffffff"} />}
-      />
+      {carregando ? (
+        <div className="flex items-center justify-center w-full h-full">
+          <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+        </div>
+      ) : (
+        <>
+          {dados.length < 1 ? (
+            <div className="w-full h-full flex items-center justify-center flex-col  ">
+              <VscSearchStop size={40} color="#8a9099" />
+              <p className="text-gray-600">Não há nenhum empréstimo pendente</p>
+            </div>
+          ) : (
+            <ListaDashboard
+              dados={dados}
+              recarregarDados={getEmprestimosFinalizados}
+              tituloButton="Devolvido"
+              corButton="verde"
+              tipo="pedente"
+              Icone={<MdDone size={22} color={"#ffffff"} />}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }

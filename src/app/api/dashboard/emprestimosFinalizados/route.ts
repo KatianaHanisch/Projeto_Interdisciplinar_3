@@ -2,43 +2,27 @@ import { prisma } from "@/app/utils/Prisma";
 
 export async function GET() {
   try {
-    const emprestimos = await prisma.emprestimos.findMany({
-      where: {
-        status: 3,
-      },
+    const emprestimos = await prisma.emprestimosFinalizados.findMany({
       include: {
         livro: true,
         user: true,
       },
     });
 
-    for (const emprestimo of emprestimos) {
-      const dataDevolucao = new Date();
+    const emprestimosFinalizados = emprestimos.map((emprestimo) => ({
+      id: emprestimo.id,
+      livro: emprestimo.livro.titulo,
+      usuario: emprestimo.user.name,
+      status: emprestimo.status,
+      dataDevolucao: emprestimo.dataDevolucao,
+    }));
 
-      await prisma.emprestimosFinalizados.create({
-        data: {
-          livro: {
-            connect: { id: emprestimo.livroId },
-          },
-          user: {
-            connect: { id: emprestimo.userId },
-          },
-          status: emprestimo.status,
-          dataDevolucao: dataDevolucao,
-        },
-      });
-
-      await prisma.emprestimos.delete({
-        where: {
-          id: emprestimo.id,
-        },
-      });
-    }
-
-    return new Response(JSON.stringify(emprestimos), {
+    await prisma.$disconnect();
+    return new Response(JSON.stringify(emprestimosFinalizados), {
       status: 200,
     });
   } catch (error) {
-    return new Response("Erro ao processar os dados", { status: 500 });
+    await prisma.$disconnect;
+    return new Response("Não foi possível acessar os dados", { status: 500 });
   }
 }

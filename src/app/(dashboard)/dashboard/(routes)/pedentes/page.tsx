@@ -9,6 +9,7 @@ import { DadosListaProps } from "@/app/types/DashboardTypes";
 
 import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
+import { VscSearchStop } from "react-icons/vsc";
 
 export default function Retiradas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
@@ -32,6 +33,8 @@ export default function Retiradas() {
     getEmprestimosPendentes();
   }, []);
 
+  console.log(dados.length);
+
   return (
     <div className="w-full h-full p-10">
       <TituloPagina
@@ -44,14 +47,25 @@ export default function Retiradas() {
           <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
         </div>
       ) : (
-        <ListaDashboard
-          dados={dados}
-          recarregarDados={getEmprestimosPendentes}
-          tituloButton="Devolvido"
-          corButton="vermelha"
-          tipo="pedente"
-          Icone={<IoClose size={20} color={"#ffffff"} />}
-        />
+        <>
+          {dados.length < 1 ? (
+            <div className="w-full h-full flex items-center justify-center flex-col  ">
+              <VscSearchStop size={40} color="#8a9099" />
+              <p className="text-gray-600 ">
+                Não há nenhum empréstimo pendente
+              </p>
+            </div>
+          ) : (
+            <ListaDashboard
+              dados={dados}
+              recarregarDados={getEmprestimosPendentes}
+              tituloButton="Devolvido"
+              corButton="vermelha"
+              tipo="pedente"
+              Icone={<IoClose size={20} color={"#ffffff"} />}
+            />
+          )}
+        </>
       )}
     </div>
   );
