@@ -1,4 +1,4 @@
-import { TotalizadorProps } from "../types/TotalizadorProps";
+import { TotalizadorProps } from "@/app/types/DashboardTypes";
 
 export default function CardDashboard({
   tituloCard,
@@ -16,7 +16,11 @@ export default function CardDashboard({
             {tituloCard}
           </h3>
           <h2 className="font-bold text-2xl text-gray-800 ">
-            {informacaoCard}
+            {informacaoCard === "carregando" ? (
+              <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+            ) : (
+              informacaoCard
+            )}
           </h2>
         </div>
       </div>

@@ -5,13 +5,14 @@ import { IconType } from "react-icons/lib";
 export type TotalizadorProps = {
   tituloCard: string;
   IconeCard: IconType;
-  informacaoCard: number;
+  informacaoCard: number | string;
 };
 
 export type DadosListaProps = {
   id?: number;
   livro: string;
   usuario: string;
+  telefone?: string;
   status?: number;
   dataEmprestimo: Date;
 };
@@ -69,4 +70,10 @@ export type ButtonTabelaProps = {
   Icone: ReactNode;
   abrirModal?: () => void;
   tipo?: string;
+};
+
+export type TotalizadoresProps = {
+  emprestimosPendentes: number;
+  emprestimosFinalizados: number;
+  totalLivrosCadastrados: number;
 };
