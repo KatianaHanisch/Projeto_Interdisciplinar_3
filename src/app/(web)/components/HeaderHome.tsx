@@ -26,13 +26,17 @@ export default function HeaderHome() {
   const [success, setSuccess] = useState(String);
 
   const [newName, setNewName] = useState(String);
+  const [newPhone, setNewPhone] = useState(String);
   const [newPassword, setNewPassword] = useState(String);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
+
   const [open, setOpen] = useState(false);
 
-  const { logout, isAuthenticated, validateToken, name, email } = useAuth();
+  const { logout, isAuthenticated, validateToken, name, email, phone } =
+    useAuth();
 
   useEffect(() => {
     if (!name) {
@@ -55,7 +59,7 @@ export default function HeaderHome() {
 
   async function handleChangeInfo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!newName && !newPassword) {
+    if (!newName && !newPassword && !newPhone) {
       return;
     }
 
@@ -63,6 +67,7 @@ export default function HeaderHome() {
       email: email,
       name: newName,
       password: newPassword,
+      phone: newPhone,
     };
 
     setLoading(true);
@@ -335,6 +340,36 @@ export default function HeaderHome() {
                         <span
                           className="cursor-pointer"
                           onClick={() => setIsEditingName(true)}
+                        >
+                          <FaEdit color="#1f2937" size={20} />
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <span>Telefone:</span>
+                  <div className="flex items-center gap-3">
+                    {isEditingPhone ? (
+                      <div className="flex w-full items-center gap-3">
+                        <Input
+                          type="text"
+                          value={newPhone}
+                          onChange={(e: any) => setNewPhone(e.target.value)}
+                        />
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingPhone(false)}
+                        >
+                          <IoClose color="red" size={28} />
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <h1 className="text-gray-800">{phone}</h1>
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingPhone(true)}
                         >
                           <FaEdit color="#1f2937" size={20} />
                         </span>

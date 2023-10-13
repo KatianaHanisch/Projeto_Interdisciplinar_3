@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { prisma } from "@/app/utils/Prisma"
+import { prisma } from "@/app/utils/Prisma";
 
 //ROTA DE LOGIN
 export async function POST(request: Request) {
@@ -42,15 +42,19 @@ export async function POST(request: Request) {
 
     const secretKey = process.env.SECRETKEY;
     const token = jwt.sign(
-      { userId: user.id, email: user.email, name: user.name },
+      {
+        userId: user.id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+      },
       secretKey!,
       {
         expiresIn: "24h",
       }
     );
-    const name = user.name;
 
-    return new Response(JSON.stringify({ token, name }), {
+    return new Response(JSON.stringify({ token }), {
       status: 201,
     });
   } catch (error) {

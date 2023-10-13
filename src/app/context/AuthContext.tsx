@@ -6,6 +6,7 @@ interface AuthData {
   isAuthenticated: boolean;
   name: string;
   email: string;
+  phone: string;
   logout: () => void;
   validateToken: () => void;
   validateTokenRoleFunction: () => void;
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthData | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [name, setName] = useState(String);
+  const [phone, setPhone] = useState(String);
   const [email, setEmail] = useState(String);
   const router = useRouter();
 
@@ -40,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const tokenData = JSON.parse(atob(token!.split(".")[1]));
       setName(tokenData.name);
       setEmail(tokenData.email);
+      setPhone(tokenData.phone);
       if (isTokenExpired(token)) {
         setIsAuthenticated(false);
         sessionStorage.removeItem("token");
@@ -114,6 +117,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated,
     name,
     email,
+    phone,
     logout,
     validateToken,
     validateTokenRoleFunction,
