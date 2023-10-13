@@ -4,6 +4,12 @@ export type User = {
   password: string;
   confirmPassword?: string;
   email?: string;
+  role?: number;
+};
+
+export type Roles = {
+  id: string;
+  name: string;
 };
 
 export type LivroProps = {

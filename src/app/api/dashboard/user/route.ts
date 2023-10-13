@@ -96,6 +96,66 @@ import { prisma } from "@/app/utils/Prisma";
 //   }
 // }
 
+//CADASTRO DO USUÁRIO DA DASH
+export async function POST(request: Request) {
+  const data = await request.json();
+
+  if (data.email && data.name && data.password && data.role_id) {
+    try {
+      const existingUser = await prisma.usersDashboard.findUnique({
+        where: {
+          email: data.email,
+        },
+      });
+
+      if (existingUser) {
+        return new Response("E-mail já cadastrado.", { status: 409 });
+      } else {
+        try {
+          const roleId = parseInt(data.role_id, 10);
+
+          const role = await prisma.roles.findMany({
+            where: {
+              id: roleId,
+            },
+          });
+
+          if (!role) {
+            return new Response("Função (role) não encontrada.", {
+              status: 400,
+            });
+          }
+
+          const hashedPassword = await bcrypt.hash(data.password, 12);
+          const newUser = await prisma.usersDashboard.create({
+            data: {
+              email: data.email,
+              name: data.name,
+              role: {
+                connect: {
+                  id: roleId,
+                },
+              },
+              password: hashedPassword,
+            },
+          });
+
+          return new Response(JSON.stringify(newUser), { status: 201 });
+        } catch (error) {
+          return new Response("Erro ao criar um novo usuário.", {
+            status: 400,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao criar um novo usuário:", error);
+      return new Response("Erro ao criar um novo usuário.", { status: 500 });
+    }
+  } else {
+    return new Response("Faltando dados", { status: 400 });
+  }
+}
+
 //GET de todos os usuários
 export async function GET() {
   const users = await prisma.usersDashboard.findMany();

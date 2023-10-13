@@ -47,6 +47,7 @@ model Roles {
   adicionar_usuario   Boolean
   remover_usuario     Boolean
   editar_usuario      Boolean
+  tirar_relatorio     Boolean
 
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -104,5 +105,3 @@ model EmprestimosFinalizados {
   status        Int
   dataDevolucao DateTime
 }
-
-

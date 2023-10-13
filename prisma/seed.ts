@@ -18,6 +18,22 @@ async function main() {
       adicionar_usuario: true,
       remover_usuario: true,
       editar_usuario: true,
+      tirar_relatorio: true,
+    },
+  });
+  const role2 = await prisma.roles.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
+      name: "relatorio",
+      adicionar_livro: false,
+      remover_livro: false,
+      confirmar_retirada: false,
+      confirmar_devolucao: false,
+      adicionar_usuario: false,
+      remover_usuario: false,
+      editar_usuario: false,
+      tirar_relatorio: true,
     },
   });
 
