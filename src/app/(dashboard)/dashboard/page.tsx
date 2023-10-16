@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import CardTotalizadorDashboard from "./components/CardTotalizadorDashboard";
 import CardFraseDashboard from "./components/CardFraseDashboard";
 import CardImagemDashboard from "./components/CardImagemDashboard";
+import SnackBar from "@/app/components/SnackBar";
 
 import { TotalizadoresProps } from "@/app/types/DashboardTypes";
 
@@ -15,16 +16,38 @@ import { useAuth } from "../../context/AuthContext";
 export default function Dashboard() {
   const { validateTokenRoleFunction, isAuthenticated } = useAuth();
   const [dados, setDados] = useState<TotalizadoresProps | null>(null);
+  const [carregando, setCarregando] = useState(false);
+  const [messagemSnackBar, setMessagemSnackBar] = useState("");
+  const [tipoSnackBar, setTipoSnackBar] = useState("");
+  const [abrirSnackBar, setAbrirSnackBar] = useState(false);
+
+  function fecharSnackBar() {
+    setAbrirSnackBar(false);
+  }
 
   async function getTotatizadores() {
-    const response = await fetch("/api/dashboard/totalizadores", {
-      method: "GET",
-    });
+    setCarregando(true);
+    try {
+      const response = await fetch("/api/dashboard/totalizadores", {
+        method: "GET",
+      });
 
-    const data = await response.json();
-    console.log(data);
+      const data = await response.json();
+      setDados(data);
 
-    setDados(data);
+      setCarregando(false);
+    } catch (error) {
+      setMessagemSnackBar("Não foi possível carrgar os dados");
+      setTipoSnackBar("erro");
+      setAbrirSnackBar(true);
+
+      setTimeout(() => {
+        setAbrirSnackBar(false);
+      }, 3000);
+
+      setCarregando(false);
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -47,37 +70,45 @@ export default function Dashboard() {
         IconeCard={BiSolidBookOpen}
         tituloCard="Empréstimos Pedentes"
         informacaoCard={
-          dados?.emprestimosPendentes
-            ? dados.emprestimosPendentes < 1
-              ? "nenhum empréstmo pedente"
-              : dados.emprestimosPendentes
-            : "carregando"
+          carregando ? (
+            <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          ) : (
+            dados?.emprestimosPendentes
+          )
         }
       />
       <CardTotalizadorDashboard
         IconeCard={BiSolidBookOpen}
         tituloCard="Empréstimos Finalizados"
         informacaoCard={
-          dados?.emprestimosFinalizados
-            ? dados.emprestimosFinalizados < 1
-              ? "nenhum empréstmo finalizado"
-              : dados.emprestimosFinalizados
-            : "carregando"
+          carregando ? (
+            <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          ) : (
+            dados?.emprestimosFinalizados
+          )
         }
       />
       <CardTotalizadorDashboard
         IconeCard={BiSolidBookOpen}
         tituloCard="Livros Cadastrados"
         informacaoCard={
-          dados?.totalLivrosCadastrados
-            ? dados.totalLivrosCadastrados < 1
-              ? "nenhum livro cadastrado"
-              : dados.totalLivrosCadastrados
-            : "carregando"
+          carregando ? (
+            <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          ) : (
+            dados?.totalLivrosCadastrados
+          )
         }
       />
       <CardFraseDashboard />
       <CardImagemDashboard />
+
+      {abrirSnackBar && (
+        <SnackBar
+          mensagem={messagemSnackBar}
+          tipo={tipoSnackBar}
+          fecharSnackBar={fecharSnackBar}
+        />
+      )}
     </main>
   );
 }

@@ -11,7 +11,7 @@ import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
-export default function Retiradas() {
+export default function Reservas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Retiradas() {
   return (
     <div className="w-full h-full flex flex-col p-10">
       <TituloPagina
-        tituloPagina="Livros não retirados"
+        tituloPagina="Reservas de livros"
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}
       />
@@ -50,7 +50,7 @@ export default function Retiradas() {
             <div className="w-full h-80 flex items-center justify-center flex-col">
               <VscSearchStop size={40} color="#8a9099" />
               <p className="text-gray-600 text-lg">
-                Não há nenhuma retirada pendente
+                Não há nenhuma reserva pendente
               </p>
             </div>
           ) : (

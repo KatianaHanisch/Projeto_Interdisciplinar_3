@@ -16,11 +16,7 @@ export default function CardDashboard({
             {tituloCard}
           </h3>
           <h2 className="font-bold text-2xl text-gray-800 ">
-            {informacaoCard === "carregando" ? (
-              <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-            ) : (
-              informacaoCard
-            )}
+            {informacaoCard}
           </h2>
         </div>
       </div>

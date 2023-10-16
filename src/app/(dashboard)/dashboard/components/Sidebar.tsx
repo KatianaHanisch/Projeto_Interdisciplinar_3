@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiFillShopping } from "react-icons/ai";
 import { BiBookAdd } from "react-icons/bi";
 import { LuBookX } from "react-icons/lu";
 import { IoBagRemoveOutline } from "react-icons/io5";
@@ -30,6 +30,12 @@ const routes = [
     label: "Remover",
     Icone: LuBookX,
     href: "/dashboard/remover",
+  },
+
+  {
+    label: "Reservas",
+    Icone: AiFillShopping,
+    href: "/dashboard/reservas",
   },
   {
     label: "Retiradas",

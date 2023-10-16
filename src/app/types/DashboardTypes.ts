@@ -5,7 +5,7 @@ import { IconType } from "react-icons/lib";
 export type TotalizadorProps = {
   tituloCard: string;
   IconeCard: IconType;
-  informacaoCard: number | string;
+  informacaoCard: ReactNode;
 };
 
 export type DadosListaProps = {
