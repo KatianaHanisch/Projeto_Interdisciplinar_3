@@ -14,10 +14,10 @@ import { Roles } from "@/app/types/Types";
 
 export default function Usuarios() {
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
-  const [abrirModalEditar, setAbrirModalEditar] = useState(false);
 
   const [dados, setDados] = useState([]);
   const [roles, setRoles] = useState<Roles[]>([]);
+  const [role, setRole] = useState("");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -27,14 +27,18 @@ export default function Usuarios() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("");
 
   const abrirModalAdicionarUsuario = () => {
     setAbrirModalAdicionar(!abrirModalAdicionar);
   };
-
-  const abrirModalEditarUsuario = () => {
-    setAbrirModalEditar(!abrirModalEditar);
+  const closeModal = () => {
+    setEmail("");
+    setRole("");
+    setPassword("");
+    setConfirmPassword("");
+    setName("");
+    setError("");
+    abrirModalAdicionarUsuario();
   };
 
   const fetchDataUsers = async () => {
@@ -61,8 +65,6 @@ export default function Usuarios() {
 
     setRoles(data);
   };
-
-  console.log(role);
 
   useEffect(() => {
     fetchDataUsers();
@@ -136,16 +138,6 @@ export default function Usuarios() {
     }
   }
 
-  const closeModal = () => {
-    setEmail("");
-    setRole("");
-    setPassword("");
-    setConfirmPassword("");
-    setName("");
-    setError("");
-    abrirModalAdicionarUsuario();
-  };
-
   return (
     <div className="w-full h-full p-10">
       <TituloPagina
@@ -155,7 +147,11 @@ export default function Usuarios() {
         abrirModal={abrirModalAdicionarUsuario}
       />
 
-      <ListaUsuarios dados={dados} abrirModalEditar={abrirModalEditarUsuario} />
+      <ListaUsuarios
+        dados={dados}
+        roles={roles}
+        fetchDataUsers={fetchDataUsers}
+      />
 
       {abrirModalAdicionar && (
         <Modal
@@ -220,25 +216,6 @@ export default function Usuarios() {
 
             {error && <Toast text={error} />}
             {success && <ToastSuccess text={success} />}
-          </div>
-        </Modal>
-      )}
-
-      {abrirModalEditar && (
-        <Modal
-          title="Editar usuário"
-          loading={loading}
-          textButton="Editar"
-          cancelarModal={abrirModalEditarUsuario}
-          confirmarModal={abrirModalEditarUsuario}
-          fecharModal={abrirModalEditarUsuario}
-        >
-          <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
-            <p className="text-gray-700 text-lg font-medium leading-relaxed">
-              Editar usuário:
-            </p>
-            <Input title="Nome do usuário" type="text" />
-            <Input title="Email do usuário" type="email" />
           </div>
         </Modal>
       )}

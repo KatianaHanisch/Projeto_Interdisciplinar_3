@@ -4,7 +4,8 @@ import LinhaTabelaUsuarios from "./LinhaTabelaUsuarios";
 
 export default function ListaUsuarios({
   dados,
-  abrirModalEditar,
+  roles,
+  fetchDataUsers,
 }: DadosTabelaUsuariosProps) {
   return (
     <div className="w-full h-full py-6 px-4">
@@ -18,13 +19,15 @@ export default function ListaUsuarios({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {dados.map(({ id, name, email }) => (
+            {dados.map(({ id, name, email, role_id }) => (
               <LinhaTabelaUsuarios
                 key={id}
                 id={id}
                 name={name}
                 email={email}
-                abrirModalEditar={abrirModalEditar}
+                role_id={role_id}
+                roles={roles}
+                fetchDataUsers={fetchDataUsers}
               />
             ))}
           </tbody>

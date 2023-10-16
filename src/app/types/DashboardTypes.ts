@@ -33,6 +33,9 @@ export type LinhaTabelaUsuariosProps = {
   id?: number;
   name: string;
   email: string;
+  role_id?: string;
+  roles?: any;
+  fetchDataUsers?: () => void;
   abrirModalEditar?: () => void;
   abrirModalRemover?: () => void;
 };
@@ -52,7 +55,8 @@ export type ButtonTituloPaginaProps = {
 
 export type DadosTabelaUsuariosProps = {
   dados: LinhaTabelaUsuariosProps[];
-  abrirModalEditar: () => void;
+  roles?: any;
+  fetchDataUsers?: () => void;
 };
 
 export type ListaProps = {

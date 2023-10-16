@@ -91,9 +91,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (tokenData.role) {
         setIsAuthenticated(true);
         setName(tokenData.name);
+        setEmail(tokenData.email);
       } else {
         setIsAuthenticated(false);
         setName("");
+        setEmail("");
+
         router.push("/not-found");
       }
     } else {

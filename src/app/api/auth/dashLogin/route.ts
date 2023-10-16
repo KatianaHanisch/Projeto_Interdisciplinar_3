@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { prisma } from "@/app/utils/Prisma"
+import { prisma } from "@/app/utils/Prisma";
 
 //ROTA DE LOGIN DA DASHBOARD
 export async function POST(request: Request) {
@@ -46,9 +46,8 @@ export async function POST(request: Request) {
         expiresIn: "24h",
       }
     );
-    const name = user.name;
 
-    return new Response(JSON.stringify({ token, name }), { status: 201 });
+    return new Response(JSON.stringify({ token }), { status: 201 });
   } catch (error) {
     console.error("Erro ao fazer login:", error);
     return new Response(
