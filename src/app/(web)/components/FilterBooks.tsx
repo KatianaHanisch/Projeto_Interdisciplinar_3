@@ -15,8 +15,8 @@ export default function FilterBooks({
 }: LivroBuscaProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchText = event.target.value;
-    onChange(event); // Chama a função onChange para atualizar o estado
-    onSearch(searchText); // Chama a função de pesquisa com o texto atual
+    onChange(event);
+    onSearch(searchText);
   };
   return (
     <div className="xl:mb-40">

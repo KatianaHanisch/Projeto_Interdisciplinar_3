@@ -15,7 +15,8 @@ export default function Remover() {
   const [tituloBusca, setTituloBusca] = useState("");
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [page, setPage] = useState(0);
-  const [filterData, setFilterData] = useState<LivroProps[]>([]);
+  const [filteredData, setFilteredData] = useState<LivroProps[]>([]);
+  const [pagination, setPagination] = useState(false);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
 
   const itemPorPagina = 6;
@@ -27,7 +28,12 @@ export default function Remover() {
       const data = await res.json();
 
       setLivros(data);
-      setQuantidadePaginas(Math.ceil(data.length / itemPorPagina));
+      const newQuantidadePaginas = Math.ceil(data.length / itemPorPagina);
+      setQuantidadePaginas(newQuantidadePaginas);
+
+      const newPagination = newQuantidadePaginas > 1;
+      setPagination(newPagination);
+
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -35,21 +41,53 @@ export default function Remover() {
     }
   }
 
-  useEffect(() => {
-    setFilterData(
-      livros.filter((item: LivroProps, index: number) => {
-        return (
-          index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
-        );
-      })
+  const applyFilter = (data: LivroProps[]) => {
+    const filteredData = data.filter(
+      (item: LivroProps) =>
+        typeof item.titulo === "string" &&
+        item.titulo.toLowerCase().includes(tituloBusca.toLowerCase())
     );
-  }, [page, livros]);
 
-  const filteredData = filterData.filter(
-    (item: LivroProps) =>
-      typeof item.titulo === "string" &&
-      item.titulo.toLowerCase().includes(tituloBusca.toLowerCase())
-  );
+    setFilteredData(filteredData);
+
+    const newQuantidadePaginas = Math.ceil(filteredData.length / itemPorPagina);
+    setQuantidadePaginas(newQuantidadePaginas);
+
+    const newPagination = newQuantidadePaginas > 1;
+    setPagination(newPagination);
+  };
+
+  useEffect(() => {
+    applyFilter(livros);
+  }, [livros]);
+
+  const handleSearch = () => {
+    applyFilter(livros);
+
+    setPage(0);
+  };
+
+  const handleSearchClear = () => {
+    setTituloBusca("");
+    applyFilter(livros);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    if (tituloBusca === "") {
+      handleSearchClear();
+    }
+  }, [tituloBusca]);
+
+  // useEffect(() => {
+  //   setFilterData(
+  //     livros.filter((item: LivroProps, index: number) => {
+  //       return (
+  //         index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
+  //       );
+  //     })
+  //   );
+  // }, [page, livros]);
 
   useEffect(() => {
     getLivros();
@@ -61,6 +99,7 @@ export default function Remover() {
         placeholderInput="Digite o nome do livro que procura"
         value={tituloBusca}
         onChange={(e) => setTituloBusca(e.target.value)}
+        onSearch={handleSearch}
       />
       <div className="flex flex-col items-center justify-center py-8  h-[380px]  w-11/12 ">
         {carregando ? (
@@ -74,15 +113,17 @@ export default function Remover() {
               </div>
             ) : (
               <>
-                {filteredData.map((item: LivroProps, index: number) => (
-                  <Livro key={index} {...item} />
-                ))}
+                {filteredData
+                  .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
+                  .map((item: LivroProps, index: number) => (
+                    <Livro key={index} {...item} />
+                  ))}
               </>
             )}
           </div>
         )}
       </div>
-      {quantidadePaginas > 1 ? (
+      {pagination ? (
         <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
       ) : null}
     </div>
