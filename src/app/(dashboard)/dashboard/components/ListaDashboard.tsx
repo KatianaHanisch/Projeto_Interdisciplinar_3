@@ -19,29 +19,61 @@ export default function ListaDashboard({
   recarregarDados,
 }: ListaProps) {
   const [page, setPage] = useState(0);
-  const [filterData, setFilterData] = useState<DadosListaProps[]>([]);
-  const [textoBusca, setTextoBusca] = useState("");
+  const [filteredData, setFilteredData] = useState<DadosListaProps[]>([]);
+  const [pagination, setPagination] = useState(false);
+  const [tituloBusca, setTituloBusca] = useState("");
+  const [quantidadePaginas, setQuantidadePaginas] = useState(0);
   const itemPorPagina = 5;
 
-  useEffect(() => {
-    setFilterData(
-      dados.filter((item: DadosListaProps, index: number) => {
-        return (
-          index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
-        );
-      })
+  function quatidadePaginasInicial() {
+    const newQuantidadePaginas = Math.ceil(dados.length / itemPorPagina);
+    setQuantidadePaginas(newQuantidadePaginas);
+
+    const newPagination = newQuantidadePaginas > 1;
+    setPagination(newPagination);
+  }
+
+  const applyFilter = (data: DadosListaProps[]) => {
+    const filteredData = data.filter(
+      (item: DadosListaProps) =>
+        typeof item.livro === "string" &&
+        item.livro.toLowerCase().includes(tituloBusca.toLowerCase())
     );
-  }, [page]);
 
-  const quantidadePaginas = Math.ceil(dados.length / itemPorPagina);
+    setFilteredData(filteredData);
 
-  const pagination = quantidadePaginas > 1;
+    const newQuantidadePaginas = Math.ceil(filteredData.length / itemPorPagina);
+    setQuantidadePaginas(newQuantidadePaginas);
 
-  const filteredData = filterData.filter(
-    (item: DadosListaProps) =>
-      typeof item.livro === "string" &&
-      item.livro.toLowerCase().includes(textoBusca.toLowerCase())
-  );
+    const newPagination = newQuantidadePaginas > 1;
+    setPagination(newPagination);
+  };
+
+  useEffect(() => {
+    applyFilter(dados);
+  }, [dados]);
+
+  const handleSearch = () => {
+    applyFilter(dados);
+
+    setPage(0);
+  };
+
+  const handleSearchClear = () => {
+    setTituloBusca("");
+    applyFilter(dados);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    if (tituloBusca === "") {
+      handleSearchClear();
+    }
+  }, [tituloBusca]);
+
+  useEffect(() => {
+    quatidadePaginasInicial();
+  }, []);
 
   return (
     <div className="w-full h-full py-6 px-4 ">
@@ -49,8 +81,9 @@ export default function ListaDashboard({
         <div className="w-1/2 py-4 ">
           <InputBusca
             placeholderInput="Digite o livro que procura"
-            value={textoBusca}
-            onChange={(e) => setTextoBusca(e.target.value)}
+            value={tituloBusca}
+            onChange={(e) => setTituloBusca(e.target.value)}
+            onSearch={handleSearch}
           />
         </div>
       </div>
@@ -72,8 +105,9 @@ export default function ListaDashboard({
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredData &&
-                filteredData.map(({ usuario, telefone, livro, id }, index) => (
+              {filteredData
+                .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
+                .map(({ usuario, telefone, livro, id }, index) => (
                   <LinhasTabela
                     key={index}
                     id={id}

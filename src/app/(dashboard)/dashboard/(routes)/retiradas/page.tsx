@@ -22,6 +22,7 @@ export default function Retiradas() {
       const data = await res.json();
 
       setDados(data);
+
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
