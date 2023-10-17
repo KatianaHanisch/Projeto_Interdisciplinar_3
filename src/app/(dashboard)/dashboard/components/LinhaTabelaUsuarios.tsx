@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { LinhaTabelaUsuariosProps } from "@/app/types/DashboardTypes";
 
@@ -26,6 +27,7 @@ export default function LinhaTabelaUsuarios({
   const [abrirModalRemover, setAbrirModalRemover] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
   const { userId } = useAuth();
+  const router = useRouter();
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -87,11 +89,11 @@ export default function LinhaTabelaUsuarios({
       if (response.status === 201) {
         setSuccess("Informações alteradas com sucesso!");
 
-        fetchDataUsers!();
-
         setTimeout(() => {
           setSuccess("");
         }, 5000);
+
+        fetchDataUsers!();
 
         setLoading(false);
       } else if (response.status === 409) {

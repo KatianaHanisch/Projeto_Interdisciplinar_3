@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/");
     setTimeout(() => {
       sessionStorage.removeItem("d_token");
-    }, 1000);
+    }, 5000);
   };
 
   const validateToken = () => {

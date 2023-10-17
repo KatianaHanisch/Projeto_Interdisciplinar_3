@@ -147,7 +147,7 @@ export async function POST(request: Request) {
   }
 }
 
-//DELETE DO USUÁRIO
+//DELETE DOS USUÁRIOS DA DASHBOARD
 export async function DELETE(request: Request) {
   const data = await request.json();
 
@@ -156,9 +156,11 @@ export async function DELETE(request: Request) {
   try {
     const user = await prisma.usersDashboard.findFirst({
       where: {
-        id: data.id,
+        id: data,
       },
     });
+
+    console.log(user);
 
     if (!user) {
       return new Response("Usuário não encontrado.", {

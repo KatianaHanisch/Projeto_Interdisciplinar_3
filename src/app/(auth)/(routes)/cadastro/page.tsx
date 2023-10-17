@@ -35,6 +35,30 @@ export default function Cadastro() {
     });
   };
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatPhoneNumber(e.target.value);
+    setUserData({
+      ...userData,
+      phone: formattedValue,
+    });
+  };
+
+  const formatPhoneNumber = (phoneNumber: string) => {
+    // Remove todos os caracteres não numéricos do valor
+    const cleaned = phoneNumber.replace(/\D/g, "");
+
+    // Aplica a máscara "(xx) xxxxx-xxxx" ao número
+    const match = cleaned.match(/^(\d{2})(\d{0,5})(\d{0,4})$/);
+    if (match) {
+      const formatted = `(${match[1]}) ${match[2]}${
+        match[3] ? `-${match[3]}` : ""
+      }`;
+      return formatted;
+    }
+
+    return phoneNumber;
+  };
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
@@ -46,13 +70,18 @@ export default function Cadastro() {
       return;
     }
 
+    const cleanedPhoneNumber = userData.phone!.replace(/\D/g, "");
+
     try {
       const response = await fetch("/api/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          ...userData,
+          phone: cleanedPhoneNumber,
+        }),
       });
 
       if (response.status === 409) {
@@ -114,13 +143,35 @@ export default function Cadastro() {
                 value={userData.email}
                 onChange={handleChange}
               />
-              <Input
+
+              <div className="relative w-full ">
+                <input
+                  minLength={15}
+                  maxLength={15}
+                  required
+                  name="phone"
+                  type="text"
+                  value={userData.phone}
+                  onChange={handlePhoneChange}
+                  id="floating_outlined"
+                  className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="floating_outlined"
+                  className="absolute text-sm text-gray-4 dark:text-gray-700 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-gary-600 peer-focus:dark:text-gary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+                >
+                  Telefone
+                </label>
+              </div>
+
+              {/* <Input
                 type="text"
                 title="Telefone"
                 name="phone"
                 value={userData.phone}
                 onChange={handleChange}
-              />
+              /> */}
               <Input
                 type="password"
                 title="Senha"
