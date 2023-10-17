@@ -15,7 +15,7 @@ export default function TodosLivros() {
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
   const [page, setPage] = useState(0);
   const [pagination, setPagination] = useState(false);
-  const itemPorPagina = 5;
+  const itemPorPagina = 4;
 
   const applyFilter = (data: LivroProps[]) => {
     const filteredData = data.filter(
