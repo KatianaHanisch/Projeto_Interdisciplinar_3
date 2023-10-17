@@ -29,14 +29,16 @@ export default function HeaderHome() {
   const [newName, setNewName] = useState(String);
   const [newPhone, setNewPhone] = useState(String);
   const [newPassword, setNewPassword] = useState(String);
+  const [newEmail, setNewEmail] = useState(String);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
 
   const [open, setOpen] = useState(false);
 
-  const { logout, isAuthenticated, validateToken, name, email, phone } =
+  const { logout, isAuthenticated, validateToken, name, email, phone, userId } =
     useAuth();
 
   useEffect(() => {
@@ -58,17 +60,39 @@ export default function HeaderHome() {
     setAbrirModal(!abrirModal);
   }
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatPhoneNumber(e.target.value);
+    setNewPhone(formattedValue);
+  };
+
+  const formatPhoneNumber = (phoneNumber: string) => {
+    const cleaned = phoneNumber.replace(/\D/g, "");
+
+    const match = cleaned.match(/^(\d{2})(\d{0,5})(\d{0,4})$/);
+    if (match) {
+      const formatted = `(${match[1]}) ${match[2]}${
+        match[3] ? `-${match[3]}` : ""
+      }`;
+      return formatted;
+    }
+
+    return phoneNumber;
+  };
+
   async function handleChangeInfo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!newName && !newPassword && !newPhone) {
+    if (!newName && !newPassword && !newPhone && !newEmail) {
       return;
     }
 
+    const cleanedPhoneNumber = newPhone!.replace(/\D/g, "");
+
     const userData = {
-      email: email,
-      name: newName,
-      password: newPassword,
-      phone: newPhone,
+      id: userId,
+      email: newEmail || email,
+      name: newName || name,
+      password: newPassword || "",
+      phone: cleanedPhoneNumber || phone,
     };
 
     setLoading(true);
@@ -86,7 +110,14 @@ export default function HeaderHome() {
       const data = await response.json();
       const token = data.token;
 
-      if (response.status === 201) {
+      if (response.status === 409) {
+        setError("E-mail já cadastrado!");
+        setLoading(false);
+
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      } else if (response.status === 201) {
         setSuccess("Informações alteradas com sucesso!");
 
         sessionStorage.setItem("token", token);
@@ -333,12 +364,20 @@ export default function HeaderHome() {
                   <span>Telefone:</span>
                   <div className="flex items-center gap-3">
                     {isEditingPhone ? (
-                      <div className="flex w-full items-center gap-3">
-                        <Input
+                      <div className="relative flex w-full gap-3">
+                        <input
+                          minLength={15}
+                          maxLength={15}
+                          required
+                          name="phone"
                           type="text"
                           value={newPhone}
-                          onChange={(e: any) => setNewPhone(e.target.value)}
+                          onChange={handlePhoneChange}
+                          id="floating_outlined"
+                          className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+                          placeholder=" "
                         />
+
                         <span
                           className="cursor-pointer"
                           onClick={() => setIsEditingPhone(false)}
@@ -348,7 +387,9 @@ export default function HeaderHome() {
                       </div>
                     ) : (
                       <>
-                        <h1 className="text-gray-800">{phone}</h1>
+                        <h1 className="text-gray-800">
+                          {formatPhoneNumber(phone)}
+                        </h1>
                         <span
                           className="cursor-pointer"
                           onClick={() => setIsEditingPhone(true)}
@@ -359,10 +400,35 @@ export default function HeaderHome() {
                     )}
                   </div>
                 </div>
+
                 <div>
-                  <span>E-mail:</span>
+                  <span>E-mail</span>
                   <div className="flex items-center gap-3">
-                    <h1 className="text-gray-800">{email}</h1>
+                    {/* {isEditingEmail ? (
+                      <div className="flex w-full items-center gap-3">
+                        <Input
+                          type="e-mail"
+                          value={newEmail}
+                          onChange={(e: any) => setNewEmail(e.target.value)}
+                        />
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => setIsEditingEmail(false)}
+                        >
+                          <IoClose color="red" size={28} />
+                        </span>
+                      </div>
+                    ) : ( */}
+                    <>
+                      <h1 className="text-gray-800">{email}</h1>
+                      {/* <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingEmail(true)}
+                      >
+                        <FaEdit color="#1f2937" size={20} />
+                      </span> */}
+                    </>
+                    {/* )} */}
                   </div>
                 </div>
                 <div>

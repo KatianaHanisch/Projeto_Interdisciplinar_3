@@ -44,10 +44,8 @@ export default function Cadastro() {
   };
 
   const formatPhoneNumber = (phoneNumber: string) => {
-    // Remove todos os caracteres não numéricos do valor
     const cleaned = phoneNumber.replace(/\D/g, "");
 
-    // Aplica a máscara "(xx) xxxxx-xxxx" ao número
     const match = cleaned.match(/^(\d{2})(\d{0,5})(\d{0,4})$/);
     if (match) {
       const formatted = `(${match[1]}) ${match[2]}${

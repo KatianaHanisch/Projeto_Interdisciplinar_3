@@ -8,88 +8,71 @@ export async function PUT(request: Request) {
   const data = await request.json();
   const secretKey = process.env.SECRETKEY;
 
+  console.log(data);
+
   try {
     const user = await prisma.users.findFirst({
       where: {
-        email: data.email,
+        id: data.id,
       },
     });
 
-    if (user) {
-      if (data.name && data.password) {
-        const hashedPassword = await bcrypt.hash(data.password, 12);
-
-        await prisma.users.update({
-          where: {
-            email: user.email,
-          },
-          data: {
-            password: hashedPassword,
-            name: data.name,
-          },
-        });
-
-        const token = jwt.sign(
-          { userId: user.id, email: user.email, name: data.name },
-          secretKey!,
-          {
-            expiresIn: "24h",
-          }
-        );
-
-        return new Response(JSON.stringify({ token }), {
-          status: 201,
-        });
-      } else if (data.password !== "") {
-        const hashedPassword = await bcrypt.hash(data.password, 12);
-
-        await prisma.users.update({
-          where: {
-            email: user.email,
-          },
-          data: {
-            password: hashedPassword,
-          },
-        });
-
-        const token = jwt.sign(
-          { userId: user.id, email: user.email, name: data.name },
-          secretKey!,
-          {
-            expiresIn: "24h",
-          }
-        );
-
-        return new Response(JSON.stringify({ token }), {
-          status: 201,
-        });
-      } else if (data.name !== "") {
-        await prisma.users.update({
-          where: {
-            email: user.email,
-          },
-          data: {
-            name: data.name,
-          },
-        });
-
-        const token = jwt.sign(
-          { userId: user.id, email: user.email, name: data.name },
-          secretKey!,
-          {
-            expiresIn: "24h",
-          }
-        );
-
-        return new Response(JSON.stringify({ token }), {
-          status: 201,
-        });
-      }
-    } else {
+    if (!user) {
       return new Response("Usuário não encontrado.", {
         status: 404,
       });
     }
+
+    if (user.email !== data.email) {
+      const existingUser = await prisma.users.findFirst({
+        where: {
+          email: data.email,
+        },
+      });
+
+      if (existingUser) {
+        return new Response(
+          JSON.stringify({ error: "O email já está em uso." }),
+          {
+            status: 409,
+          }
+        );
+      }
+    }
+
+    let hashedPassword;
+    if (data.password) {
+      hashedPassword = await bcrypt.hash(data.password, 12);
+    }
+
+    await prisma.users.update({
+      where: {
+        email: user.email,
+      },
+      data: {
+        password: hashedPassword || user.password,
+        email: data.email,
+        phone: data.phone,
+        name: data.name,
+      },
+    });
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+        name: data.name,
+        phone: data.phone,
+      },
+      secretKey!,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    return new Response(JSON.stringify({ token }), {
+      status: 201,
+    });
   } catch (error) {
     console.error("Erro:", error);
     return new Response("Erro.", { status: 500 });
