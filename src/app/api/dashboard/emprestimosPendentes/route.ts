@@ -15,6 +15,9 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        dataEmprestimo: "desc",
+      },
     });
 
     const emprestimosPendentes = emprestimos.map((emprestimo) => ({

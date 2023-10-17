@@ -2,7 +2,6 @@ import { prisma } from "@/app/utils/Prisma";
 
 export async function PUT(request: Request) {
   try {
-    // Encontre todos os empréstimos com status 3
     const emprestimosStatus3 = await prisma.emprestimos.findMany({
       where: {
         status: 3,
@@ -10,7 +9,6 @@ export async function PUT(request: Request) {
     });
 
     for (const emprestimo of emprestimosStatus3) {
-      // Crie um registro na tabela emprestimosFinalizados
       await prisma.emprestimosFinalizados.create({
         data: {
           livro: {
@@ -24,7 +22,6 @@ export async function PUT(request: Request) {
         },
       });
 
-      // Delete o registro da tabela emprestimos
       await prisma.emprestimos.delete({
         where: {
           id: emprestimo.id,
@@ -78,6 +75,9 @@ export async function GET() {
             phone: true,
           },
         },
+      },
+      orderBy: {
+        dataDevolucao: "desc",
       },
     });
 

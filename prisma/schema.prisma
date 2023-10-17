@@ -93,6 +93,8 @@ model Reservas {
   userId Int
   user   Users @relation(fields: [userId], references: [id])
   status Int   @default(4)
+
+  dataReserva DateTime @default(now())
 }
 
 model EmprestimosFinalizados {

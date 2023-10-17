@@ -12,6 +12,9 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        dataReserva: "desc",
+      },
     });
 
     const livrosReservados = reservas.map((reserva) => ({
