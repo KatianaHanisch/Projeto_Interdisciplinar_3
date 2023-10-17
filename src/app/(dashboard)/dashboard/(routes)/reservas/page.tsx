@@ -7,7 +7,7 @@ import { DadosListaProps } from "@/app/types/DashboardTypes";
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 
-import { IoClose } from "react-icons/io5";
+import { MdDone } from "react-icons/md";
 import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
@@ -15,10 +15,11 @@ export default function Reservas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
-  async function getRetiradasPendentes() {
+  async function getReservas() {
     setCarregando(true);
+
     try {
-      const res = await fetch("/api/dashboard/retiradasPendentes");
+      const res = await fetch("/api/dashboard/reservasLivros");
       const data = await res.json();
 
       setDados(data);
@@ -30,7 +31,7 @@ export default function Reservas() {
   }
 
   useEffect(() => {
-    getRetiradasPendentes();
+    getReservas();
   }, []);
 
   return (
@@ -55,12 +56,12 @@ export default function Reservas() {
             </div>
           ) : (
             <ListaDashboard
-              recarregarDados={getRetiradasPendentes}
+              recarregarDados={getReservas}
               dados={dados}
-              tituloButton="Retirado"
-              corButton="vermelha"
-              tipo="retirado"
-              Icone={<IoClose size={20} color={"#ffffff"} />}
+              tituloButton="Reservado"
+              corButton="verde"
+              tipo="reserva"
+              Icone={<MdDone size={22} color={"#ffffff"} />}
             />
           )}
         </>

@@ -26,7 +26,7 @@ export default function LinhasTabela({
   const [carregando, setCarregando] = useState(false);
 
   function abrirModalConfirmacao() {
-    if (tipo === "finalizado") {
+    if (tipo === "finalizado" || tipo === "reserva") {
       setAbrirModal(false);
     } else {
       setAbrirModal(!abrirModal);
