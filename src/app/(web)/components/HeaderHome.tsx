@@ -264,6 +264,17 @@ export default function HeaderHome() {
                       Configurações
                     </button>
                   </div>
+                  <div className="w-10 mt-6 h-10 flex items-center justify-center rounded-full cursor-pointer">
+                    <button
+                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                      onClick={() => logout()}
+                    >
+                      <span>
+                        <BiExit size={20} color="white" />
+                      </span>{" "}
+                      Sair
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center">

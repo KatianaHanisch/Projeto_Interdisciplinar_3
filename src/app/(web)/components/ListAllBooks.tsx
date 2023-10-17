@@ -69,60 +69,58 @@ export default function TodosLivros() {
   }, []);
 
   return (
-    <div className="mt-40 mb-40 max-w-[1200px] mx-40">
-      <div className="flex flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0  max-w-[1200px] m-auto justify-between">
-        <FilterBooks
-          onChange={(e) => setTituloBusca(e.target.value)}
-          value={tituloBusca}
-        />
-        {carregando ? (
-          <div className="w-full flex  items-center justify-center">
-            <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
-          </div>
-        ) : (
-          <>
-            {filteredData.length === 0 ? (
-              <div className="w-full h-11/12 flex flex-col items-center justify-center ">
-                <VscSearchStop color="#8a9099" size={35} />
-                <p className="text-gray-400 text-lg">
-                  O livro buscado não foi encontrado
-                </p>
-              </div>
-            ) : (
-              <>
-                <div className="flex flex-col gap-8 items-center">
-                  {filteredData.map(
-                    (
-                      { id, titulo, autor, categoria, sinopse, capaUrl },
-                      index
-                    ) => (
-                      <div key={index}>
-                        <CardBookDetailed
-                          id={id}
-                          titulo={titulo}
-                          autor={autor}
-                          categoria={categoria}
-                          sinopse={sinopse}
-                          capaUrl={capaUrl}
-                        />
-                        <div className="border-b-[1px]"></div>
-                      </div>
-                    )
-                  )}
-                </div>
-              </>
-            )}
-            <div className="flex justify-between mt-4">
-              {pagination ? (
-                <Pagination
-                  quantidadePaginas={quantidadePaginas}
-                  setPage={setPage}
-                />
-              ) : null}
+    <div className="flex mt-40 flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
+      <FilterBooks
+        onChange={(e) => setTituloBusca(e.target.value)}
+        value={tituloBusca}
+      />
+      {carregando ? (
+        <div className="w-full flex  items-center justify-center">
+          <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+        </div>
+      ) : (
+        <div className="flex w-full flex-col items-center justify-center">
+          {filteredData.length === 0 ? (
+            <div className=" flex flex-col items-center mb-40">
+              <VscSearchStop color="#8a9099" size={35} />
+              <p className="text-gray-400 text-lg">
+                O livro buscado não foi encontrado
+              </p>
             </div>
-          </>
-        )}
-      </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-16 items-center">
+                {filteredData.map(
+                  (
+                    { id, titulo, autor, categoria, sinopse, capaUrl },
+                    index
+                  ) => (
+                    <div key={index}>
+                      <CardBookDetailed
+                        id={id}
+                        titulo={titulo}
+                        autor={autor}
+                        categoria={categoria}
+                        sinopse={sinopse}
+                        capaUrl={capaUrl}
+                      />
+                      <div className="border-b-[1px]"></div>
+                    </div>
+                  )
+                )}
+              </div>
+            </>
+          )}
+          <div className="flex justify-between mt-4">
+            {pagination ? (
+              <Pagination
+                quantidadePaginas={quantidadePaginas}
+                setPage={setPage}
+              />
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

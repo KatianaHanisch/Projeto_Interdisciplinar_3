@@ -9,7 +9,7 @@ type LivroBuscaProps = {
 
 export default function FilterBooks({ value, onChange }: LivroBuscaProps) {
   return (
-    <div className="">
+    <div className="xl:mb-40">
       <div className="flex items-center justify-center w-[300px] bg-gray-50 px-3 py-1 border border-gray-400 rounded-md">
         <BiSearch color="#89909b" size={22} />
         <input
