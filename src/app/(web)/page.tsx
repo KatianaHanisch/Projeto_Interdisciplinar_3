@@ -20,7 +20,7 @@ export default function Home() {
   async function getLivros() {
     setCarregando(true);
     try {
-      const response = await fetch("/api/todosLivros");
+      const response = await fetch("/api/web/livrosRecemAdicionados");
       const data = await response.json();
       setLivros(data);
 

@@ -12,22 +12,6 @@ type Props = {
 };
 
 export default function ListRecentBooks({ livros, carregando }: Props) {
-  const [page, setPage] = useState(0);
-  const [filterData, setFilterData] = useState<LivroProps[]>([]);
-  const [quantidadePaginas, setQuantidadePaginas] = useState(0);
-
-  const itemPorPagina = 12;
-
-  useEffect(() => {
-    setFilterData(
-      livros.filter((item: LivroProps, index: number) => {
-        return (
-          index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
-        );
-      })
-    );
-  }, [page, livros]);
-
   return (
     <section className="flex flex-col items-center justify-center">
       <h1 className="md:text-3xl text-2xl mb-16 m-auto text-slate-800 font-medium">
@@ -38,19 +22,17 @@ export default function ListRecentBooks({ livros, carregando }: Props) {
           <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
         ) : (
           <>
-            {filterData &&
-              filterData.map(
-                ({ id, titulo, autor, categoria, capaUrl }, index) => (
-                  <CardBook
-                    key={index}
-                    id={id}
-                    autor={autor}
-                    titulo={titulo}
-                    categoria={categoria}
-                    capaUrl={capaUrl}
-                  />
-                )
-              )}
+            {livros &&
+              livros.map(({ id, titulo, autor, categoria, capaUrl }, index) => (
+                <CardBook
+                  key={index}
+                  id={id}
+                  autor={autor}
+                  titulo={titulo}
+                  categoria={categoria}
+                  capaUrl={capaUrl}
+                />
+              ))}
           </>
         )}
       </div>
