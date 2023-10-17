@@ -75,7 +75,7 @@ export default function TodosLivros() {
         value={tituloBusca}
       />
       {carregando ? (
-        <div className="w-full flex  items-center justify-center">
+        <div className="w-full flex  items-center justify-center mb-40">
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         </div>
       ) : (
