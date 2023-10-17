@@ -25,7 +25,6 @@ export default function Retiradas() {
       const data = await res.json();
 
       setDados(data);
-      console.log(data);
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -60,7 +59,7 @@ export default function Retiradas() {
             <ListaDashboard
               dados={dados}
               recarregarDados={getEmprestimosFinalizados}
-              tituloButton="Devolvido"
+              tituloButton="Finalizado"
               corButton="verde"
               tipo="finalizado"
               Icone={<MdDone size={22} color={"#ffffff"} />}
