@@ -247,7 +247,7 @@ export default function Adicionar() {
               onChange={handleChange}
             />
             <Textarea
-              value={livroData.sinopse}
+              value={livroData.sinopse!}
               name="sinopse"
               onChange={handleTextareaChange}
             />

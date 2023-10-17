@@ -81,7 +81,7 @@ export default function TodosLivros() {
   }, []);
 
   return (
-    <div className="mt-40 mb-40 max-w-[1200px] mx-40">
+    <div className="mt-40 w-full mb-40">
       <div className="flex flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
         <FilterBooks
           onChange={(e) => setTituloBusca(e.target.value)}
