@@ -3,7 +3,19 @@
 
 import { PrismaClient } from "@prisma/client";
 
+import { LivroProps } from "@/app/types/Types";
+
 const prisma = new PrismaClient();
+
+async function createLivro(data: any) {
+  const livro = await prisma.livros.upsert({
+    where: { titulo: data.titulo },
+    update: {},
+    create: data,
+  });
+
+  return livro;
+}
 
 async function main() {
   const role = await prisma.roles.upsert({
@@ -48,10 +60,8 @@ async function main() {
     },
   });
 
-  const livro = await prisma.livros.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
+  const livrosData = [
+    {
       titulo: "A rainha vermelha",
       autor: "Victoria Aveyard",
       categoria: "fantasia",
@@ -60,11 +70,7 @@ async function main() {
       capaUrl:
         "https://res.cloudinary.com/dtlenywzp/image/upload/v1695844537/projeto_interdisplinar_uplouds/dakmm7syj6pooylkaqww.jpg",
     },
-  });
-  const livro2 = await prisma.livros.upsert({
-    where: { id: 2 },
-    update: {},
-    create: {
+    {
       titulo: "A rebelde do deserto",
       autor: "Alwyn Hamilton",
       categoria: "ficção",
@@ -73,11 +79,7 @@ async function main() {
       capaUrl:
         "https://res.cloudinary.com/dtlenywzp/image/upload/v1695844977/projeto_interdisplinar_uplouds/s2zznksdvcccjq4oyqzj.jpg",
     },
-  });
-  const livro3 = await prisma.livros.upsert({
-    where: { id: 3 },
-    update: {},
-    create: {
+    {
       titulo: "O príncipe cruel",
       autor: "Holly Black",
       categoria: "fantasia épica",
@@ -86,7 +88,56 @@ async function main() {
       capaUrl:
         "https://res.cloudinary.com/dtlenywzp/image/upload/v1695845172/projeto_interdisplinar_uplouds/mifmu2mtsagfumhzzxym.jpg",
     },
-  });
+    {
+      titulo: "O conde de monte cristo",
+      autor: "Alexandre Dumas",
+      categoria: "Literatura",
+      sinopse:
+        "Um dos maiores clássicos da literatura francesa há mais de 150 anos, “O conde de Monte-Cristo” gira em torno de Edmond Dantè, que é preso por um crime que não cometeu. Ao sair da prisão, Edmond vai à busca de vingança contra seus inimigos. Uma trama repleta de reviravoltas dignas de um jogo de xadrez.",
+      capaUrl:
+        "https://res.cloudinary.com/dtlenywzp/image/upload/v1697556730/projeto_interdisplinar_uplouds/lynpcyv19a9ogyhiml4o.jpg",
+    },
+    {
+      titulo: "Os miseraveis",
+      autor: "Victor Hugo",
+      categoria: "Literatura",
+      sinopse:
+        "Um clássico da literatura mundial, esta obra é uma poderosa denúncia a todos os tipos de injustiça humana. Narra a emocionante história de Jean Valjean ― o homem que, por ter roubado um pão, é condenado a dezenove anos de prisão. Os miseráveis é um livro inquietantemente religioso e político, com uma das narrativas mais envolventes já criadas.",
+      capaUrl:
+        "https://res.cloudinary.com/dtlenywzp/image/upload/v1697556758/projeto_interdisplinar_uplouds/igvpsn1n6tdzkf1wtvcj.jpg",
+    },
+    {
+      titulo: "Nevernight",
+      autor: "Jay Kristoff",
+      categoria: "Fantasia",
+      sinopse:
+        "Destinada a destruir impérios, Mia Corvere é apenas uma criança quando tem sua primeira lição sobre a morte. Mais tarde, aos 16 anos, a jovem que cresceu nas sombras inicia sua jornada para manter a promessa feita no dia em que perdeu tudo. Entretanto, a chance de vencer inimigos tão poderosos será efêmera, e se Mia deseja vingança, deve se tornar uma assassina sem igual. Assim, ela precisará provar suas habilidades diante dos mais perigosos amigos e inimigos, e sobreviver a assassinos, mentirosos e demônios no cerne de um lugar que cultua o assassinato. A Igreja Vermelha não é uma escola comum, mas Mia Corvere também não é uma estudante qualquer. As sombras a acompanham, e bebem todo seu medo. Nevernight é o primeiro volume da trilogia best-seller As crônicas da quasinoite, agora em sua segunda edição.",
+      capaUrl:
+        "https://res.cloudinary.com/dtlenywzp/image/upload/v1697556785/projeto_interdisplinar_uplouds/fzkgi1t4vfdq7ycdw6qj.jpg",
+    },
+    {
+      titulo: "A guerra da papoula",
+      autor: "R. F. Kuang",
+      categoria: "Fantasia",
+      sinopse:
+        "A guerra está no coração do Império Nikara, e o ópio corre em suas veias. No passado, os heróis que formaram a Trindade uniram a nação contra a poderosa Federação de Mugen, e acreditava-se que eles caminhavam entre os deuses. Décadas depois, a paz reina, mas há boatos de que a Terceira Guerra da Papoula pode estourar a qualquer momento, e a academia militar mais prestigiada do Império prepara seus estudantes para o combate: filhos da elite e, inesperadamente, uma órfã de guerra. Obrigada a se casar com um homem asqueroso, a jovem Rin fez de tudo para reescrever o próprio destino. Estudou para o exame imperial por pura teimosia e, quando conseguiu uma vaga na academia, acreditou estar salva. Mas ela logo aprende que uma garota pobre e de pele escura não tem muito valor naquele lugar. Hostilizada pelos professores e colegas, Rin treina com afinco. Com a ajuda de um mestre excêntrico e de substâncias psicoativas, a jovem passa a cultivar poderes xamânicos e a acessar a força incandescente de uma deusa vingativa, a perigosa Fênix. Quando o conflito com o país vizinho eclode, Rin entende que, para ganhar a guerra, talvez tenha que perder sua humanidade.",
+      capaUrl:
+        "https://res.cloudinary.com/dtlenywzp/image/upload/v1697556830/projeto_interdisplinar_uplouds/wgaxsjzr7rtpdvpedquf.jpg",
+    },
+    {
+      titulo: "A sociedade de Atlas",
+      autor: "Olivie Blake",
+      categoria: "Fantasia",
+      sinopse:
+        "Conhecimento é carnificina. É isso que vão descobrir os mágicos selecionados para a iniciação na Sociedade Alexandrina, instituição secreta que abriga os guardiões do conhecimento perdido das grandes civilizações da Antiguidade. Aqueles que conquistam um lugar entre os Alexandrinos se tornam símbolos de riqueza, poder e prestígio. A cada década, são convocados apenas os seis mágicos mais talentosos e excepcionais do mundo. Dessa vez, são: Libby Rhodes e Nico de Varona, que conseguem controlar todos os elementos da fisicalidade; Reina Mori, naturalista capaz de intuir a linguagem da vida; Parisa Kamali, telepata que navega pelas entranhas do subconsciente; Callum Nova, empata que manipula os desejos e vontades das pessoas; e Tristan Caine, que possui a rara habilidade de ver através das ilusões e criar uma nova estrutura da realidade. Recrutados pelo misterioso Atlas Blakely, os seis terão um ano para provar a serventia de seus poderes à Sociedade e precisarão trabalhar juntos para decifrar enigmas envolvendo tempo e espaço, acaso e destino, vida e morte. Mas apenas cinco poderão concluir a iniciação. Conforme são desafiados por missões cada vez mais sombrias, os mágicos vão descobrir que conhecimento é poder e que o poder é viciante e perigoso, principalmente ao cair nas mãos erradas.",
+      capaUrl:
+        "https://res.cloudinary.com/dtlenywzp/image/upload/v1697556881/projeto_interdisplinar_uplouds/hjsaxtnhte69vvtjekzb.jpg",
+    },
+  ];
+
+  for (const livroData of livrosData) {
+    await createLivro(livroData);
+  }
 }
 
 main()
