@@ -6,6 +6,7 @@ interface AuthData {
   isAuthenticated: boolean;
   name: string;
   email: string;
+  userId: string;
   phone: string;
   logout: () => void;
   validateToken: () => void;
@@ -19,6 +20,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [name, setName] = useState(String);
   const [phone, setPhone] = useState(String);
+  const [userId, setUserId] = useState(String);
   const [email, setEmail] = useState(String);
   const router = useRouter();
 
@@ -40,6 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     } else {
       const tokenData = JSON.parse(atob(token!.split(".")[1]));
+      setUserId(tokenData.userId);
       setName(tokenData.name);
       setEmail(tokenData.email);
       setPhone(tokenData.phone);
@@ -90,12 +93,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const tokenData = JSON.parse(atob(tokendash.split(".")[1]));
       if (tokenData.role) {
         setIsAuthenticated(true);
+        setUserId(tokenData.userId);
         setName(tokenData.name);
         setEmail(tokenData.email);
       } else {
         setIsAuthenticated(false);
         setName("");
         setEmail("");
+        setUserId("");
 
         router.push("/not-found");
       }
@@ -118,6 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const authData: AuthData = {
     isAuthenticated,
+    userId,
     name,
     email,
     phone,

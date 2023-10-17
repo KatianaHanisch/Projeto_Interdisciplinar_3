@@ -151,10 +151,12 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   const data = await request.json();
 
+  console.log(data);
+
   try {
     const user = await prisma.usersDashboard.findFirst({
       where: {
-        id: parseInt(data.id, 10),
+        id: data.id,
       },
     });
 

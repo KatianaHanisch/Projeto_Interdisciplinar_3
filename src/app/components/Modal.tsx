@@ -5,6 +5,7 @@ type Props = {
   title: string;
   children: React.ReactNode;
   textButton: string;
+  disabled?: any;
   confirmarModal?: any;
   cancelarModal?: () => void;
   fecharModal?: () => void;
@@ -19,6 +20,7 @@ export default function Modal({
   children,
   textButton,
   loading,
+  disabled,
 }: Props) {
   return (
     <div className="justify-center items-center flex bg-black bg-opacity-20 backdrop-blur-sm overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -53,6 +55,7 @@ export default function Modal({
                   : "active:bg-emerald-600 bg-emerald-600"
               }  font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150`}
               type="button"
+              disabled={disabled}
               onClick={confirmarModal}
             >
               {loading ? (

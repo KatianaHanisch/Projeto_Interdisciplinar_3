@@ -11,6 +11,7 @@ import ToastSuccess from "@/app/components/ToastSuccess";
 
 import { MdPersonAddAlt1 } from "react-icons/md";
 import { Roles } from "@/app/types/Types";
+import { VscSearchStop } from "react-icons/vsc";
 
 export default function Usuarios() {
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
@@ -22,6 +23,7 @@ export default function Usuarios() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,16 +44,21 @@ export default function Usuarios() {
   };
 
   const fetchDataUsers = async () => {
-    const response = await fetch("/api/dashboard/user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-
-    setDados(data);
+    setCarregando(true);
+    try {
+      const response = await fetch("/api/dashboard/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setCarregando(false);
+      const data = await response.json();
+      setDados(data);
+    } catch (error) {
+      console.log(error);
+      setCarregando(false);
+    }
   };
   const fetchDataRoles = async () => {
     const response = await fetch("/api/dashboard/roles", {
@@ -147,11 +154,26 @@ export default function Usuarios() {
         abrirModal={abrirModalAdicionarUsuario}
       />
 
-      <ListaUsuarios
-        dados={dados}
-        roles={roles}
-        fetchDataUsers={fetchDataUsers}
-      />
+      {carregando ? (
+        <div className="flex items-center justify-center w-full h-full">
+          <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+        </div>
+      ) : (
+        <>
+          {dados.length < 1 ? (
+            <div className="w-full h-80 flex items-center justify-center flex-col  ">
+              <VscSearchStop size={40} color="#8a9099" />
+              <p className="text-gray-600 text-lg">Nenhum usuário cadastrado</p>
+            </div>
+          ) : (
+            <ListaUsuarios
+              dados={dados}
+              roles={roles}
+              fetchDataUsers={fetchDataUsers}
+            />
+          )}
+        </>
+      )}
 
       {abrirModalAdicionar && (
         <Modal

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
+import { useAuth } from "@/app/context/AuthContext";
 import { LinhaTabelaUsuariosProps } from "@/app/types/DashboardTypes";
 
 import Modal from "@/app/components/Modal";
@@ -13,6 +13,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
+import SnackBar from "@/app/components/SnackBar";
 
 export default function LinhaTabelaUsuarios({
   id,
@@ -24,6 +25,7 @@ export default function LinhaTabelaUsuarios({
 }: LinhaTabelaUsuariosProps) {
   const [abrirModalRemover, setAbrirModalRemover] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
+  const { userId } = useAuth();
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -41,6 +43,9 @@ export default function LinhaTabelaUsuarios({
 
   function abrirModal() {
     setAbrirModalRemover(!abrirModalRemover);
+  }
+  function fecharSnack() {
+    setSuccess("");
   }
 
   const abrirModalEditarUsuario = () => {
@@ -106,17 +111,27 @@ export default function LinhaTabelaUsuarios({
     }
   }
 
-  async function handleDeleteUser() {
+  async function handleDeleteUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (id === Number(userId)) {
+      return;
+    }
+    setLoading(true);
+
     try {
-      const response = await fetch("/api/dashboard/user/" + id, {
+      const response = await fetch("/api/dashboard/user", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(id),
       });
 
-      if (response.status === 201) {
-        setSuccess("Usuáio deletedo com sucesso!");
+      if (response.status === 200) {
+        abrirModal();
+        setSuccess("Usuário excluído com sucesso!");
+
         fetchDataUsers!();
 
         setTimeout(() => {
@@ -124,8 +139,15 @@ export default function LinhaTabelaUsuarios({
         }, 5000);
 
         setLoading(false);
+      } else if (response.status === 404) {
+        setError("Usuário não encontrado!");
+        setLoading(false);
+
+        setTimeout(() => {
+          setError("");
+        }, 5000);
       } else {
-        setError("Erro ao deletar o usuário!");
+        setError("Erro ao excluir usuário!");
         setLoading(false);
 
         setTimeout(() => {
@@ -140,6 +162,13 @@ export default function LinhaTabelaUsuarios({
 
   return (
     <>
+      {success && (
+        <SnackBar
+          mensagem={success}
+          tipo="sucesso"
+          fecharSnackBar={fecharSnack}
+        />
+      )}
       <tr className="text-sm font-medium text-gray-700">
         <td className="px-6 py-3">{id}</td>
         <td className="px-6 py-3">{name}</td>
@@ -150,13 +179,19 @@ export default function LinhaTabelaUsuarios({
           </button>
         </td>
         <td className="px-6 py-3">
-          <button onClick={abrirModal} className="p-1">
+          <button
+            onClick={abrirModal}
+            disabled={id === Number(userId)}
+            className="p-1"
+          >
             <BiSolidTrash size={21} color={"#374151"} />
           </button>
         </td>
       </tr>
       {abrirModalRemover && (
         <Modal
+          disabled={loading}
+          loading={loading}
           cancelarModal={abrirModal}
           confirmarModal={handleDeleteUser}
           fecharModal={abrirModal}
@@ -169,7 +204,6 @@ export default function LinhaTabelaUsuarios({
               <span className="font-medium text-gray-700"> {name} </span>
               do sistema?
             </p>
-            {success && <ToastSuccess text={success} />}
             {error && <Toast text={error} />}
           </div>
         </Modal>
