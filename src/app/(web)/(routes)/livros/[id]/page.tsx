@@ -114,20 +114,37 @@ export default function Detalhes({ params }: { params: { id: string } }) {
         },
       });
 
-      if (response.status === 400) {
+      if (response.status === 404) {
         setTipoSnackBar("erro");
         setMensagemSnackBar(
-          "Você já realizou o empréstimo desse livro e ainda não fez a devolução"
+          "Você atigiu a quantidade limite de empréstimos simultâneos"
         );
         setAbrirSnackBar(true);
 
         setTimeout(() => {
           setAbrirSnackBar(false);
         }, 4000);
+
+        setCarregandoEmprestimo(false);
+      }
+
+      if (response.status === 400) {
+        setTipoSnackBar("erro");
+        setMensagemSnackBar(
+          "Você já realizou o empréstimo desse livro e ainda não fez a devolução. Faça a devolução de alguma livro para proseguir"
+        );
+        setAbrirSnackBar(true);
+
+        setTimeout(() => {
+          setAbrirSnackBar(false);
+        }, 4000);
+
+        setCarregandoEmprestimo(false);
       }
 
       if (response.status === 201) {
         await atualizarQuantidadeDisponivel();
+        setCarregandoEmprestimo(false);
       }
       setCarregandoEmprestimo(false);
     } catch (error) {

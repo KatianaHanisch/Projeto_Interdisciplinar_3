@@ -79,16 +79,6 @@ export default function Remover() {
     }
   }, [tituloBusca]);
 
-  // useEffect(() => {
-  //   setFilterData(
-  //     livros.filter((item: LivroProps, index: number) => {
-  //       return (
-  //         index >= page * itemPorPagina && index < (page + 1) * itemPorPagina
-  //       );
-  //     })
-  //   );
-  // }, [page, livros]);
-
   useEffect(() => {
     getLivros();
   }, []);

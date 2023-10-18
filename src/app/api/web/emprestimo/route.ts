@@ -38,6 +38,22 @@ export async function POST(request: Request) {
 
       const userId = decodedToken.userId;
 
+      const emprestimosAtivos = await prisma.emprestimos.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      if (emprestimosAtivos.length > 3) {
+        await prisma.$disconnect();
+        return new Response(
+          "Você atigiu a quantidade limite de empréstimos simultâneos",
+          {
+            status: 404,
+          }
+        );
+      }
+
       const emprestimoExistente = await prisma.emprestimos.findFirst({
         where: {
           livroId: Number(id),
@@ -87,7 +103,6 @@ export async function POST(request: Request) {
   }
 }
 
-//GET de todos os empréstimos
 export async function GET() {
   const users = await prisma.emprestimosFinalizados.findMany();
   return new Response(JSON.stringify(users), { status: 200 });
