@@ -17,7 +17,6 @@ export default function CardBookDetailed({
       className="flex m-auto justify- items-center sm:flex-row flex-col relative gap-3 hover:shadow-md transition-transform hover:scale-[1.01] cursor-pointer"
     >
       <div className="relative w-[170px]">
-        <span className="absolute left-0 bg-slate-50 px-1 ">Status</span>
         <Image src={capaUrl} width={170} height={240} alt="Capa do livro" />
       </div>
 
@@ -29,7 +28,7 @@ export default function CardBookDetailed({
           similique nesciunt doloribus temporibus, perspiciatis odio laboriosam
           ab quos labore unde eum.
         </p>
-        <h3 className="mt-[-5px] mb-2 font-semibold">{autor}</h3>
+        <h3 className="mt-[-5px]  font-semibold">{autor}</h3>
         <h3 className="mt-[-5px] font-light">{categoria}</h3>
       </div>
     </Link>

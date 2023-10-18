@@ -11,5 +11,7 @@ export async function GET() {
     return new Response(JSON.stringify(livros), { status: 200 });
   } catch (error) {
     await prisma.$disconnect();
+
+    return new Response("Não foi possível acessar os dados", { status: 500 });
   }
 }
