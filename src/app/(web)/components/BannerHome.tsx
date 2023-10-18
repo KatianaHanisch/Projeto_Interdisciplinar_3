@@ -1,8 +1,68 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 import { BsBook } from "react-icons/bs";
 
 export default function BannerHome() {
+  const [booksCount, setBooksCount] = useState<number | undefined>();
+  const [usersCount, setUsersCount] = useState<number | undefined>();
+  const [emprestimosCount, setEsprestimosCount] = useState<
+    number | undefined
+  >();
+
+  const fetchData = async () => {
+    //GET DOS DOS LIVROS
+    const response = await fetch("/api/todosLivros", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setBooksCount(data.length);
+    } else {
+      console.error("Failed to fetch data");
+    }
+
+    //GET DOS EMPRÉSTIMOS
+    const responseEmprestimos = await fetch("/api/web/emprestimo", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (responseEmprestimos.ok) {
+      const data = await responseEmprestimos.json();
+      setEsprestimosCount(data.length);
+    } else {
+      console.error("Failed to fetch data");
+    }
+
+    //GET DOS USUÁRIOS
+    const responseUsers = await fetch("/api/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (responseUsers.ok) {
+      const data = await responseUsers.json();
+      setUsersCount(data.length);
+    } else {
+      console.error("Failed to fetch data");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section className="text-gray-900">
       <div className="hidden md:block">
@@ -27,19 +87,31 @@ export default function BannerHome() {
       <div className="md:flex bg-[#EBEBEB] md:h-[80px] h-[60px] items-center justify-center px-6">
         <div className="flex justify-between md:w-[1200px] text-base lg:text-xl">
           <div className="flex mx-auto md:mx-0 mt-3 md:mt-0 flex-col items-center">
-            <p className="z-10">Mais de tantos livros disponíveis</p>
+            {booksCount !== undefined ? (
+              <p className="z-10">{`São ${booksCount} livros disponíveis`}</p>
+            ) : (
+              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
+            )}
             <span className="absolute  bg-[#EBEBEB] mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl">
               <BsBook />
             </span>
           </div>
           <div className="hidden md:flex flex-col items-center">
-            <p className="z-10">Mais de tantos livros disponíveis</p>
+            {emprestimosCount !== undefined ? (
+              <p className="z-10">{`Total de ${emprestimosCount} livros emprestados`}</p>
+            ) : (
+              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
+            )}
             <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
               <BsBook />
             </span>
           </div>
           <div className="hidden md:flex flex-col items-center">
-            <p className="z-10">Mais de tantos livros disponíveis</p>
+            {usersCount !== undefined ? (
+              <p className="z-10">{`Mais de ${usersCount} usuários cadastrados`}</p>
+            ) : (
+              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
+            )}
             <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
               <BsBook />
             </span>

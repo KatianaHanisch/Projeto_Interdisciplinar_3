@@ -86,3 +86,9 @@ export async function POST(request: Request) {
     });
   }
 }
+
+//GET de todos os empréstimos
+export async function GET() {
+  const users = await prisma.emprestimosFinalizados.findMany();
+  return new Response(JSON.stringify(users), { status: 200 });
+}

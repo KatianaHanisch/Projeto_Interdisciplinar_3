@@ -8,8 +8,6 @@ export async function PUT(request: Request) {
   const data = await request.json();
   const secretKey = process.env.SECRETKEY;
 
-  console.log(data);
-
   try {
     const user = await prisma.users.findFirst({
       where: {
@@ -77,4 +75,10 @@ export async function PUT(request: Request) {
     console.error("Erro:", error);
     return new Response("Erro.", { status: 500 });
   }
+}
+
+//GET de todos os usuários
+export async function GET() {
+  const users = await prisma.users.findMany();
+  return new Response(JSON.stringify(users), { status: 200 });
 }
