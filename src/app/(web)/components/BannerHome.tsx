@@ -87,31 +87,30 @@ export default function BannerHome() {
       <div className="md:flex bg-[#EBEBEB] md:h-[80px] h-[60px] items-center justify-center px-6">
         <div className="flex justify-between md:w-[1200px] text-base lg:text-xl">
           <div className="flex mx-auto md:mx-0 mt-3 md:mt-0 flex-col items-center">
-            {booksCount !== undefined ? (
-              <p className="z-10">{`São ${booksCount} livros disponíveis`}</p>
-            ) : (
-              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
-            )}
+            <p className="z-10 gap-2 flex">
+              São <span className="flex items-end">{booksCount}</span> livros
+              disponíveis
+            </p>
             <span className="absolute  bg-[#EBEBEB] mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl">
               <BsBook />
             </span>
           </div>
           <div className="hidden md:flex flex-col items-center">
-            {emprestimosCount !== undefined ? (
-              <p className="z-10">{`Total de ${emprestimosCount} livros emprestados`}</p>
-            ) : (
-              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
-            )}
+            <p className="z-10 gap-2 flex">
+              Total de{" "}
+              <span className="flex items-end">{emprestimosCount}</span> livros
+              emprestados
+            </p>
             <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
               <BsBook />
             </span>
           </div>
           <div className="hidden md:flex flex-col items-center">
-            {usersCount !== undefined ? (
-              <p className="z-10">{`Mais de ${usersCount} usuários cadastrados`}</p>
-            ) : (
-              <span className="h-6 z-10 w-6 bg-transparent block rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></span>
-            )}
+            <p className="z-10 gap-2 flex">
+              Mais de <span className="flex items-end">{usersCount}</span>{" "}
+              usuários cadastrados
+            </p>
+
             <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
               <BsBook />
             </span>
