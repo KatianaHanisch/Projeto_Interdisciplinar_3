@@ -107,11 +107,11 @@ export default function ListaDashboard({
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredData
                 .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
-                .map(({ usuario, telefone, livro, id }, index) => (
+                .map(({ nome, telefone, livro, id }, index) => (
                   <LinhasTabela
                     key={index}
                     id={id}
-                    nome={usuario}
+                    nome={nome}
                     livro={livro}
                     telefone={telefone}
                     recarregarDados={recarregarDados}

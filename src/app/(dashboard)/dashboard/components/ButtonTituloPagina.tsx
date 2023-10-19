@@ -4,10 +4,16 @@ export default function ButtonRelatorio({
   tituloButton,
   Icone,
   abrirModal,
+  tipoButton,
+  gerarRelatorio,
 }: ButtonTituloPaginaProps) {
   return (
     <button
-      onClick={abrirModal}
+      onClick={
+        tipoButton === "relatorio"
+          ? () => gerarRelatorio && gerarRelatorio([])
+          : abrirModal
+      }
       className="px-4 py-2 bg-gray-300  flex items-center rounded-md font-semibold text-lg text-gray-800 hover:bg-gray-400 transition"
     >
       <div className="mr-1">

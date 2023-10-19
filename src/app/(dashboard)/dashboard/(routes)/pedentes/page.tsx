@@ -11,9 +11,20 @@ import { IoClose } from "react-icons/io5";
 import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
+import ExportarPDF from "@/app/reports/ExportarPDF";
+
 export default function Retiradas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
+
+  function formatarTelefone(telefone: string) {
+    const numeroLimpo = telefone.replace(/\D/g, "");
+
+    const formato = /(\d{2})(\d{4,})(\d{4})/;
+    const numeroFormatado = numeroLimpo.replace(formato, "($1) $2-$3");
+
+    return numeroFormatado;
+  }
 
   async function getEmprestimosPendentes() {
     setCarregando(true);
@@ -21,7 +32,13 @@ export default function Retiradas() {
       const res = await fetch("/api/dashboard/emprestimosPendentes");
       const data = await res.json();
 
-      setDados(data);
+      const dadosFormatados = data.map((item: DadosListaProps) => ({
+        ...item,
+        telefone: formatarTelefone(item.telefone!),
+      }));
+
+      setDados(dadosFormatados);
+
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -39,6 +56,8 @@ export default function Retiradas() {
         tituloPagina="Empréstimos pedentes"
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}
+        gerarRelatorio={() => ExportarPDF(dados)}
+        tipoButton="relatorio"
       />
       {carregando ? (
         <div className="flex items-center justify-center w-full h-full">

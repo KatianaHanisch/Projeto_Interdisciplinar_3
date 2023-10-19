@@ -84,9 +84,9 @@ export async function GET() {
     const emprestimosFinalizados = emprestimos.map((emprestimo) => ({
       id: emprestimo.id,
       livro: emprestimo.livro.titulo,
-      usuario: emprestimo.user.name,
+      nome: emprestimo.user.name,
       telefone: emprestimo.user.phone,
-      status: emprestimo.status,
+      status: emprestimo.status === 3 ? "Devolvido" : emprestimo.status,
       dataDevolucao: emprestimo.dataDevolucao,
     }));
 

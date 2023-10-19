@@ -11,9 +11,9 @@ export type TotalizadorProps = {
 export type DadosListaProps = {
   id?: number;
   livro: string;
-  usuario: string;
-  telefone?: string;
-  status?: number;
+  nome: string;
+  telefone?: string | undefined; // Modificada para aceitar "undefined"
+  status?: string | number | undefined; // Modificada para aceitar "undefined"
   dataEmprestimo: Date;
 };
 
@@ -23,6 +23,7 @@ export type LinhasTabelaProps = {
   telefone?: string;
   livro: string;
   tituloButton: string;
+  status?: string;
   corButton: string;
   Icone: ReactNode;
   tipo?: string;
@@ -45,12 +46,16 @@ export type TituloPaginaProps = {
   tituloButton: string;
   Icone: IconType;
   abrirModal?: () => void;
+  gerarRelatorio?: (dados: LinhasTabelaProps[]) => void;
+  tipoButton: string;
 };
 
 export type ButtonTituloPaginaProps = {
   tituloButton: string;
   Icone: IconType;
   abrirModal?: () => void;
+  gerarRelatorio?: (dados: LinhasTabelaProps[]) => void | undefined;
+  tipoButton: string;
 };
 
 export type DadosTabelaUsuariosProps = {

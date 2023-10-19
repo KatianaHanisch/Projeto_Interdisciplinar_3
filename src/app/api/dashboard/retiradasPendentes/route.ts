@@ -23,9 +23,9 @@ export async function GET() {
     const emprestimosComNomes = emprestimos.map((emprestimo) => ({
       id: emprestimo.id,
       livro: emprestimo.livro.titulo,
-      usuario: emprestimo.user.name,
+      nome: emprestimo.user.name,
       telefone: emprestimo.user.phone,
-      status: emprestimo.status,
+      status: emprestimo.status === 1 ? "Não retirado" : emprestimo.status,
       dataEmprestimo: emprestimo.dataEmprestimo,
     }));
 
