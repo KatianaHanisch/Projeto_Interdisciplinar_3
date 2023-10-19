@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 import { HiMenu } from "react-icons/hi";
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -13,6 +14,8 @@ import { BiExit, BiSolidLogIn, BiSolidUser } from "react-icons/bi";
 import { BsFillGearFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { BsMoonFill } from "react-icons/bs";
+import { BsSunFill } from "react-icons/bs";
 
 import Modal from "@/app/components/Modal";
 import Input from "@/app/components/Input";
@@ -31,15 +34,18 @@ export default function HeaderHome() {
   const [newPassword, setNewPassword] = useState(String);
   const [newEmail, setNewEmail] = useState(String);
 
+  const [theme, setTheme] = useState(String);
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
-  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  // const [isEditingEmail, setIsEditingEmail] = useState(false);
 
   const [open, setOpen] = useState(false);
 
   const { logout, isAuthenticated, validateToken, name, email, phone, userId } =
     useAuth();
+  const { toggleTheme, themeValue } = useTheme();
 
   useEffect(() => {
     if (!name) {
@@ -143,32 +149,74 @@ export default function HeaderHome() {
   }
 
   return (
-    <nav className="">
+    <nav
+      className={`${themeValue === "dark" ? "bg-dark-back" : "bg-light-back"}`}
+    >
       <div className="hidden md:flex max-w-[1200px] px-8 items-center h-[50px] m-auto  justify-between xl:px-0">
-        <h2 className="text-gray-700 text-[14px]">BEM VINDO(A) A BIBLIOTECA</h2>
+        <h2
+          className={`${
+            themeValue === "dark" ? "text-dark-text2" : "text-light-text2"
+          } text-[14px]`}
+        >
+          BEM VINDO(A) A BIBLIOTECA
+        </h2>
 
         {isAuthenticated ? (
           <div className="flex  items-center justify-end ">
-            <h4 className="text-[16px] font-medium mr-2 text-gray-800">
+            <button onClick={toggleTheme} className="mr-4">
+              {themeValue === "light" ? (
+                <BsMoonFill color="#111827" />
+              ) : (
+                <BsSunFill color="#f1f5f9" />
+              )}
+            </button>
+            <h4
+              className={`text-[16px] font-medium mr-2 ${
+                themeValue === "dark" ? "text-dark-text" : "text-light-text"
+              }`}
+            >
               {name}
             </h4>
-            <div className="w-10 h-10 bg-white flex items-center justify-center rounded-full cursor-pointer">
+            <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full cursor-pointer">
               <button className="" onClick={abrirDropdown}>
-                <BiSolidUser className="w-7 h-7" color="#1f2937" />
+                <BiSolidUser
+                  className="w-7 h-7"
+                  color={`${themeValue === "dark" ? "#f1f5f9" : "#111827"}`}
+                />
               </button>
               {open && (
-                <div className="absolute z-[100] mt-32 ml-[-150px] w-48 rounded bg-gray-800 py-2 shadow-xl ">
-                  <div className="flex mt-1 mb-4 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600">
-                    <BsFillGearFill size={20} color="white" />
+                <div
+                  className={`absolute  z-[100] mt-36 ml-[-150px] w-48 rounded ${
+                    themeValue === "dark" ? "bg-light-back" : "bg-dark-back"
+                  } py-2 shadow-xl`}
+                >
+                  <div
+                    className={`flex mt-1 mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
+                      themeValue === "dark"
+                        ? "bg-light-back text-light-text"
+                        : "bg-dark-back text-dark-text"
+                    }`}
+                  >
+                    <BsFillGearFill
+                      size={20}
+                      color={`${themeValue === "dark" ? "#111827" : "#f1f5f9"}`}
+                    />
                     <button onClick={() => abrirModalConfig()}>
                       Configurações
                     </button>
                   </div>
                   <div
                     onClick={() => logout()}
-                    className="flex mt-1 items-center text-base gap-2 font-medium text-white px-3 py-1 bg-gray-800 hover:bg-gray-600"
+                    className={`flex mt- mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
+                      themeValue === "dark"
+                        ? "bg-light-back text-light-text"
+                        : "bg-dark-back text-dark-text"
+                    }`}
                   >
-                    <BiExit size={20} color="white" />
+                    <BiExit
+                      size={20}
+                      color={`${themeValue === "dark" ? "#111827" : "#f1f5f9"}`}
+                    />
                     Sair
                   </div>
                 </div>
@@ -176,15 +224,31 @@ export default function HeaderHome() {
             </div>
           </div>
         ) : (
-          <div className="group ">
+          <div className="group flex">
+            <button onClick={toggleTheme} className="mr-4">
+              {themeValue === "light" ? (
+                <BsMoonFill color="#111827" />
+              ) : (
+                <BsSunFill color="#f1f5f9" />
+              )}
+            </button>
+
             <Link
-              className="mr-[25px] text-gray-700 text-[14px] hover:text-gray-950"
+              className={`mr-[25px]  ${
+                themeValue === "dark"
+                  ? "text-dark-text2 hover:text-dark-hover"
+                  : "text-light-text2 hover:text-light-hover"
+              } text-[14px]`}
               href="/cadastro"
             >
               CADASTRAR
             </Link>
             <Link
-              className="text-gray-700 text-[14px] hover:text-gray-950"
+              className={`mr-[25px]  ${
+                themeValue === "dark"
+                  ? "text-dark-text2 hover:text-dark-hover"
+                  : "text-light-text2 hover:text-light-hover"
+              } text-[14px]`}
               href="/login"
             >
               ENTRAR
@@ -192,59 +256,127 @@ export default function HeaderHome() {
           </div>
         )}
       </div>
-      <div className="w-full border-b"></div>
-      <div className="fixed z-20 bg-[white] md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0 ">
-        <h1 className="font-semibold text-3xl md:text-5xl text-gray-800">
+      <div
+        className={`mr-[25px] w-full border-b ${
+          themeValue === "dark" && "border-dark-border"
+        } text-[14px]`}
+      ></div>
+      <div
+        className={`fixed ${
+          themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
+        } z-20 md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0`}
+      >
+        <h1
+          className={`font-semibold text-3xl md:text-5xl  ${
+            themeValue === "dark" ? "text-dark-text" : "text-light-text"
+          }`}
+        >
           BIBLIOTECA
         </h1>
-        <div className="md:hidden text-3xl text-gray-800" onClick={toggleMenu}>
+        <div
+          className={`md:hidden text-3xl ${
+            themeValue === "dark" && "text-dark-text"
+          }`}
+          onClick={toggleMenu}
+        >
           <HiMenu />
         </div>
 
         {/* Menu mobile */}
         {menuOpen && (
-          <div className="md:hidden z-20 fixed bg-gray-500 w-48 right-0 top-0 h-full backdrop-blur-md">
-            <HiMenuAlt3
-              className="block my-2 text-gray-50 text-2xl ml-2"
-              onClick={toggleMenu}
-            />
+          <div
+            className={`md:hidden z-20 fixed ${
+              themeValue === "dark" ? "bg-light-back" : "bg-dark-back"
+            } w-48 right-0 top-0 h-full backdrop-blur-md`}
+          >
+            <div className="flex justify-between">
+              <HiMenuAlt3
+                className={`block my-2 ${
+                  themeValue === "dark"
+                    ? "bg-light-back text-light-text"
+                    : "bg-dark-back text-dark-text"
+                } text-2xl ml-2`}
+                onClick={toggleMenu}
+              />
+              <button onClick={toggleTheme} className="mr-4">
+                {themeValue === "light" ? (
+                  <BsMoonFill color="#f1f5f9" />
+                ) : (
+                  <BsSunFill color="#111827" />
+                )}
+              </button>
+            </div>
             <div className="flex flex-col h-5/6 justify-between">
               <div className="flex flex-col items-center gap-4">
                 <Link
-                  className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                  className={`my-2 ${
+                    themeValue === "dark" ? "text-light-text" : "text-dark-text"
+                  } text-1xl flex justify-start items-center gap-2`}
                   href="/"
                 >
                   <span>
-                    <AiFillHome className="text-gray-50" />
+                    <AiFillHome
+                      className={`${
+                        themeValue === "dark"
+                          ? "text-dark-back"
+                          : "text-light-back"
+                      }`}
+                    />
                   </span>{" "}
                   HOME
                 </Link>
 
                 <Link
-                  className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                  className={`my-2 ${
+                    themeValue === "dark" ? "text-light-text" : "text-dark-text"
+                  } text-1xl flex justify-start items-center gap-2`}
                   href="/livros"
                 >
                   <span>
-                    <BsFillBookFill className="text-gray-50" />
+                    <BsFillBookFill
+                      className={`${
+                        themeValue === "dark"
+                          ? "text-dark-back"
+                          : "text-light-back"
+                      }`}
+                    />
                   </span>{" "}
                   TODOS OS LIVROS
                 </Link>
                 <Link
-                  className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                  className={`my-2 ${
+                    themeValue === "dark" ? "text-light-text" : "text-dark-text"
+                  } text-1xl flex justify-start items-center gap-2`}
                   href="/sobre"
                 >
                   <span>
-                    <HiDotsCircleHorizontal className="text-gray-50" />
+                    <HiDotsCircleHorizontal
+                      className={`${
+                        themeValue === "dark"
+                          ? "text-dark-back"
+                          : "text-light-back"
+                      }`}
+                    />
                   </span>{" "}
                   SOBRE
                 </Link>
                 {isAuthenticated && (
                   <Link
-                    className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                    className={`my-2 ${
+                      themeValue === "dark"
+                        ? "text-light-text"
+                        : "text-dark-text"
+                    } text-1xl flex justify-start items-center gap-2`}
                     href="/emprestimos"
                   >
                     <span>
-                      <BsFillBookFill className="text-gray-50" />
+                      <BsFillBookFill
+                        className={`${
+                          themeValue === "dark"
+                            ? "text-dark-back"
+                            : "text-light-back"
+                        }`}
+                      />
                     </span>{" "}
                     MEUS LIVROS
                   </Link>
@@ -255,22 +387,43 @@ export default function HeaderHome() {
                 <div className="flex flex-col items-center justify-end ">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer">
                     <button
-                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                      className={`my-2 ${
+                        themeValue === "dark"
+                          ? "text-light-text"
+                          : "text-dark-text"
+                      } text-1xl flex justify-start items-center gap-2`}
                       onClick={() => abrirModalConfig()}
                     >
                       <span>
-                        <BsFillGearFill className="text-gray-50" />
+                        <BsFillGearFill
+                          className={`${
+                            themeValue === "dark"
+                              ? "text-dark-back"
+                              : "text-light-back"
+                          }`}
+                        />
                       </span>{" "}
                       Configurações
                     </button>
                   </div>
                   <div className="w-10 mt-6 h-10 flex items-center justify-center rounded-full cursor-pointer">
                     <button
-                      className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                      className={`my-2 ${
+                        themeValue === "dark"
+                          ? "text-light-text"
+                          : "text-dark-text"
+                      } text-1xl flex justify-start items-center gap-2`}
                       onClick={() => logout()}
                     >
                       <span>
-                        <BiExit size={20} color="white" />
+                        <BiExit
+                          size={20}
+                          className={`${
+                            themeValue === "dark"
+                              ? "text-dark-back"
+                              : "text-light-back"
+                          }`}
+                        />
                       </span>{" "}
                       Sair
                     </button>
@@ -279,12 +432,22 @@ export default function HeaderHome() {
               ) : (
                 <div className="flex flex-col items-center">
                   <Link
-                    className="my-2 text-gray-50 text-1xl flex justify-start items-center gap-2"
+                    className={`my-2 ${
+                      themeValue === "dark"
+                        ? "text-light-text"
+                        : "text-dark-text"
+                    } text-1xl flex justify-start items-center gap-2`}
                     href="/login"
                   >
                     <span>
                       {" "}
-                      <BiSolidLogIn className="text-gray-50" />
+                      <BiSolidLogIn
+                        className={`${
+                          themeValue === "dark"
+                            ? "text-dark-back"
+                            : "text-light-back"
+                        }`}
+                      />
                     </span>{" "}
                     ENTRAR
                   </Link>
@@ -296,24 +459,43 @@ export default function HeaderHome() {
 
         <div className="group hidden md:flex">
           <Link
-            className="mr-[35px] text-gray-800 hover:text-gray-950 "
+            className={`mr-[35px] ${
+              themeValue === "dark"
+                ? "text-dark-text hover:text-dark-hover"
+                : "text-light-text hover:text-light-hover"
+            }`}
             href="/"
           >
             HOME
           </Link>
           <Link
-            className="mr-[35px] text-gray-800 hover:text-gray-950"
+            className={`mr-[35px] ${
+              themeValue === "dark"
+                ? "text-dark-text hover:text-dark-hover"
+                : "text-light-text hover:text-light-hover"
+            }`}
             href="/livros"
           >
             LIVROS
           </Link>
-          <Link className="text-gray-800  hover:text-gray-950" href="/sobre">
+          <Link
+            className={`mr-[35px] ${
+              themeValue === "dark"
+                ? "text-dark-text hover:text-dark-hover"
+                : "text-light-text hover:text-light-hover"
+            }`}
+            href="/sobre"
+          >
             SOBRE
           </Link>
 
           {isAuthenticated && (
             <Link
-              className="text-gray-800 ml-[35px] hover:text-gray-950"
+              className={`${
+                themeValue === "dark"
+                  ? "text-dark-text hover:text-dark-hover"
+                  : "text-light-text hover:text-light-hover"
+              }`}
               href="/emprestimos"
             >
               MEUS LIVROS
