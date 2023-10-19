@@ -7,6 +7,8 @@ import { DadosListaProps } from "@/app/types/DashboardTypes";
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 
+import ExportarPDF from "@/app/reports/ExportarPDF";
+
 import { MdDone } from "react-icons/md";
 import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
@@ -15,6 +17,15 @@ export default function Reservas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
+  function formatarTelefone(telefone: string) {
+    const numeroLimpo = telefone.replace(/\D/g, "");
+
+    const formato = /(\d{2})(\d{4,})(\d{4})/;
+    const numeroFormatado = numeroLimpo.replace(formato, "($1) $2-$3");
+
+    return numeroFormatado;
+  }
+
   async function getReservas() {
     setCarregando(true);
 
@@ -22,8 +33,15 @@ export default function Reservas() {
       const res = await fetch("/api/dashboard/reservasLivros");
       const data = await res.json();
 
-      setDados(data);
+      const dadosFormatados = data.map((item: DadosListaProps) => ({
+        ...item,
+        telefone: formatarTelefone(item.telefone!),
+      }));
+
+      setDados(dadosFormatados);
+
       setCarregando(false);
+      console.log(data);
     } catch (error) {
       setCarregando(false);
       console.log(error);
@@ -37,6 +55,8 @@ export default function Reservas() {
   return (
     <div className="w-full h-full flex flex-col p-10">
       <TituloPagina
+        gerarRelatorio={() => ExportarPDF(dados)}
+        tipoButton="relatorio"
         tituloPagina="Reservas de livros"
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}

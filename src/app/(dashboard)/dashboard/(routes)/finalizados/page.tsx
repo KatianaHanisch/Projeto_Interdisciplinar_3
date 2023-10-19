@@ -7,6 +7,8 @@ import { DadosListaProps } from "@/app/types/DashboardTypes";
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
 
+import ExportarPDF from "@/app/reports/ExportarPDF";
+
 import { MdDone } from "react-icons/md";
 import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
@@ -14,6 +16,15 @@ import { VscSearchStop } from "react-icons/vsc";
 export default function Retiradas() {
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
+
+  function formatarTelefone(telefone: string) {
+    const numeroLimpo = telefone.replace(/\D/g, "");
+
+    const formato = /(\d{2})(\d{4,})(\d{4})/;
+    const numeroFormatado = numeroLimpo.replace(formato, "($1) $2-$3");
+
+    return numeroFormatado;
+  }
 
   async function getEmprestimosFinalizados() {
     setCarregando(true);
@@ -24,7 +35,13 @@ export default function Retiradas() {
 
       const data = await res.json();
 
-      setDados(data);
+      const dadosFormatados = data.map((item: DadosListaProps) => ({
+        ...item,
+        telefone: formatarTelefone(item.telefone!),
+      }));
+
+      setDados(dadosFormatados);
+
       setCarregando(false);
     } catch (error) {
       setCarregando(false);
@@ -38,6 +55,8 @@ export default function Retiradas() {
   return (
     <div className="w-full h-full p-10">
       <TituloPagina
+        gerarRelatorio={() => ExportarPDF(dados)}
+        tipoButton="relatorio"
         tituloPagina="Empréstimos finalizados"
         tituloButton="Gerar relatório"
         Icone={BsFiletypePdf}

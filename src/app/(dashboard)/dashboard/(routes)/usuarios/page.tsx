@@ -151,6 +151,7 @@ export default function Usuarios() {
         tituloPagina="Usuários"
         tituloButton="Adicionar usuário"
         Icone={MdPersonAddAlt1}
+        tipoButton="modal"
         abrirModal={abrirModalAdicionarUsuario}
       />
 

@@ -20,8 +20,9 @@ export async function GET() {
     const livrosReservados = reservas.map((reserva) => ({
       id: reserva.id,
       livro: reserva.livro.titulo,
-      usuario: reserva.user.name,
+      nome: reserva.user.name,
       telefone: reserva.user.phone,
+      status: reserva.status === 1 ? "Reservado" : reserva.status,
     }));
 
     await prisma.$disconnect;
