@@ -10,6 +10,7 @@ export default function CardBookDetailed({
   categoria,
   sinopse,
   capaUrl,
+  themeValue,
 }: LivroProps) {
   return (
     <Link
@@ -20,7 +21,11 @@ export default function CardBookDetailed({
         <Image src={capaUrl} width={170} height={240} alt="Capa do livro" />
       </div>
 
-      <div className="flex flex-col text-slate-800 w-full">
+      <div
+        className={`flex flex-col ${
+          themeValue === "dark" ? "text-dark-text" : "text-light-text"
+        } w-full`}
+      >
         <h1 className="font-semibold text-2xl mb-2">{titulo}</h1>
         <p className="mb-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore

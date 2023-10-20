@@ -9,9 +9,14 @@ import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 type Props = {
   setPage: (selected: number) => void;
   quantidadePaginas: number;
+  themeValue?: any;
 };
 
-export default function Pagination({ setPage, quantidadePaginas }: Props) {
+export default function Pagination({
+  setPage,
+  quantidadePaginas,
+  themeValue,
+}: Props) {
   const [pagina, setPagina] = useState(0);
   const handlePageClick = (selectedItem: { selected: number }) => {
     const selectedPage = selectedItem.selected;
@@ -22,8 +27,12 @@ export default function Pagination({ setPage, quantidadePaginas }: Props) {
   return (
     <ReactPaginate
       containerClassName="flex items-center justify-center mt-4 mb-4"
-      pageClassName="block hover:bg-gray-200 w-10 h-10 flex items-center justify-center  rounded-full mr-4"
-      activeClassName="bg-gray-700 text-white hover:bg-gray-700"
+      pageClassName={`block  w-10 ${
+        themeValue === "dark"
+          ? "text-dark-text hover:bg-gray-700"
+          : "text-light-text hover:bg-gray-200"
+      } h-10 flex items-center justify-center rounded-full mr-4`}
+      activeClassName={`bg-gray-700 text-white hover:bg-gray-700`}
       onPageChange={handlePageClick}
       pageCount={quantidadePaginas}
       breakLabel={<span className="mr-4">...</span>}

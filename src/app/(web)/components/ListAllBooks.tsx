@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../../context/ThemeContext";
+
 import CardBookDetailed from "./CardBookDetailed";
 import FilterBooks from "./FilterBooks";
 import Pagination from "@/app/components/Pagination";
+
 import { VscSearchStop } from "react-icons/vsc";
 import { LivroProps } from "@/app/types/Types";
 
@@ -16,6 +19,8 @@ export default function TodosLivros() {
   const [page, setPage] = useState(0);
   const [pagination, setPagination] = useState(false);
   const itemPorPagina = 4;
+
+  const { themeValue } = useTheme();
 
   const applyFilter = (data: LivroProps[]) => {
     const filteredData = data.filter(
@@ -81,9 +86,14 @@ export default function TodosLivros() {
   }, []);
 
   return (
-    <div className="mt-40 w-full mb-40">
+    <div
+      className={`pt-40 w-full pb-40 ${
+        themeValue === "light" ? "bg-light-back" : "bg-dark-back"
+      }`}
+    >
       <div className="flex flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
         <FilterBooks
+          themeValue={themeValue}
           onChange={(e) => setTituloBusca(e.target.value)}
           value={tituloBusca}
           onSearch={handleSearch}
@@ -113,6 +123,7 @@ export default function TodosLivros() {
                       ) => (
                         <div key={index}>
                           <CardBookDetailed
+                            themeValue={themeValue}
                             id={id}
                             titulo={titulo}
                             autor={autor}
@@ -120,7 +131,13 @@ export default function TodosLivros() {
                             sinopse={sinopse}
                             capaUrl={capaUrl}
                           />
-                          <div className="border-b-[1px]"></div>
+                          <div
+                            className={`border-b-[1px] ${
+                              themeValue === "dark"
+                                ? "border-dark-border"
+                                : "border-light-border"
+                            }`}
+                          ></div>
                         </div>
                       )
                     )}
@@ -130,6 +147,7 @@ export default function TodosLivros() {
             <div className="flex justify-between mt-4">
               {pagination ? (
                 <Pagination
+                  themeValue={themeValue}
                   quantidadePaginas={quantidadePaginas}
                   setPage={setPage}
                 />
