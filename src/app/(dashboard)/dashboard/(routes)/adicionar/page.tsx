@@ -19,8 +19,6 @@ import Button from "../../components/Button";
 import Modal from "@/app/components/Modal";
 import SnackBar from "@/app/components/SnackBar";
 
-import { TbAlertCircle } from "react-icons/tb";
-
 import book from "../../../../../../public/banner-login.jpg";
 
 export default function Adicionar() {
@@ -31,6 +29,7 @@ export default function Adicionar() {
   const [loading, setLoading] = useState(false);
   const [tipoSnackBar, setTipoSnackBar] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const [categoriaOriginal, setCategoriaOriginal] = useState("");
   const [livroData, setLivroData] = useState<LivroProps>({
     titulo: "",
     autor: "",
@@ -85,6 +84,11 @@ export default function Adicionar() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === "categoria") {
+      setCategoriaOriginal(value);
+    }
+
     setLivroData({
       ...livroData,
       [name]: value,
@@ -180,6 +184,10 @@ export default function Adicionar() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (file) {
+      setLivroData({
+        ...livroData,
+        categoria: categoriaOriginal.toLowerCase(),
+      });
       setAbrirModal(true);
     } else {
       setAbrirSnackBar(true);

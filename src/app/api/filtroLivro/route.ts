@@ -1,5 +1,4 @@
-import { prisma } from "@/app/utils/Prisma"
-
+import { prisma } from "@/app/utils/Prisma";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

@@ -1,25 +1,38 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { LivroBuscaProps } from "@/app/types/WebTypes";
 import { BiSearch } from "react-icons/bi";
-
-type LivroBuscaProps = {
-  value?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void | undefined;
-  onSearch: (searchText: string) => void;
-  themeValue: any;
-};
 
 export default function FilterBooks({
   value,
   onChange,
   onSearch,
+  categorias,
+  buscaCategoria,
+  todosLivros,
   themeValue,
 }: LivroBuscaProps) {
+  const [filtroAtivo, setFiltroAtivo] = useState<string | null>("TODOS LIVROS");
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchText = event.target.value;
     onChange(event);
     onSearch(searchText);
   };
+
+  const handleCategoriaClick = (categoria: string) => {
+    if (filtroAtivo === categoria) {
+      return;
+    }
+
+    setFiltroAtivo(categoria);
+
+    if (categoria === "TODOS LIVROS") {
+      todosLivros();
+    } else {
+      buscaCategoria && buscaCategoria(categoria);
+    }
+  };
+
   return (
     <div className="xl:mb-40">
       <div
@@ -53,123 +66,59 @@ export default function FilterBooks({
         }`}
       >
         <h3 className="font-semibold">CATEGORIAS</h3>
-        <ul className="mt-4">
-          <li className=" ml-2">ROMANCE</li>
+        <ul className="mt-4 cursor-pointer">
           <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
+            className={`hover:bg-gray-200 rounded-sm ${
+              filtroAtivo === "TODOS LIVROS" ? "bg-gray-200" : ""
             }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div
-            className={`border-b-[1px] ${
-              themeValue === "dark"
-                ? "border-dark-border"
-                : "border-light-border"
-            }`}
-          ></div>
+          >
+            <li
+              className={`uppercase ml-2 font-normal ${
+                filtroAtivo === "TODOS LIVROS"
+                  ? "text-blue-500 font-semibold"
+                  : ""
+              }`}
+              onClick={() => handleCategoriaClick("TODOS LIVROS")}
+            >
+              TODOS LIVROS
+            </li>
+            <div className="border-b-[1px]"></div>
+          </div>
+          {categorias.map((categoria, index) => (
+            <div
+              key={index}
+              className={`hover:bg-gray-200 rounded-sm ${
+                filtroAtivo === categoria.categoria ? "bg-gray-200" : ""
+              }`}
+            >
+              <li
+                className={`uppercase ml-2 font-normal ${
+                  filtroAtivo === categoria.categoria
+                    ? "text-blue-500 font-semibold"
+                    : ""
+                }`}
+                onClick={() => handleCategoriaClick(categoria.categoria)}
+              >
+                {categoria.categoria}
+              </li>
+              {index < categorias.length - 1 && (
+                <div className="border-b-[1px]"></div>
+              )}
+            </div>
+          ))}
         </ul>
       </div>
-
       <div className="mt-8 xl:hidden mb-8">
         <details className="">
           <summary>CATEGORIAS</summary>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
-          <li className=" ml-2">ROMANCE</li>
-          <div className="border-b-[1px]"></div>
+          {categorias.map((categoria, index) => (
+            <div key={index}>
+              <li className="uppercase ml-2">{categoria.categoria}</li>
+              {index < categorias.length - 1 && (
+                <div className="border-b-[1px]"></div>
+              )}
+            </div>
+          ))}
         </details>
       </div>
     </div>

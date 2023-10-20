@@ -7,14 +7,18 @@ import CardBookDetailed from "./CardBookDetailed";
 import FilterBooks from "./FilterBooks";
 import Pagination from "@/app/components/Pagination";
 
-import { VscSearchStop } from "react-icons/vsc";
 import { LivroProps } from "@/app/types/Types";
+import { CategoriaProps } from "@/app/types/WebTypes";
+
+import { VscSearchStop } from "react-icons/vsc";
 
 export default function TodosLivros() {
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [filteredData, setFilteredData] = useState<LivroProps[]>([]);
+  const [categorias, setCategorias] = useState<CategoriaProps[]>([]);
   const [tituloBusca, setTituloBusca] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const [carregandoFiltro, setCarregandoFiltro] = useState(false);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
   const [page, setPage] = useState(0);
   const [pagination, setPagination] = useState(false);
@@ -37,6 +41,38 @@ export default function TodosLivros() {
     const newPagination = newQuantidadePaginas > 1;
     setPagination(newPagination);
   };
+
+  async function filtroCategoria(categoria: string) {
+    setCarregando(true);
+
+    try {
+      const response = await fetch(
+        `/api/web/filtroCategoria?categoria=${categoria}`,
+        { method: "GET" }
+      );
+
+      const data = await response.json();
+      setLivros(data);
+
+      setCarregando(false);
+    } catch (error) {
+      setCarregando(false);
+      console.log(error);
+    }
+  }
+  async function getCategorias() {
+    try {
+      const response = await fetch("/api/web/categoriasLivros", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+
+      setCategorias(data);
+    } catch (error) {
+      console.log("Ocorreu um erro: ", error);
+    }
+  }
 
   async function getLivros() {
     setCarregando(true);
@@ -83,6 +119,7 @@ export default function TodosLivros() {
 
   useEffect(() => {
     getLivros();
+    getCategorias();
   }, []);
 
   return (
@@ -97,63 +134,68 @@ export default function TodosLivros() {
           onChange={(e) => setTituloBusca(e.target.value)}
           value={tituloBusca}
           onSearch={handleSearch}
+          categorias={categorias}
+          buscaCategoria={(categoria) => filtroCategoria(categoria)}
+          todosLivros={getLivros}
         />
         {carregando ? (
           <div className="w-full flex items-center justify-center">
             <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-start w-full ">
-            {filteredData.length === 0 ? (
-              <div className="w-full h-60 flex flex-col items-center justify-center ">
-                <VscSearchStop color="#8a9099" size={35} />
-                <p className="text-gray-400 text-lg">
-                  O livro buscado não foi encontrado
-                </p>
-              </div>
-            ) : (
-              <>
-                <div className="flex flex-col gap-8 items-center">
-                  {filteredData
-                    .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
-                    .map(
-                      (
-                        { id, titulo, autor, categoria, sinopse, capaUrl },
-                        index
-                      ) => (
-                        <div key={index}>
-                          <CardBookDetailed
-                            themeValue={themeValue}
-                            id={id}
-                            titulo={titulo}
-                            autor={autor}
-                            categoria={categoria}
-                            sinopse={sinopse}
-                            capaUrl={capaUrl}
-                          />
-                          <div
-                            className={`border-b-[1px] ${
-                              themeValue === "dark"
-                                ? "border-dark-border"
-                                : "border-light-border"
-                            }`}
-                          ></div>
-                        </div>
-                      )
-                    )}
+          <>
+            <div className="flex flex-col items-center justify-start w-full ">
+              {filteredData.length === 0 ? (
+                <div className="w-full h-60 flex flex-col items-center justify-center ">
+                  <VscSearchStop color="#8a9099" size={35} />
+                  <p className="text-gray-400 text-lg">
+                    O livro buscado não foi encontrado
+                  </p>
                 </div>
-              </>
-            )}
-            <div className="flex justify-between mt-4">
-              {pagination ? (
-                <Pagination
-                  themeValue={themeValue}
-                  quantidadePaginas={quantidadePaginas}
-                  setPage={setPage}
-                />
-              ) : null}
+              ) : (
+                <>
+                  <div className="flex flex-col gap-8 items-center">
+                    {filteredData
+                      .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
+                      .map(
+                        (
+                          { id, titulo, autor, categoria, sinopse, capaUrl },
+                          index
+                        ) => (
+                          <div key={index}>
+                            <CardBookDetailed
+                              id={id}
+                              themeValue={themeValue}
+                              titulo={titulo}
+                              autor={autor}
+                              categoria={categoria}
+                              sinopse={sinopse}
+                              capaUrl={capaUrl}
+                            />
+                            <div
+                              className={`border-b-[1px] ${
+                                themeValue === "dark"
+                                  ? "border-dark-border"
+                                  : "border-light-border"
+                              }`}
+                            ></div>
+                          </div>
+                        )
+                      )}
+                  </div>
+                </>
+              )}
+              <div className="flex justify-between mt-4">
+                {pagination ? (
+                  <Pagination
+                    themeValue={themeValue}
+                    quantidadePaginas={quantidadePaginas}
+                    setPage={setPage}
+                  />
+                ) : null}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>
