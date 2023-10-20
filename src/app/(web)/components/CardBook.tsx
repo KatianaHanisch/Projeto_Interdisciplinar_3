@@ -9,6 +9,7 @@ export default function CardBook({
   autor,
   categoria,
   capaUrl,
+  themeValue,
 }: LivroProps) {
   return (
     <Link
@@ -18,10 +19,22 @@ export default function CardBook({
       <div>
         <Image src={capaUrl} width={150} height={210} alt="Capa do livro" />
       </div>
-      <div className="flex flex-col text-slate-80 ">
+      <div
+        className={`flex flex-col ${
+          themeValue === "light"
+            ? "text-light-textBooks"
+            : "text-dark-textBooks"
+        }`}
+      >
         <h1 className="font-semibold mb-1 capitalize">{titulo}</h1>
         <h3 className="mt-[-5px] mb-2 font-normal">{autor}</h3>
-        <h3 className="mt-[-5px] font-light capitalize text-gray-600">
+        <h3
+          className={`mt-[-5px] font-light capitalize  ${
+            themeValue === "light"
+              ? "text-light-textBooks2"
+              : "text-dark-textBooks2"
+          }`}
+        >
           {categoria}
         </h3>
       </div>

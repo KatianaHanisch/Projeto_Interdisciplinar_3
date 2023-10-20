@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 
 import { BsBook } from "react-icons/bs";
 
-export default function BannerHome() {
+export default function BannerHome({ themeValue }: any) {
   const [booksCount, setBooksCount] = useState<number | undefined>();
   const [usersCount, setUsersCount] = useState<number | undefined>();
   const [emprestimosCount, setEsprestimosCount] = useState<
     number | undefined
   >();
+
+  console.log(themeValue);
 
   const fetchData = async () => {
     //GET DOS DOS LIVROS
@@ -64,7 +66,7 @@ export default function BannerHome() {
   }, []);
 
   return (
-    <section className="text-gray-900">
+    <section className={`text-gray-800`}>
       <div className="hidden md:block">
         <Image
           src="/banner.jpg"
@@ -84,14 +86,30 @@ export default function BannerHome() {
         ></Image>
       </div>
 
-      <div className="md:flex bg-[#EBEBEB] md:h-[80px] h-[60px] items-center justify-center px-6">
-        <div className="flex justify-between md:w-[1200px] text-base lg:text-xl">
+      <div
+        className={`md:flex ${
+          themeValue === "dark" ? "bg-dark-sectionHome" : "bg-light-sectionHome"
+        } md:h-[80px] h-[60px] items-center justify-center px-6`}
+      >
+        <div
+          className={`flex justify-between md:w-[1200px] text-base lg:text-xl  ${
+            themeValue === "light"
+              ? "text-light-sectionHomeText"
+              : "text-dark-sectionHomeText"
+          }`}
+        >
           <div className="flex mx-auto md:mx-0 mt-3 md:mt-0 flex-col items-center">
             <p className="z-10 gap-2 flex">
               São <span className="flex items-end">{booksCount}</span> livros
               disponíveis
             </p>
-            <span className="absolute  bg-[#EBEBEB] mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl">
+            <span
+              className={`absolute  ${
+                themeValue === "dark"
+                  ? "bg-dark-sectionHome"
+                  : "bg-light-sectionHome"
+              } mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl`}
+            >
               <BsBook />
             </span>
           </div>
@@ -101,7 +119,13 @@ export default function BannerHome() {
               <span className="flex items-end">{emprestimosCount}</span> livros
               emprestados
             </p>
-            <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
+            <span
+              className={`absolute  ${
+                themeValue === "dark"
+                  ? "bg-dark-sectionHome"
+                  : "bg-light-sectionHome"
+              } mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl`}
+            >
               <BsBook />
             </span>
           </div>
@@ -111,7 +135,13 @@ export default function BannerHome() {
               usuários cadastrados
             </p>
 
-            <span className="absolute bg-[#EBEBEB] mt-3 p-6 rounded-full text-4xl">
+            <span
+              className={`absolute  ${
+                themeValue === "dark"
+                  ? "bg-dark-sectionHome"
+                  : "bg-light-sectionHome"
+              } mt-1 md:mt-3 md:p-6 p-5 rounded-full text-4xl`}
+            >
               <BsBook />
             </span>
           </div>

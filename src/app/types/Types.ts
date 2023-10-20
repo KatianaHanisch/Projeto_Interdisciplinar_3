@@ -20,4 +20,5 @@ export type LivroProps = {
   sinopse?: string;
   capaUrl: string;
   quantidadeDisponivel?: number;
+  themeValue?: any;
 };

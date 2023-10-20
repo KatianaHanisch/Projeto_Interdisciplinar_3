@@ -18,7 +18,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const newTheme = themeValue === "light" ? "dark" : "light";
     setThemeValue(newTheme);
 
-    // Verificar se estamos no navegador antes de acessar sessionStorage
     if (typeof window !== "undefined") {
       sessionStorage.setItem("mode", newTheme);
     }

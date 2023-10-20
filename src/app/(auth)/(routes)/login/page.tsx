@@ -42,7 +42,7 @@ export default function Login(request: Request) {
     }
 
     validateToken();
-  }, []);
+  }, [validateToken, searchParams]);
 
   if (isAuthenticated) {
     router.push("/");
@@ -83,6 +83,7 @@ export default function Login(request: Request) {
         setLoading(false);
       } else if (response.status === 201) {
         sessionStorage.setItem("token", token);
+        sessionStorage.removeItem("mode");
         router.push("/");
         setLoading(false);
       } else {

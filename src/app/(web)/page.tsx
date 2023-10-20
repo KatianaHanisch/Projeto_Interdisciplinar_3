@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext";
 
 import Link from "next/link";
 
@@ -16,6 +17,8 @@ import { RiArrowUpDoubleFill } from "react-icons/ri";
 export default function Home() {
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [carregando, setCarregando] = useState(false);
+
+  const { themeValue } = useTheme();
 
   async function getLivros() {
     setCarregando(true);
@@ -36,13 +39,19 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main
+      className={`${themeValue === "light" ? "bg-light-back" : "bg-dark-back"}`}
+    >
       <HeaderHome />
       <div className="mt-[70px] md:mt-0">
-        <BannerHome />
+        <BannerHome themeValue={themeValue} />
       </div>
       <div className="mt-24 md:mt-40 mb-40">
-        <ListRecentBooks livros={livros} carregando={carregando} />
+        <ListRecentBooks
+          themeValue={themeValue}
+          livros={livros}
+          carregando={carregando}
+        />
       </div>
       <Link
         href=""
@@ -50,7 +59,7 @@ export default function Home() {
       >
         <RiArrowUpDoubleFill />
       </Link>
-      <Footer />
+      <Footer themeValue={themeValue} />
     </main>
   );
 }

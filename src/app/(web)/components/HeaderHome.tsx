@@ -152,7 +152,7 @@ export default function HeaderHome() {
     <nav
       className={`${themeValue === "dark" ? "bg-dark-back" : "bg-light-back"}`}
     >
-      <div className="hidden md:flex max-w-[1200px] px-8 items-center h-[50px] m-auto  justify-between xl:px-0">
+      <div className="hidden md:flex max-w-[1200px] px-8 items-center h-[50px] m-auto justify-between xl:px-0">
         <h2
           className={`${
             themeValue === "dark" ? "text-dark-text2" : "text-light-text2"
@@ -162,7 +162,7 @@ export default function HeaderHome() {
         </h2>
 
         {isAuthenticated ? (
-          <div className="flex  items-center justify-end ">
+          <div className="flex items-center justify-end ">
             <button onClick={toggleTheme} className="mr-4">
               {themeValue === "light" ? (
                 <BsMoonFill color="#111827" />
@@ -171,13 +171,13 @@ export default function HeaderHome() {
               )}
             </button>
             <h4
-              className={`text-[16px] font-medium mr-2 ${
-                themeValue === "dark" ? "text-dark-text" : "text-light-text"
-              }`}
+              className={` ${
+                themeValue === "light" ? "text-light-text" : "text-dark-text"
+              } text-[16px] font-medium mr-2 `}
             >
               {name}
             </h4>
-            <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full cursor-pointer">
+            <div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full">
               <button className="" onClick={abrirDropdown}>
                 <BiSolidUser
                   className="w-7 h-7"
@@ -186,15 +186,15 @@ export default function HeaderHome() {
               </button>
               {open && (
                 <div
-                  className={`absolute  z-[100] mt-36 ml-[-150px] w-48 rounded ${
+                  className={`absolute  z-20 mt-36 ml-[-150px] w-48 rounded ${
                     themeValue === "dark" ? "bg-light-back" : "bg-dark-back"
                   } py-2 shadow-xl`}
                 >
                   <div
                     className={`flex mt-1 mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
                       themeValue === "dark"
-                        ? "bg-light-back text-light-text"
-                        : "bg-dark-back text-dark-text"
+                        ? "bg-light-back text-light-text hover:bg-gray-200"
+                        : "bg-dark-back text-dark-text hover:bg-gray-900"
                     }`}
                   >
                     <BsFillGearFill
@@ -206,18 +206,17 @@ export default function HeaderHome() {
                     </button>
                   </div>
                   <div
-                    onClick={() => logout()}
-                    className={`flex mt- mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
+                    className={`flex mt-1  items-center text-base gap-2 font-medium px-3 py-1 ${
                       themeValue === "dark"
-                        ? "bg-light-back text-light-text"
-                        : "bg-dark-back text-dark-text"
+                        ? "bg-light-back text-light-text hover:bg-gray-200"
+                        : "bg-dark-back text-dark-text hover:bg-gray-900"
                     }`}
                   >
                     <BiExit
                       size={20}
                       color={`${themeValue === "dark" ? "#111827" : "#f1f5f9"}`}
                     />
-                    Sair
+                    <button onClick={() => logout()}>Sair</button>
                   </div>
                 </div>
               )}
@@ -264,7 +263,7 @@ export default function HeaderHome() {
       <div
         className={`fixed ${
           themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
-        } z-20 md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0`}
+        } md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0`}
       >
         <h1
           className={`font-semibold text-3xl md:text-5xl  ${

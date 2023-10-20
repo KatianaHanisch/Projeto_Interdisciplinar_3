@@ -9,12 +9,21 @@ import { LivroProps } from "@/app/types/Types";
 type Props = {
   livros: LivroProps[];
   carregando: boolean;
+  themeValue: any;
 };
 
-export default function ListRecentBooks({ livros, carregando }: Props) {
+export default function ListRecentBooks({
+  livros,
+  carregando,
+  themeValue,
+}: Props) {
   return (
     <section className="flex flex-col items-center justify-center">
-      <h1 className="md:text-3xl text-2xl mb-16 m-auto text-slate-800 font-medium">
+      <h1
+        className={`md:text-3xl text-2xl mb-16 m-auto ${
+          themeValue === "light" ? "text-light-text" : "text-dark-text"
+        } font-medium`}
+      >
         Livros Recém Adicionados
       </h1>
       <div className="flex m-auto md:gap-[45px] gap-[30px] flex-wrap px-4 max-w-[1200px] justify-center">
@@ -25,6 +34,7 @@ export default function ListRecentBooks({ livros, carregando }: Props) {
             {livros &&
               livros.map(({ id, titulo, autor, categoria, capaUrl }, index) => (
                 <CardBook
+                themeValue={themeValue}
                   key={index}
                   id={id}
                   autor={autor}
