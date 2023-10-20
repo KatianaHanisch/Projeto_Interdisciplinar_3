@@ -9,4 +9,5 @@ export type LivroBuscaProps = {
   categorias: CategoriaProps[];
   buscaCategoria?: (value: string) => void;
   todosLivros: () => void;
+  themeValue?: any;
 };
