@@ -128,7 +128,7 @@ export default function TodosLivros() {
         themeValue === "light" ? "bg-light-back" : "bg-dark-back"
       }`}
     >
-      <div className="flex flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
+      <div className="flex z-0 flex-col gap-8 bg-red-10 xl:flex-row px-8 xl:p-0 max-w-[1200px] m-auto justify-between">
         <FilterBooks
           themeValue={themeValue}
           onChange={(e) => setTituloBusca(e.target.value)}
@@ -143,7 +143,7 @@ export default function TodosLivros() {
             <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
           </div>
         ) : (
-          <>
+          <div className="z-10">
             <div className="flex flex-col items-center justify-start w-full ">
               {filteredData.length === 0 ? (
                 <div className="w-full h-60 flex flex-col items-center justify-center ">
@@ -153,7 +153,7 @@ export default function TodosLivros() {
                   </p>
                 </div>
               ) : (
-                <>
+                <div className="z-10">
                   <div className="flex flex-col gap-8 items-center">
                     {filteredData
                       .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
@@ -183,7 +183,7 @@ export default function TodosLivros() {
                         )
                       )}
                   </div>
-                </>
+                </div>
               )}
               <div className="flex justify-between mt-4">
                 {pagination ? (
@@ -195,7 +195,7 @@ export default function TodosLivros() {
                 ) : null}
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

@@ -68,8 +68,10 @@ export default function FilterBooks({
         <h3 className="font-semibold">CATEGORIAS</h3>
         <ul className="mt-4 cursor-pointer">
           <div
-            className={`hover:bg-gray-200 rounded-sm ${
-              filtroAtivo === "TODOS LIVROS" ? "bg-gray-200" : ""
+            className={` rounded-sm ${
+              themeValue === "dark"
+                ? "hover:bg-dark-sectionHome"
+                : "hover:bg-light-sectionHome"
             }`}
           >
             <li
@@ -87,8 +89,12 @@ export default function FilterBooks({
           {categorias.map((categoria, index) => (
             <div
               key={index}
-              className={`hover:bg-gray-200 rounded-sm ${
-                filtroAtivo === categoria.categoria ? "bg-gray-200" : ""
+              className={`rounded-sm ${
+                filtroAtivo === categoria.categoria ? "" : ""
+              } ${
+                themeValue === "dark"
+                  ? "hover:bg-dark-sectionHome"
+                  : "hover:bg-light-sectionHome"
               }`}
             >
               <li
@@ -108,12 +114,30 @@ export default function FilterBooks({
           ))}
         </ul>
       </div>
-      <div className="mt-8 xl:hidden mb-8">
+      <div
+        className={`mt-8 xl:hidden mb-8 ${
+          themeValue === "light" ? "text-light-tex" : "text-dark-text"
+        }`}
+      >
         <details className="">
           <summary>CATEGORIAS</summary>
           {categorias.map((categoria, index) => (
-            <div key={index}>
-              <li className="uppercase ml-2">{categoria.categoria}</li>
+            <div
+              key={index}
+              className={`cursor-pointer rounded-sm ${
+                filtroAtivo === categoria.categoria
+                  ? "text-blue-500 font-semibold"
+                  : ""
+              } ${
+                themeValue === "dark" ? "text-dark-text" : "text-light-text"
+              }`}
+            >
+              <li
+                className="uppercase ml-2 mt-2"
+                onClick={() => handleCategoriaClick(categoria.categoria)}
+              >
+                {categoria.categoria}
+              </li>
               {index < categorias.length - 1 && (
                 <div className="border-b-[1px]"></div>
               )}

@@ -15,7 +15,7 @@ export default function CardBookDetailed({
   return (
     <Link
       href={`/livros/${id}/`}
-      className="flex m-auto justify- items-center sm:flex-row flex-col relative gap-3 hover:shadow-md transition-transform hover:scale-[1.01] cursor-pointer"
+      className="flex m-auto z-0 justify- items-center sm:flex-row flex-col relative gap-3 hover:shadow-md transition-transform hover:scale-[1.01] cursor-pointer"
     >
       <div className="relative w-[170px]">
         <Image src={capaUrl} width={170} height={240} alt="Capa do livro" />

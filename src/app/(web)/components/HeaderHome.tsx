@@ -261,7 +261,7 @@ export default function HeaderHome() {
         } text-[14px]`}
       ></div>
       <div
-        className={`fixed ${
+        className={`fixed z-50 ${
           themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
         } md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0`}
       >
