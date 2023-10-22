@@ -3,13 +3,7 @@ import { prisma } from "@/app/utils/Prisma";
 export async function POST(request: Request) {
   const data = await request.json();
 
-  if (
-    data.titulo &&
-    data.autor &&
-    data.categoria &&
-    data.sinopse &&
-    data.capaUrl
-  ) {
+  if (data.titulo && data.autor && data.categoria && data.sinopse) {
     try {
       const livroExistente = await prisma.livros.findUnique({
         where: {

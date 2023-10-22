@@ -98,7 +98,7 @@ export default function Adicionar() {
   async function cadastroLivro() {
     setLoading(true);
     try {
-      const response = await fetch("/api/dashboard/createLivro", {
+      const response = await fetch("/api/dashboard/adicionarLivro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -181,6 +181,27 @@ export default function Adicionar() {
     }
   }
 
+  async function verificaLivro() {
+    try {
+      const response = await fetch(
+        `/api/dashboard/livroExistente?titulo=${livroData.titulo}`
+      );
+
+      if (response.status === 200) {
+        const livroExistente = await response.json();
+        if (livroExistente) {
+          cadastroLivro();
+        }
+      }
+
+      if (response.status === 404) {
+        uploadImage(file!);
+      }
+    } catch (error) {
+      console.error("Erro ao verificar a existência do livro: ", error);
+    }
+  }
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (file) {
@@ -188,6 +209,7 @@ export default function Adicionar() {
         ...livroData,
         categoria: categoriaOriginal.toLowerCase(),
       });
+
       setAbrirModal(true);
     } else {
       setAbrirSnackBar(true);
@@ -205,7 +227,8 @@ export default function Adicionar() {
   useEffect(() => {
     if (formularioConfirmado) {
       setLoading(true);
-      uploadImage(file!);
+
+      verificaLivro();
     }
   }, [formularioConfirmado]);
 
