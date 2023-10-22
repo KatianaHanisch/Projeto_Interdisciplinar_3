@@ -21,4 +21,5 @@ export type LivroProps = {
   capaUrl: string;
   quantidadeDisponivel?: number;
   themeValue?: any;
+  dataVencimento?: string;
 };

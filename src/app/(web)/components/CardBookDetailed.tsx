@@ -14,7 +14,7 @@ export default function CardBookDetailed({
 }: LivroProps) {
   return (
     <Link
-      href={`/livros/${id}/`}
+      href={`/livros/${id}`}
       className="flex m-auto z-0 justify- items-center sm:flex-row flex-col relative gap-3 hover:shadow-md transition-transform hover:scale-[1.01] cursor-pointer"
     >
       <div className="relative w-[170px]">
@@ -26,15 +26,23 @@ export default function CardBookDetailed({
           themeValue === "dark" ? "text-dark-text" : "text-light-text"
         } w-full`}
       >
-        <h1 className="font-semibold text-2xl mb-2">{titulo}</h1>
+        <h1 className="font-semibold text-2xl mb-2 capitalize">{titulo}</h1>
         <p className="mb-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
           cumque, adipisci quidem sapiente expedita incidunt culpa ut rerum
           similique nesciunt doloribus temporibus, perspiciatis odio laboriosam
           ab quos labore unde eum.
         </p>
-        <h3 className="mt-[-5px]  font-semibold">{autor}</h3>
-        <h3 className="mt-[-5px] font-light">{categoria}</h3>
+        <h3 className="mt-[-5px]  font-semibold capitalize">{autor}</h3>
+        <h3
+          className={`mt-[-5px] font-light capitalize  ${
+            themeValue === "light"
+              ? "text-light-textBooks2"
+              : "text-dark-textBooks2"
+          }`}
+        >
+          {categoria}
+        </h3>
       </div>
     </Link>
   );

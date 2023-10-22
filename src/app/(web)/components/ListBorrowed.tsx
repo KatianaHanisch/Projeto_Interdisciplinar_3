@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/app/context/AuthContext";
 
-import CardBook from "./CardBook";
+import CardBookEmprestimos from "./CardBookEmprestimos";
 import Pagination from "@/app/components/Pagination";
 
 import { LivroProps } from "@/app/types/Types";
@@ -55,14 +55,13 @@ export default function ListBorrowed({ livros }: Props) {
           .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
           .map(({ id, titulo, autor, categoria, capaUrl }, index) => (
             <div key={index}>
-              <CardBook
+              <CardBookEmprestimos
                 id={id}
                 titulo={titulo}
                 autor={autor}
                 categoria={categoria}
                 capaUrl={capaUrl}
               />
-              {/* <div className="border-b-[1px]"></div> */}
             </div>
           ))}
       </div>

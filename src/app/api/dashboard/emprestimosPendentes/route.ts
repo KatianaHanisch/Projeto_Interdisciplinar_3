@@ -27,6 +27,7 @@ export async function GET() {
       telefone: emprestimo.user.phone,
       status: emprestimo.status === 2 ? "Não devolvido" : emprestimo.status,
       dataEmprestimo: emprestimo.dataEmprestimo,
+      dataVencimento: emprestimo.dataVencimento,
     }));
 
     return new Response(JSON.stringify(emprestimosPendentes), { status: 200 });

@@ -1,7 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
-
 import CardBook from "./CardBook";
 
 import { LivroProps } from "@/app/types/Types";
@@ -34,7 +30,7 @@ export default function ListRecentBooks({
             {livros &&
               livros.map(({ id, titulo, autor, categoria, capaUrl }, index) => (
                 <CardBook
-                themeValue={themeValue}
+                  themeValue={themeValue}
                   key={index}
                   id={id}
                   autor={autor}

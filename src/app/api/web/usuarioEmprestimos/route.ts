@@ -39,6 +39,7 @@ export async function GET(request: Request) {
         include: {
           livro: {
             select: {
+              id: true,
               capaUrl: true,
               autor: true,
               categoria: true,
@@ -52,12 +53,13 @@ export async function GET(request: Request) {
       });
 
       const emprestimos = emprestimosUsuario.map((emprestimo) => ({
-        id: emprestimo.id,
+        id: emprestimo.livro.id,
         titulo: emprestimo.livro.titulo,
         autor: emprestimo.livro.autor,
         categoria: emprestimo.livro.categoria,
         capaUrl: emprestimo.livro.capaUrl,
         dataEmprestimo: emprestimo.dataEmprestimo,
+        dataVencimento: emprestimo.dataVencimento,
       }));
 
       await prisma.$disconnect();

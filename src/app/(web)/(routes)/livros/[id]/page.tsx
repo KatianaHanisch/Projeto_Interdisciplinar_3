@@ -10,7 +10,7 @@ import { LivroProps } from "@/app/types/Types";
 import SnackBar from "@/app/components/SnackBar";
 
 export default function Detalhes({ params }: { params: { id: string } }) {
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
   const [carregandoEmprestimo, setCarregandoEmprestimo] = useState(false);
   const [carregandoReserva, setCarregandoReserva] = useState(false);
   const [mensagemSnackBar, setMensagemSnackBar] = useState("");
@@ -37,18 +37,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     const token = await sessionStorage.getItem("token");
 
     if (!token) {
-      setCarregandoReserva(false);
-      setTipoSnackBar("erro");
-      setMensagemSnackBar(
-        "Você precisa realizar o login para realizar essa ação. Redirecionando..."
-      );
-      setAbrirSnackBar(true);
-
-      setTimeout(() => {
-        setAbrirSnackBar(false);
-        router.push("/login");
-      }, 3000);
-      return;
+      router.push("/login");
     }
 
     try {
@@ -92,18 +81,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     const token = await sessionStorage.getItem("token");
 
     if (!token) {
-      setCarregandoEmprestimo(false);
-      setTipoSnackBar("erro");
-      setMensagemSnackBar(
-        "Você precisa realizar o login para realizar essa ação. Redirecionando..."
-      );
-      setAbrirSnackBar(true);
-
-      setTimeout(() => {
-        setAbrirSnackBar(false);
-        router.push("/login");
-      }, 3000);
-      return;
+      router.push("/login");
     }
 
     try {
@@ -180,7 +158,6 @@ export default function Detalhes({ params }: { params: { id: string } }) {
   }
 
   async function getLivro() {
-    setCarregando(true);
     try {
       const response = await fetch(`/api/filtroLivro?id=${idLivro}`, {
         method: "GET",
@@ -190,7 +167,9 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       });
 
       const data = await response.json();
+
       setLivro(data);
+
       setCarregando(false);
     } catch (error) {
       console.log(error);
@@ -253,25 +232,24 @@ export default function Detalhes({ params }: { params: { id: string } }) {
             </div>
             <div className="flex flex-col pl-3 mt-3 xl:ml-0 text-slate-900">
               <div>
-                <h1 className="text-2xl font-semibold text-center md:text-start mb-1">
+                <h1 className="text-2xl font-semibold capitalize text-center md:text-start mb-1">
                   {livro.titulo}
                 </h1>
-                <h3 className="text-center md:text-start font-semibold">
+                <h3 className="text-center capitalize md:text-start font-semibold">
                   {livro.autor}
                 </h3>
-                <h3 className="mb-2 text-center md:text-start">
+                <h3 className="mb-2 text-center capitalize md:text-start">
                   {livro.categoria}
                 </h3>
                 <p className="mb-2">{livro.sinopse}</p>
               </div>
               <div className="mt-3">
                 <h3 className="text-xl text-center md:text-start font-semibold">
-                  Disponibilidade
+                  Empréstimo
                 </h3>
                 <p>
-                  Livro indisponível para empréstimo, faltam 2 dias para que o
-                  livro seja devolvido. Ao solicitar empréstimo, retire o livro
-                  em nossa biblioteca.
+                  Ao realizar o empréstimo você tem o prazo de 30 dias para
+                  realizar a devolução.
                 </p>
               </div>
             </div>
