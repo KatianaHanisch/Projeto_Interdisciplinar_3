@@ -18,7 +18,6 @@ export default function TodosLivros() {
   const [categorias, setCategorias] = useState<CategoriaProps[]>([]);
   const [tituloBusca, setTituloBusca] = useState("");
   const [carregando, setCarregando] = useState(false);
-  const [carregandoFiltro, setCarregandoFiltro] = useState(false);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
   const [page, setPage] = useState(0);
   const [pagination, setPagination] = useState(false);
@@ -44,6 +43,8 @@ export default function TodosLivros() {
 
   async function filtroCategoria(categoria: string) {
     setCarregando(true);
+
+    setPage(0);
 
     try {
       const response = await fetch(
