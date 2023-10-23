@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from "../../../../context/ThemeContext";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { LivroProps } from "@/app/types/Types";
-
 import SnackBar from "@/app/components/SnackBar";
 
 export default function Detalhes({ params }: { params: { id: string } }) {
@@ -23,6 +23,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     sinopse: "",
     categoria: "",
   });
+
+  const { themeValue } = useTheme();
 
   const router = useRouter();
 
@@ -182,8 +184,14 @@ export default function Detalhes({ params }: { params: { id: string } }) {
   }, []);
 
   return (
-    <div className="m-auto mt-32 mb-32 px-3 xl:p-0 max-w-[1200px]">
-      <div className="flex md:flex-row flex-col justify-center">
+    <div
+      className={`m-auto xl:p-0 w-full ${
+        themeValue === "dark"
+          ? "text-dark-text bg-dark-back"
+          : "text-light-text bg-light-back"
+      }`}
+    >
+      <div className="flex md:flex-row flex-col justify-center max-w-[1200px] m-auto pt-32 pb-32 px-3">
         {carregando ? (
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         ) : (
@@ -208,10 +216,16 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 <>
                   <button
                     onClick={cadastroEmprestimo}
-                    className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500"
+                    className={`flex items-center justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500  ${
+                      themeValue === "dark"
+                        ? "text-dark-text"
+                        : "text-light-text"
+                    }`}
                   >
                     {carregandoEmprestimo ? (
-                      <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+                      <span
+                        className={`h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin`}
+                      ></span>
                     ) : (
                       "Pegar Livro emprestado"
                     )}
@@ -221,7 +235,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
               )}
               <button
                 onClick={cadastroReserva}
-                className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500"
+                className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}
               >
                 {carregandoReserva ? (
                   <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
@@ -230,7 +244,11 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 )}
               </button>
             </div>
-            <div className="flex flex-col pl-3 mt-3 xl:ml-0 text-slate-900">
+            <div
+              className={`flex flex-col pl-3 mt-3 xl:ml-0  ${
+                themeValue === "dark" ? "text-dark-text" : "text-light-text"
+              }`}
+            >
               <div>
                 <h1 className="text-2xl font-semibold capitalize text-center md:text-start mb-1">
                   {livro.titulo}

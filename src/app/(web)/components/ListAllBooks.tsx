@@ -144,8 +144,8 @@ export default function TodosLivros() {
             <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
           </div>
         ) : (
-          <div className="z-10">
-            <div className="flex flex-col items-center justify-start w-full ">
+          <div className="z-10 w-full">
+            <div className="flex flex-col items-center justify-start w-full">
               {filteredData.length === 0 ? (
                 <div className="w-full h-60 flex flex-col items-center justify-center ">
                   <VscSearchStop color="#8a9099" size={35} />
