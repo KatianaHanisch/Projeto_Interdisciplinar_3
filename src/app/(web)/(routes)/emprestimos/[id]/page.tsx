@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+import { useTheme } from "../../../../context/ThemeContext";
+
 import Image from "next/image";
 
 import { LivroProps } from "@/app/types/Types";
@@ -25,6 +27,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     sinopse: "",
     categoria: "",
   });
+
+  const { themeValue } = useTheme();
 
   const idLivro = parseInt(params.id);
 

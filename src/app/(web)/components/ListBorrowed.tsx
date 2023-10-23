@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/app/context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 import CardBookEmprestimos from "./CardBookEmprestimos";
 import Pagination from "@/app/components/Pagination";
@@ -17,6 +18,8 @@ type Props = {
 export default function ListBorrowed({ livros }: Props) {
   const { isAuthenticated, validateTokenForPageEmprestimos } = useAuth();
   const router = useRouter();
+
+  const { themeValue } = useTheme();
 
   const [filteredData, setFilteredData] = useState<LivroProps[]>([]);
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
@@ -47,7 +50,13 @@ export default function ListBorrowed({ livros }: Props) {
   }
 
   return (
-    <div className="max-w-[1200px] m-auto mt-32 mb-32 px-2">
+    <div
+      className={`max-w-[1200px] m-auto mt-32 mb-32 px-2 ${
+        themeValue === "dark"
+          ? "text-dark-text bg-dark-back"
+          : "text-light-text bg-light-back"
+      }`}
+    >
       <h1 className="text-center mb-8 text-3xl">Meus Empréstimos</h1>
 
       <div className="flex flex-wrap justify-center gap-7">
@@ -61,6 +70,7 @@ export default function ListBorrowed({ livros }: Props) {
                 autor={autor}
                 categoria={categoria}
                 capaUrl={capaUrl}
+                themeValue={themeValue}
               />
             </div>
           ))}
