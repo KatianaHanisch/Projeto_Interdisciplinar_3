@@ -51,39 +51,41 @@ export default function Retiradas() {
   }, []);
 
   return (
-    <div className="w-full h-full p-10">
-      <TituloPagina
-        tituloPagina="Empréstimos pedentes"
-        tituloButton="Gerar relatório"
-        Icone={BsFiletypePdf}
-        gerarRelatorio={() => ExportarPDF(dados)}
-        tipoButton="relatorio"
-      />
-      {carregando ? (
-        <div className="flex items-center justify-center w-full h-full">
-          <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-        </div>
-      ) : (
-        <>
-          {dados.length < 1 ? (
-            <div className="w-full  h-80 flex items-center justify-center flex-col  ">
-              <VscSearchStop size={40} color="#8a9099" />
-              <p className="text-gray-600 text-lg">
-                Não há nenhum empréstimo pendente
-              </p>
-            </div>
-          ) : (
-            <ListaDashboard
-              dados={dados}
-              recarregarDados={getEmprestimosPendentes}
-              tituloButton="Devolvido"
-              corButton="vermelha"
-              tipo="pedente"
-              Icone={<IoClose size={20} color={"#ffffff"} />}
-            />
-          )}
-        </>
-      )}
+    <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
+      <div className="w-full h-full p-10">
+        <TituloPagina
+          tituloPagina="Empréstimos pedentes"
+          tituloButton="Gerar relatório"
+          Icone={BsFiletypePdf}
+          gerarRelatorio={() => ExportarPDF(dados)}
+          tipoButton="relatorio"
+        />
+        {carregando ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          </div>
+        ) : (
+          <>
+            {dados.length < 1 ? (
+              <div className="w-full  h-80 flex items-center justify-center flex-col  ">
+                <VscSearchStop size={40} color="#8a9099" />
+                <p className="text-gray-600 text-lg">
+                  Não há nenhum empréstimo pendente
+                </p>
+              </div>
+            ) : (
+              <ListaDashboard
+                dados={dados}
+                recarregarDados={getEmprestimosPendentes}
+                tituloButton="Devolvido"
+                corButton="vermelha"
+                tipo="pedente"
+                Icone={<IoClose size={20} color={"#ffffff"} />}
+              />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

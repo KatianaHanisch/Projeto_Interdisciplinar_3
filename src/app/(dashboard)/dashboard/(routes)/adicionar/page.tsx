@@ -239,89 +239,91 @@ export default function Adicionar() {
   }, [livroData.capaUrl]);
 
   return (
-    <div className="flex items-center justify-center h-full p-10 ">
-      <div className="flex items-center justify-start rounded-lg  h-full w-full">
-        <div className="w-2/4 h-full">
-          <Image
-            src={book}
-            className="h-full rounded-l-lg"
-            alt="imagem biblioteca"
-          />
-        </div>
-        <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300">
-          <form
-            className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md"
-            onSubmit={onSubmit}
-          >
-            <h1 className="text-3xl font-semibold mb-4 text-gray-700">
-              Adicionar livro
-            </h1>
-            <Input
-              type="text"
-              title="Título do livro"
-              name="titulo"
-              value={livroData.titulo}
-              onChange={handleChange}
+    <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
+      <div className="flex items-center justify-center h-full p-10 ">
+        <div className="flex items-center justify-start rounded-lg  h-full w-full">
+          <div className="w-2/4 h-full">
+            <Image
+              src={book}
+              className="h-full rounded-l-lg"
+              alt="imagem biblioteca"
             />
-            <Input
-              type="text"
-              title="Autor do livro"
-              name="autor"
-              value={livroData.autor}
-              onChange={handleChange}
-            />
-            <Input
-              type="text"
-              title="Categoria do livro"
-              name="categoria"
-              value={livroData.categoria}
-              onChange={handleChange}
-            />
-            <Textarea
-              value={livroData.sinopse!}
-              name="sinopse"
-              onChange={handleTextareaChange}
-            />
-            <InputFile file={file!} onDrop={onDrop} removeFile={removeFile} />
-            <div className="w-full py-1 flex items-center justify-end">
-              <Button
-                typeButton="submit"
-                tituloButton="Adicionar livro"
-                carregando={loading}
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-
-      {abrirSnackBar && (
-        <SnackBar
-          mensagem={mensagem}
-          fecharSnackBar={fecharSnackBar}
-          tipo={tipoSnackBar}
-        />
-      )}
-
-      {abrirModal && (
-        <Modal
-          title="Deseja confirmar?"
-          textButton="Adicionar"
-          confirmarModal={confirmarModal}
-          cancelarModal={cancelarModal}
-          fecharModal={fecharModal}
-        >
-          <div className="relative p-6 flex-auto">
-            <p className="text-gray-600 text-lg font-normal leading-relaxed">
-              Você realmente deseja adicionar o livro
-              <span className="font-medium text-gray-700">
-                {" "}
-                {livroData.titulo}{" "}
-              </span>
-              na biblioteca?
-            </p>
           </div>
-        </Modal>
-      )}
+          <div className="h-full w-full p-6 flex flex-col items-center bg-gray-300">
+            <form
+              className="w-11/12 h-full p-5 bg-white flex items-center flex-col rounded-lg gap-3 shadow-md"
+              onSubmit={onSubmit}
+            >
+              <h1 className="text-3xl font-semibold mb-4 text-gray-700">
+                Adicionar livro
+              </h1>
+              <Input
+                type="text"
+                title="Título do livro"
+                name="titulo"
+                value={livroData.titulo}
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                title="Autor do livro"
+                name="autor"
+                value={livroData.autor}
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                title="Categoria do livro"
+                name="categoria"
+                value={livroData.categoria}
+                onChange={handleChange}
+              />
+              <Textarea
+                value={livroData.sinopse!}
+                name="sinopse"
+                onChange={handleTextareaChange}
+              />
+              <InputFile file={file!} onDrop={onDrop} removeFile={removeFile} />
+              <div className="w-full py-1 flex items-center justify-end">
+                <Button
+                  typeButton="submit"
+                  tituloButton="Adicionar livro"
+                  carregando={loading}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {abrirSnackBar && (
+          <SnackBar
+            mensagem={mensagem}
+            fecharSnackBar={fecharSnackBar}
+            tipo={tipoSnackBar}
+          />
+        )}
+
+        {abrirModal && (
+          <Modal
+            title="Deseja confirmar?"
+            textButton="Adicionar"
+            confirmarModal={confirmarModal}
+            cancelarModal={cancelarModal}
+            fecharModal={fecharModal}
+          >
+            <div className="relative p-6 flex-auto">
+              <p className="text-gray-600 text-lg font-normal leading-relaxed">
+                Você realmente deseja adicionar o livro
+                <span className="font-medium text-gray-700">
+                  {" "}
+                  {livroData.titulo}{" "}
+                </span>
+                na biblioteca?
+              </p>
+            </div>
+          </Modal>
+        )}
+      </div>
     </div>
   );
 }
