@@ -107,8 +107,12 @@ export default function Detalhes({ params }: { params: { id: string } }) {
   }, [dadosEmprestimo, idLivro]);
 
   return (
-    <div className="m-auto mt-32 mb-32 px-3 xl:p-0 max-w-[1200px]">
-      <div className="flex md:flex-row flex-col justify-center">
+    <div
+      className={`m-auto xl:p-0 w-full ${
+        themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
+      }`}
+    >
+      <div className="flex md:flex-row flex-col justify-center max-w-[1200px] pt-32 pb-32 px-3 m-auto">
         {carregando ? (
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         ) : (
@@ -125,7 +129,11 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 Seu emprestimo desse livro ainda não foi finalizado
               </button>
             </div>
-            <div className="flex flex-col pl-3 mt-3 xl:ml-0 text-slate-900">
+            <div
+              className={`flex flex-col pl-3 mt-3 xl:ml-0 ${
+                themeValue === "dark" ? "text-dark-text" : "text-light-text"
+              }`}
+            >
               <div>
                 <h1 className="text-2xl font-semibold capitalize text-center md:text-start mb-1">
                   {livro.titulo}
