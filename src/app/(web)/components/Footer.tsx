@@ -1,4 +1,10 @@
-export default function Footer({ themeValue }: any) {
+"use client";
+
+import { useTheme } from "../../context/ThemeContext";
+
+export default function Footer() {
+  const { themeValue } = useTheme();
+
   return (
     <footer
       className={`flex justify-center items-center h-[80px] ${

@@ -59,7 +59,7 @@ export default function Home() {
       >
         <RiArrowUpDoubleFill />
       </Link>
-      <Footer themeValue={themeValue} />
+      <Footer />
     </main>
   );
 }

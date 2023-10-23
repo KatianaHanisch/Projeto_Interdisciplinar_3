@@ -216,15 +216,11 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 <>
                   <button
                     onClick={cadastroEmprestimo}
-                    className={`flex items-center justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500  ${
-                      themeValue === "dark"
-                        ? "text-dark-text"
-                        : "text-light-text"
-                    }`}
+                    className={`flex items-center justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500`}
                   >
                     {carregandoEmprestimo ? (
                       <span
-                        className={`h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin`}
+                        className={`h-6 w-6 block text-slate-900 rounded-full border-4 border-t-blue-500 animate-spin`}
                       ></span>
                     ) : (
                       "Pegar Livro emprestado"
