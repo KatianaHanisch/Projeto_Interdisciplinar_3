@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { useTheme } from "@/app/context/ThemeContext";
 
 import { AiOutlineHome, AiFillShopping } from "react-icons/ai";
 import { BiBookAdd } from "react-icons/bi";
@@ -62,6 +64,8 @@ const routes = [
 export default function Sidebar() {
   const pathname = usePathname();
 
+  const { themeValue } = useTheme();
+
   const { validateTokenRoleFunction, isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -73,7 +77,13 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-gray-300">
+    <div
+      className={`space-y-4 py-4 flex flex-col h-full ${
+        themeValue === "light"
+          ? "bg-light-dashboardLight"
+          : "bg-dark-dashboardDark"
+      } 0`}
+    >
       <div className="px-3 py-2 flex-1 ">
         <Link
           href="/dashboard"
@@ -82,7 +92,13 @@ export default function Sidebar() {
           <div className=" relative w-14 h-12 ">
             <Image fill alt="logo" src="/logo.png" />
           </div>
-          <h1 className="font-semibold text-3xl md:text-3xl text-gray-800 tracking-wide">
+          <h1
+            className={`${
+              themeValue === "light"
+                ? "text-light-dashboardText"
+                : "text-dark-dashboardText"
+            } font-semibold text-3xl md:text-3xl   tracking-wide`}
+          >
             BIBLIOTECA
           </h1>
         </Link>
@@ -95,12 +111,25 @@ export default function Sidebar() {
                 <div
                   className={`flex items-center p-2  transition rounded ${
                     isActive
-                      ? "bg-gray-100 hover:bg-gray-100 shadow-sm"
-                      : "bg-gray-300 hover:bg-gray-200"
+                      ? themeValue === "light"
+                        ? "bg-gray-100 hover:bg-gray-100 shadow-md"
+                        : "bg-gray-600 hover:bg-gray-600"
+                      : themeValue === "light"
+                      ? "bg-gray-300 hover:bg-gray-200"
+                      : "bg-gray-800 hover:bg-gray-700"
                   }`}
                 >
-                  <Icone className="h-7 w-7 mr-1" color="#171f29" />
-                  <h2 className="font-semibold text-lg text-gray-700 ">
+                  <Icone
+                    className="h-7 w-7 mr-1"
+                    color={`${themeValue === "light" ? "#171f29" : "#f1f5f9"}`}
+                  />
+                  <h2
+                    className={`${
+                      themeValue === "light"
+                        ? "text-light-dashboardTextSecundary"
+                        : "text-dark-dashboardText"
+                    } font-semibold text-lg `}
+                  >
                     {label}
                   </h2>
                 </div>
