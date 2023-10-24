@@ -212,11 +212,22 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 className="shadow-lg"
               />
               {livro.quantidadeDisponivel !== undefined &&
-              livro.quantidadeDisponivel < 1 ? null : (
+              livro.quantidadeDisponivel < 1 ? (
+                <button
+                  onClick={cadastroReserva}
+                  className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}
+                >
+                  {carregandoReserva ? (
+                    <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+                  ) : (
+                    "Avisar quando disponível"
+                  )}
+                </button>
+              ) : (
                 <>
                   <button
                     onClick={cadastroEmprestimo}
-                    className={`flex items-center justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500`}
+                    className={`flex items-center text-slate-900 justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500`}
                   >
                     {carregandoEmprestimo ? (
                       <span
@@ -226,19 +237,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                       "Pegar Livro emprestado"
                     )}
                   </button>
-                  <p>ou</p>
                 </>
               )}
-              <button
-                onClick={cadastroReserva}
-                className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}
-              >
-                {carregandoReserva ? (
-                  <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
-                ) : (
-                  "Reservar livro"
-                )}
-              </button>
             </div>
             <div
               className={`flex flex-col pl-3 mt-3 xl:ml-0  ${

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import type { Metadata } from "next";
 
 import { LivroProps } from "@/app/types/Types";
+import { useTheme } from "../../../context/ThemeContext";
 
 import ListBorrowed from "../../components/ListBorrowed";
 import SnackBar from "@/app/components/SnackBar";
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default function Emprestimos() {
+  const { themeValue } = useTheme();
+
   const [livros, setLivros] = useState<LivroProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
@@ -63,9 +66,11 @@ export default function Emprestimos() {
   }, []);
 
   return (
-    <div>
+    <div
+      className={`${themeValue === "dark" ? "bg-dark-back" : "bg-light-back"}`}
+    >
       {carregando ? (
-        <div className="w-full h-72 flex items-center justify-center">
+        <div className="w-full h-96 flex items-center justify-center">
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         </div>
       ) : (
