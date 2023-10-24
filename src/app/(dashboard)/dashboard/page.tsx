@@ -40,7 +40,7 @@ export default function Dashboard() {
 
       setCarregando(false);
     } catch (error) {
-      setMessagemSnackBar("Não foi possível carrgar os dados");
+      setMessagemSnackBar("Não foi possível carregar os dados");
       setTipoSnackBar("erro");
       setAbrirSnackBar(true);
 

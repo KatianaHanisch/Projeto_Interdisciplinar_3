@@ -1,6 +1,6 @@
 import { prisma } from "@/app/utils/Prisma";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { addDays } from "date-fns"; // Importa a função de adicionar dias a partir da biblioteca date-fns
+import { addDays } from "date-fns";
 
 export async function POST(request: Request) {
   const secretKey = process.env.SECRETKEY;
@@ -95,4 +95,9 @@ export async function POST(request: Request) {
       status: 500,
     });
   }
+}
+
+export async function GET() {
+  const emprestimos = await prisma.emprestimos.findMany();
+  return new Response(JSON.stringify(emprestimos), { status: 200 });
 }

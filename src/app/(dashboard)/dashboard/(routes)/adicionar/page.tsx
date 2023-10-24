@@ -7,6 +7,7 @@ import {
   useEffect,
   useCallback,
 } from "react";
+import { useAuth } from "../../../../context/AuthContext";
 
 import Image from "next/image";
 
@@ -22,6 +23,8 @@ import SnackBar from "@/app/components/SnackBar";
 import book from "../../../../../../public/banner-login.jpg";
 
 export default function Adicionar() {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const [abrirModal, setAbrirModal] = useState(false);
   const [formularioConfirmado, setFormularioConfirmado] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -45,6 +48,10 @@ export default function Adicionar() {
   const onDrop = useCallback((files: File[]) => {
     setFile(files[0]);
   }, []);
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
 
   function fecharSnackBar() {
     setAbrirSnackBar(false);
@@ -237,6 +244,10 @@ export default function Adicionar() {
       cadastroLivro();
     }
   }, [livroData.capaUrl]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">

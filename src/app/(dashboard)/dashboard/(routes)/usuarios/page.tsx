@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { useAuth } from "../../../../context/AuthContext";
 
 import TituloPagina from "../../components/TituloPagina";
 import ListaUsuarios from "../../components/ListaUsuarios";
@@ -14,6 +15,8 @@ import { Roles } from "@/app/types/Types";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Usuarios() {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
 
   const [dados, setDados] = useState([]);
@@ -144,6 +147,14 @@ export default function Usuarios() {
       console.error("Erro ao analisar JSON:", error);
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
   }
 
   return (

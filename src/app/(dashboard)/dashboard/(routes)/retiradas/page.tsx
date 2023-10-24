@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "../../../../context/AuthContext";
 
 import { DadosListaProps } from "@/app/types/DashboardTypes";
 
@@ -14,6 +15,8 @@ import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Retiradas() {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
@@ -49,6 +52,14 @@ export default function Retiradas() {
   useEffect(() => {
     getRetiradasPendentes();
   }, []);
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">

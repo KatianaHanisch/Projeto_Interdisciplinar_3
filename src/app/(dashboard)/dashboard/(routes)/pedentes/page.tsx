@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "../../../../context/AuthContext";
 
 import TituloPagina from "../../components/TituloPagina";
 import ListaDashboard from "../../components/ListaDashboard";
@@ -14,6 +15,8 @@ import { VscSearchStop } from "react-icons/vsc";
 import ExportarPDF from "@/app/reports/ExportarPDF";
 
 export default function Retiradas() {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
 
@@ -49,6 +52,14 @@ export default function Retiradas() {
   useEffect(() => {
     getEmprestimosPendentes();
   }, []);
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">

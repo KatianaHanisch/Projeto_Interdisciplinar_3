@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "../../../../../context/AuthContext";
 
 import { LivroProps } from "@/app/types/Types";
 
@@ -15,6 +16,8 @@ import SnackBar from "@/app/components/SnackBar";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const router = useRouter();
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -99,6 +102,14 @@ export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     getLivro();
   }, []);
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">

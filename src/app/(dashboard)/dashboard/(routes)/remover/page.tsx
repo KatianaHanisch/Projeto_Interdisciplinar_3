@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../../context/AuthContext";
 
 import { LivroProps } from "@/app/types/Types";
 
@@ -11,6 +12,8 @@ import Livro from "./components/Livro";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Remover() {
+  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+
   const [carregando, setCarregando] = useState(true);
   const [tituloBusca, setTituloBusca] = useState("");
   const [livros, setLivros] = useState<LivroProps[]>([]);
@@ -81,6 +84,14 @@ export default function Remover() {
   useEffect(() => {
     getLivros();
   }, []);
+
+  useEffect(() => {
+    validateTokenRoleFunction();
+  }, [validateTokenRoleFunction]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
