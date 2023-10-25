@@ -23,7 +23,7 @@ import SnackBar from "@/app/components/SnackBar";
 import book from "../../../../../../public/banner-login.jpg";
 
 export default function Adicionar() {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
 
   const [abrirModal, setAbrirModal] = useState(false);
   const [formularioConfirmado, setFormularioConfirmado] = useState(false);
@@ -71,6 +71,8 @@ export default function Adicionar() {
     setAbrirModal(false);
   }
 
+  console.log(token);
+
   function cancelarModal() {
     setAbrirModal(false);
     setLivroData({
@@ -108,6 +110,7 @@ export default function Adicionar() {
       const response = await fetch("/api/dashboard/adicionarLivro", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(livroData),

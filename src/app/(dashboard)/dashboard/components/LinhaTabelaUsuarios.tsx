@@ -28,8 +28,6 @@ export default function LinhaTabelaUsuarios({
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
   const { userId, token } = useAuth();
 
-  console.log(token);
-
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);

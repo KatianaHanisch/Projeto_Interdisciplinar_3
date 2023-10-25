@@ -16,7 +16,7 @@ import SnackBar from "@/app/components/SnackBar";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function Page({ params }: { params: { id: string } }) {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
 
   const router = useRouter();
 
@@ -41,6 +41,7 @@ export default function Page({ params }: { params: { id: string } }) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -59,23 +60,31 @@ export default function Page({ params }: { params: { id: string } }) {
     try {
       const response = await fetch(`/api/filtroLivro?id=${idLivro}`, {
         method: "DELETE",
-      });
-      setMensagemSnackBar("O livro foi removido com sucesso");
-      setAbrirSnackBar(true);
-      setLivroEscolhido({
-        titulo: "",
-        autor: "",
-        capaUrl: "",
-        sinopse: "",
-        categoria: "",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      setTimeout(() => {
-        router.push("/dashboard/remover");
-        setAbrirSnackBar(false);
-      }, 2000);
+      if (response.status === 200) {
+        setMensagemSnackBar("O livro foi removido com sucesso");
+        setAbrirSnackBar(true);
+        setLivroEscolhido({
+          titulo: "",
+          autor: "",
+          capaUrl: "",
+          sinopse: "",
+          categoria: "",
+        });
 
-      setLoadingDelete(false);
+        setTimeout(() => {
+          router.push("/dashboard/remover");
+          setAbrirSnackBar(false);
+        }, 2000);
+
+        setLoadingDelete(false);
+      } else {
+        console.log("Erro ao remover livro");
+      }
     } catch (error) {
       console.log(error);
       setLoadingDelete(false);

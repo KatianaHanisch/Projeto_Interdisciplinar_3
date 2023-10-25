@@ -16,7 +16,7 @@ interface RoleInfo {
   tirar_relatorio: boolean;
 }
 
-export default async function validarPermissao(
+export default async function ValidarPermissao(
   token: string,
   permissao: string
 ): Promise<{
