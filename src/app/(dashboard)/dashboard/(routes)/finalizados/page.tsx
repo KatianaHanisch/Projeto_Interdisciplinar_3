@@ -15,7 +15,7 @@ import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Retiradas() {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
 
   const [dados, setDados] = useState<DadosListaProps[]>([]);
   const [carregando, setCarregando] = useState(false);
@@ -34,6 +34,10 @@ export default function Retiradas() {
     try {
       const res = await fetch("/api/dashboard/emprestimosFinalizados", {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const data = await res.json();
@@ -53,7 +57,9 @@ export default function Retiradas() {
   }
 
   useEffect(() => {
-    getEmprestimosFinalizados();
+    if (token) {
+      getEmprestimosFinalizados();
+    }
   }, []);
 
   useEffect(() => {

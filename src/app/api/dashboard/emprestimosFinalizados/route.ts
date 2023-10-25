@@ -1,4 +1,5 @@
 import { prisma } from "@/app/utils/Prisma";
+import ValidarPermissao from "../ValidarPermissao";
 
 export async function PUT(request: Request) {
   try {
@@ -61,41 +62,52 @@ export async function PUT(request: Request) {
   }
 }
 
-export async function GET() {
-  try {
-    const emprestimos = await prisma.emprestimosFinalizados.findMany({
-      where: {
-        status: 3,
-      },
-      include: {
-        livro: true,
-        user: {
-          select: {
-            name: true,
-            phone: true,
+export async function GET(request: Request) {
+  const authorization = request.headers.get("authorization");
+
+  const permissionResult = await ValidarPermissao(
+    authorization!,
+    "tirar_relatorio"
+  );
+
+  if (permissionResult.hasPermission) {
+    try {
+      const emprestimos = await prisma.emprestimosFinalizados.findMany({
+        where: {
+          status: 3,
+        },
+        include: {
+          livro: true,
+          user: {
+            select: {
+              name: true,
+              phone: true,
+            },
           },
         },
-      },
-      orderBy: {
-        dataDevolucao: "desc",
-      },
-    });
+        orderBy: {
+          dataDevolucao: "desc",
+        },
+      });
 
-    const emprestimosFinalizados = emprestimos.map((emprestimo) => ({
-      id: emprestimo.id,
-      livro: emprestimo.livro.titulo,
-      nome: emprestimo.user.name,
-      telefone: emprestimo.user.phone,
-      status: emprestimo.status === 3 ? "Devolvido" : emprestimo.status,
-      dataDevolucao: emprestimo.dataDevolucao,
-    }));
+      const emprestimosFinalizados = emprestimos.map((emprestimo) => ({
+        id: emprestimo.id,
+        livro: emprestimo.livro.titulo,
+        nome: emprestimo.user.name,
+        telefone: emprestimo.user.phone,
+        status: emprestimo.status === 3 ? "Devolvido" : emprestimo.status,
+        dataDevolucao: emprestimo.dataDevolucao,
+      }));
 
-    await prisma.$disconnect();
-    return new Response(JSON.stringify(emprestimosFinalizados), {
-      status: 200,
-    });
-  } catch (error) {
-    await prisma.$disconnect;
-    return new Response("Não foi possível acessar os dados", { status: 500 });
+      await prisma.$disconnect();
+      return new Response(JSON.stringify(emprestimosFinalizados), {
+        status: 200,
+      });
+    } catch (error) {
+      await prisma.$disconnect;
+      return new Response("Não foi possível acessar os dados", { status: 500 });
+    }
+  } else {
+    return new Response("Unauthorized", { status: 403 });
   }
 }
