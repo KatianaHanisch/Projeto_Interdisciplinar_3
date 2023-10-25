@@ -9,6 +9,7 @@ import Image from "next/image";
 import { LivroProps } from "@/app/types/Types";
 
 import SnackBar from "@/app/components/SnackBar";
+import { useRouter } from "next/navigation";
 
 export default function Detalhes({ params }: { params: { id: string } }) {
   const [carregando, setCarregando] = useState(true);
@@ -27,6 +28,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     sinopse: "",
     categoria: "",
   });
+
+  const router = useRouter();
 
   const { themeValue } = useTheme();
 
@@ -67,7 +70,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
   }
 
   async function getLivrosUsuario() {
-    const token = await sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     try {
       const response = await fetch(`/api/web/usuarioEmprestimos`, {
@@ -106,15 +109,22 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     }
   }, [dadosEmprestimo, idLivro]);
 
+  if (!dadosEmprestimo) {
+    router.push("/not-found");
+    return;
+  }
+
   return (
     <div
       className={`m-auto xl:p-0 w-full ${
         themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
       }`}
     >
-      <div className="flex md:flex-row flex-col justify-center max-w-[1200px] pt-32 pb-32 px-3 m-auto">
+      <div className="flex md:flex-row flex-col justify-center max-w-[1200px] pt-60 pb-60 px-3 m-auto">
         {carregando ? (
-          <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+          <div>
+            <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+          </div>
         ) : (
           <>
             <div className="w-full flex flex-col justify-center items-center ">
@@ -126,7 +136,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 className="shadow-lg"
               />
               <button className="flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500">
-                Seu emprestimo desse livro ainda não foi finalizado
+                O empréstimo desse livro ainda não foi finalizado
               </button>
             </div>
             <div

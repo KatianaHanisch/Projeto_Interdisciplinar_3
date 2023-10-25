@@ -15,11 +15,11 @@ import { Roles } from "@/app/types/Types";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Usuarios() {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
 
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
 
-  const [dados, setDados] = useState([]);
+  const [dados, setDados] = useState<any>({ users: [] });
   const [roles, setRoles] = useState<Roles[]>([]);
   const [role, setRole] = useState("");
 
@@ -52,6 +52,7 @@ export default function Usuarios() {
       const response = await fetch("/api/dashboard/user", {
         method: "GET",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -76,11 +77,6 @@ export default function Usuarios() {
 
     setRoles(data);
   };
-
-  useEffect(() => {
-    fetchDataUsers();
-    fetchDataRoles();
-  }, []);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -118,6 +114,7 @@ export default function Usuarios() {
       const response = await fetch("/api/dashboard/user", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
@@ -153,6 +150,13 @@ export default function Usuarios() {
     validateTokenRoleFunction();
   }, [validateTokenRoleFunction]);
 
+  useEffect(() => {
+    if (token) {
+      fetchDataRoles();
+      fetchDataUsers();
+    }
+  }, [token]);
+
   if (!isAuthenticated) {
     return null;
   }
@@ -174,7 +178,7 @@ export default function Usuarios() {
           </div>
         ) : (
           <>
-            {dados.length < 1 ? (
+            {dados.users.length < 1 ? (
               <div className="w-full h-80 flex items-center justify-center flex-col  ">
                 <VscSearchStop size={40} color="#8a9099" />
                 <p className="text-gray-600 text-lg">
@@ -183,7 +187,7 @@ export default function Usuarios() {
               </div>
             ) : (
               <ListaUsuarios
-                dados={dados}
+                dados={dados.users}
                 roles={roles}
                 fetchDataUsers={fetchDataUsers}
               />

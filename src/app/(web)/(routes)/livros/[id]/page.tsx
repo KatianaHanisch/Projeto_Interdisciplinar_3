@@ -52,7 +52,9 @@ export default function Detalhes({ params }: { params: { id: string } }) {
 
       if (response.status === 400) {
         setTipoSnackBar("erro");
-        setMensagemSnackBar("Você já realizou a reserva desse livro");
+        setMensagemSnackBar(
+          "Assim que o livro estiver disponível enviaremos um E-mail."
+        );
         setAbrirSnackBar(true);
 
         setTimeout(() => {
@@ -63,7 +65,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
       if (response.status === 201) {
         setTipoSnackBar("sucesso");
         setMensagemSnackBar(
-          "Reserva cadastrada com sucesso. Quando o livro estiver disponível entraremos em contato."
+          "Sucesso! Assim que o livro estiver disponível enviaremos um E-mail."
         );
         setAbrirSnackBar(true);
 
@@ -183,6 +185,11 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     getLivro();
   }, []);
 
+  if (!livro) {
+    router.push("/not-found");
+    return;
+  }
+
   return (
     <div
       className={`m-auto xl:p-0 w-full ${
@@ -193,7 +200,9 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     >
       <div className="flex md:flex-row flex-col justify-center max-w-[1200px] m-auto pt-32 pb-32 px-3">
         {carregando ? (
-          <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+          <div className="pt-32 pb-32">
+            <span className="h-12 w-12 block  rounded-full border-4 border-t-blue-500 animate-spin"></span>
+          </div>
         ) : (
           <>
             {abrirSnackBar && (
@@ -212,7 +221,7 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 className="shadow-lg"
               />
               {livro.quantidadeDisponivel !== undefined &&
-              livro.quantidadeDisponivel < 1 ? (
+              livro.quantidadeDisponivel > 1 ? (
                 <button
                   onClick={cadastroReserva}
                   className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}

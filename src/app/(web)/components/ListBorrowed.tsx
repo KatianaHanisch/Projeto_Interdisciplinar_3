@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/app/context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -17,7 +16,6 @@ type Props = {
 
 export default function ListBorrowed({ livros }: Props) {
   const { isAuthenticated, validateTokenForPageEmprestimos } = useAuth();
-  const router = useRouter();
 
   const { themeValue } = useTheme();
 

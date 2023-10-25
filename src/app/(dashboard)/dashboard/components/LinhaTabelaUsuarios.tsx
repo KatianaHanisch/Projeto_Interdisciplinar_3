@@ -26,8 +26,9 @@ export default function LinhaTabelaUsuarios({
 }: LinhaTabelaUsuariosProps) {
   const [abrirModalRemover, setAbrirModalRemover] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
-  const { userId } = useAuth();
-  const router = useRouter();
+  const { userId, token } = useAuth();
+
+  console.log(token);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -81,6 +82,7 @@ export default function LinhaTabelaUsuarios({
       const response = await fetch("/api/dashboard/user", {
         method: "PUT",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
@@ -125,6 +127,7 @@ export default function LinhaTabelaUsuarios({
       const response = await fetch("/api/dashboard/user", {
         method: "DELETE",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(id),

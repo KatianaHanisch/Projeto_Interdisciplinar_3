@@ -24,7 +24,9 @@ export default function ListRecentBooks({
       </h1>
       <div className="flex m-auto md:gap-[45px] gap-[30px] flex-wrap px-4 max-w-[1200px] justify-center">
         {carregando ? (
-          <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          <div className="pt-52 pb-52">
+            <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+          </div>
         ) : (
           <>
             {livros &&

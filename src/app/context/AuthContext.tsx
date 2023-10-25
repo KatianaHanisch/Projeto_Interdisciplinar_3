@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface AuthData {
   isAuthenticated: boolean;
   name: string;
+  token: string;
   email: string;
   userId: string;
   phone: string;
@@ -22,6 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [phone, setPhone] = useState(String);
   const [userId, setUserId] = useState(String);
   const [email, setEmail] = useState(String);
+  const [token, setToken] = useState(String);
   const router = useRouter();
 
   const logout = () => {
@@ -78,6 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const validateTokenRoleFunction = async () => {
     const tokendash = sessionStorage.getItem("d_token");
+    setToken(tokendash!);
 
     if (!tokendash) {
       setIsAuthenticated(false);
@@ -127,6 +130,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     name,
     email,
     phone,
+    token,
     logout,
     validateToken,
     validateTokenRoleFunction,

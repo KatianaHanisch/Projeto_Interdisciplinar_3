@@ -70,13 +70,13 @@ export default function Emprestimos() {
       className={`${themeValue === "dark" ? "bg-dark-back" : "bg-light-back"}`}
     >
       {carregando ? (
-        <div className="w-full h-96 flex items-center justify-center">
+        <div className="w-full pt-60 pb-60 flex items-center justify-center">
           <span className="h-12 w-12 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
         </div>
       ) : (
         <div className="pb-14">
           {livros.length === 0 ? (
-            <div className="w-full h-80 flex items-center justify-center flex-col  ">
+            <div className="w-full pt-60 pb-60 flex items-center justify-center flex-col  ">
               <VscSearchStop size={40} color="#8a9099" />
               <p className="text-gray-600 text-lg">
                 Não há nenhum empréstimo pendente
