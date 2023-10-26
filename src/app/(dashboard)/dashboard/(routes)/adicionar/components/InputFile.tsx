@@ -1,7 +1,6 @@
-"use client";
-
-import { useCallback, useState } from "react";
 import { DropzoneState, useDropzone } from "react-dropzone";
+
+import { useTheme } from "@/app/context/ThemeContext";
 
 import { LuUpload } from "react-icons/lu";
 import { AiFillFileImage } from "react-icons/ai";
@@ -23,16 +22,6 @@ type FileInputProps = {
 };
 
 export const FileInput = ({ file, removeFile, onDrop }: FileInputProps) => {
-  // const [file, setFile] = useState<File | null>(null);
-
-  // const removeFile = useCallback(() => {
-  //   setFile(null);
-  // }, [file]);
-
-  // const onDrop = useCallback((files: File[]) => {
-  //   setFile(files[0]);
-  // }, []);
-
   const dropzone = useDropzone({
     onDrop,
     accept: {
@@ -41,7 +30,6 @@ export const FileInput = ({ file, removeFile, onDrop }: FileInputProps) => {
   });
 
   if (file) {
-    // console.log(file);
     return <HasFile file={file} removeFile={removeFile} />;
   }
 
@@ -49,13 +37,21 @@ export const FileInput = ({ file, removeFile, onDrop }: FileInputProps) => {
 };
 
 const Input = ({ dropzone }: InputProps) => {
+  const { themeValue } = useTheme();
+
   const { getRootProps, getInputProps, isDragActive } = dropzone;
 
   return (
     <div
       {...getRootProps()}
-      className={`w-full h-1/6 rounded-lg border-dashed border-2 hover:border-gray-500 bg-gray-200 hover:bg-gray-300 transition-all
-      ${isDragActive ? "border-blue-800" : "border-gray-400"}`}
+      className={`${
+        isDragActive
+          ? themeValue === "light"
+            ? "bg-gray-200 hover:border-gray-500  hover:bg-gray-300 border-blue-800"
+            : "bg-gray-500 text-dark-dashboardText border-blue-800"
+          : "border-gray-400"
+      } w-full h-1/6 rounded-lg border-dashed border-2  transition-all
+      `}
     >
       <label htmlFor="dropzone-file" className="cursor-pointer w-full h-full">
         <div className="flex flex-col items-center justify-center pt-5 pb-6 w-full h-full">
@@ -70,9 +66,24 @@ const Input = ({ dropzone }: InputProps) => {
             </p>
           ) : (
             <>
-              <p className="text-gray-500 font-bold text-lg">Capa do livro</p>
-              <p className="mb-2 text-lg text-gray-500">
-                <span>Clique para enviar</span> ou arraste até aqui
+              <p
+                className={`${
+                  themeValue === "light"
+                    ? " text-light-dashboardTextSecundary"
+                    : " text-dark-dashboardTextSecundary"
+                } font-bold text-lg`}
+              >
+                Capa do livro
+              </p>
+              <p
+                className={`${
+                  themeValue === "light"
+                    ? " text-light-dashboardLightGray"
+                    : " text-dark-dashboardLightGray"
+                } mb-2 text-lg `}
+              >
+                <span className="font-bold">Clique para enviar</span> ou arraste
+                até aqui
               </p>
             </>
           )}
@@ -85,7 +96,7 @@ const Input = ({ dropzone }: InputProps) => {
 
 const HasFile = ({ file, removeFile }: HasFileProps) => {
   return (
-    <div className="w-full h-full rounded-lg border-dashed p-2 border-2 border-gray-500 bg-gray-200 flex justify-center items-center">
+    <div className="w-full h-full rounded-lg border-dashed p-2 border-2 border-gray-400 bg-gray-200 flex justify-center items-center">
       <div className="bg-gray-100  w-3/5 rounded-md shadow-md flex gap-3 items-center justify-between">
         <div className="flex items-center justify-center">
           <AiFillFileImage className="ml-3 mr-1" size={30} color="#2d333f" />

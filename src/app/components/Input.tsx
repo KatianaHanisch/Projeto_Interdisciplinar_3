@@ -1,3 +1,5 @@
+import { useTheme } from "../context/ThemeContext";
+
 type Props = {
   title?: string;
   type: string;
@@ -7,6 +9,8 @@ type Props = {
 };
 
 export default function Input({ title, type, name, value, onChange }: Props) {
+  const { themeValue } = useTheme();
+
   return (
     <div className="relative w-full ">
       <input
@@ -16,12 +20,20 @@ export default function Input({ title, type, name, value, onChange }: Props) {
         value={value}
         onChange={onChange}
         id="floating_outlined"
-        className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+        className={`${
+          themeValue === "light"
+            ? "text-light-dashboardText"
+            : "text-dark-dashboardText"
+        } block px-2.5 pb-2.5 pt-2 w-full text-sm  bg-transparent rounded border border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-gray-400 peer`}
         placeholder=" "
       />
       <label
         htmlFor="floating_outlined"
-        className="absolute text-sm text-gray-4 dark:text-gray-700 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-gary-600 peer-focus:dark:text-gary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+        className={`${
+          themeValue === "light"
+            ? "bg-light-dashbardWhite text-light-dashboardText"
+            : "bg-dark-dashboardSecundaryColor text-dark-dashboardText"
+        } absolute text-sm text-gray-4 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0]  px-2 peer-focus:px-2 peer-focus:text-gary-600 peer-focus:dark:text-gary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1`}
       >
         {title}
       </label>
