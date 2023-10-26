@@ -1,3 +1,5 @@
+import { useTheme } from "@/app/context/ThemeContext";
+
 type InputBuscaProps = {
   placeholderInput: string;
   value?: string;
@@ -19,16 +21,31 @@ export default function InputBusca({
     onSearch(searchText);
   };
 
+  const { themeValue } = useTheme();
+
   return (
     <>
-      <div className="w-11/12 flex items-center justify-center bg-gray-50 py-2 px-3 border border-gray-400 rounded-md">
-        <BsSearch color="#89909b" size={20} />
+      <div
+        className={`${
+          themeValue === "light"
+            ? "bg-gray-50 border-gray-400"
+            : "bg-gray-600 border-gray-200"
+        } w-11/12 flex items-center justify-center py-2 px-3 border rounded-md`}
+      >
+        <BsSearch
+          color={`${themeValue === "light" ? "#89909b" : "#f3f4f6"}`}
+          size={20}
+        />
         <input
           type="text"
           value={value}
           placeholder={placeholderInput}
           onChange={handleInputChange}
-          className="w-full ml-2 bg-transparent text-base focus:outline-none  text-gray-600 border-l border-gray-300 px-2"
+          className={`${
+            themeValue === "light"
+              ? "text-gray-600 border-gray-300"
+              : "text-gray-100 border-gray-100"
+          } w-full ml-2 bg-transparent text-base focus:outline-none border-l px-2`}
         />
       </div>
     </>

@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { LivroProps } from "@/app/types/Types";
 
+import { useTheme } from "@/app/context/ThemeContext";
+
 export default function CardLivro({
   id,
   titulo,
@@ -10,6 +12,8 @@ export default function CardLivro({
   categoria,
   capaUrl,
 }: LivroProps) {
+  const { themeValue } = useTheme();
+
   return (
     <Link
       href={`/dashboard/remover/${id}`}
@@ -21,7 +25,11 @@ export default function CardLivro({
         height={220}
         alt="Capa do livro"
       />
-      <div className="flex flex-col text-slate-800">
+      <div
+        className={`${
+          themeValue === "light" ? "text-slate-800" : "text-gray-100"
+        } flex flex-col `}
+      >
         <h1 className="font-semibold capitalize">{titulo}</h1>
         <h3 className="mt-[-5px] font-normal capitalize">{autor}</h3>
         <h3 className="mt-[-5px] font-light capitalize">{categoria}</h3>

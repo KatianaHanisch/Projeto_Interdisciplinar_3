@@ -32,7 +32,7 @@ export default function Pagination({
           ? "text-dark-text hover:bg-gray-700"
           : "text-light-text hover:bg-gray-200"
       } h-10 flex items-center justify-center rounded-full mr-4`}
-      activeClassName={`bg-gray-700 text-white hover:bg-gray-700`}
+      activeClassName={`bg-gray-800 text-white hover:bg-gray-700`}
       onPageChange={handlePageClick}
       pageCount={quantidadePaginas}
       breakLabel={<span className="mr-4">...</span>}

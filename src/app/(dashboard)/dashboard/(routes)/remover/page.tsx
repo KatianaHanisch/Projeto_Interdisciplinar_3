@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../context/AuthContext";
+import { useTheme } from "@/app/context/ThemeContext";
 
 import { LivroProps } from "@/app/types/Types";
 
@@ -23,6 +24,8 @@ export default function Remover() {
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
 
   const itemPorPagina = 6;
+
+  const { themeValue } = useTheme();
 
   async function getLivros() {
     try {
@@ -94,41 +97,71 @@ export default function Remover() {
   }
 
   return (
-    <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
-      <div className="w-full p-10 items-center flex flex-col ">
-        <InputBusca
-          placeholderInput="Digite o nome do livro que procura"
-          value={tituloBusca}
-          onChange={(e) => setTituloBusca(e.target.value)}
-          onSearch={handleSearch}
-        />
-        <div className="flex flex-col items-center justify-center py-8  h-[380px]  w-11/12 ">
-          {carregando ? (
-            <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-          ) : (
-            <div className=" flex flex-row items-center gap-10 justify-start py-8  w-full">
-              {filteredData.length < 1 ? (
-                <div className="w-full h-52 flex items-center justify-center flex-col  ">
-                  <VscSearchStop size={40} color="#8a9099" />
-                  <p className="text-gray-600 text-lg">
-                    Nenhum livro encontrado
-                  </p>
-                </div>
+    <div
+      className={`w-full h-screen  ${
+        themeValue === "light"
+          ? "bg-light-dashboardLight"
+          : "bg-dark-dashboardDark"
+      }`}
+    >
+      <div className="w-full h-5/6 pt-4  pr-10 pl-2">
+        <div
+          className={`${
+            themeValue === "light"
+              ? "bg-light-dashbardWhite"
+              : "bg-dark-dashboardSecundaryColor"
+          } h-full w-full rounded-lg shadow-md`}
+        >
+          <div className="w-full p-10 items-center flex flex-col ">
+            <InputBusca
+              placeholderInput="Digite o nome do livro que procura"
+              value={tituloBusca}
+              onChange={(e) => setTituloBusca(e.target.value)}
+              onSearch={handleSearch}
+            />
+            <div className="flex flex-col items-center justify-center py-8  h-[380px]  w-11/12 ">
+              {carregando ? (
+                <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
               ) : (
-                <>
-                  {filteredData
-                    .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
-                    .map((item: LivroProps, index: number) => (
-                      <Livro key={index} {...item} />
-                    ))}
-                </>
+                <div className=" flex flex-row items-center gap-10 justify-start py-8  w-full">
+                  {filteredData.length < 1 ? (
+                    <div className="w-full h-52 flex items-center justify-center flex-col  ">
+                      <VscSearchStop
+                        size={40}
+                        color={`${
+                          themeValue === "light" ? "#89909b" : "#f3f4f6"
+                        }`}
+                      />
+                      <p
+                        className={`${
+                          themeValue === "light"
+                            ? "text-light-dashboardTextSecundary"
+                            : "text-dark-dashboardTextSecundary"
+                        } text-lg`}
+                      >
+                        Nenhum livro encontrado
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      {filteredData
+                        .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
+                        .map((item: LivroProps, index: number) => (
+                          <Livro key={index} {...item} />
+                        ))}
+                    </>
+                  )}
+                </div>
               )}
             </div>
-          )}
+            {pagination ? (
+              <Pagination
+                quantidadePaginas={quantidadePaginas}
+                setPage={setPage}
+              />
+            ) : null}
+          </div>
         </div>
-        {pagination ? (
-          <Pagination quantidadePaginas={quantidadePaginas} setPage={setPage} />
-        ) : null}
       </div>
     </div>
   );
