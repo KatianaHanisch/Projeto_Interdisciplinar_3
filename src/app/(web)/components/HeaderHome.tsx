@@ -162,7 +162,7 @@ export default function HeaderHome() {
         </h2>
 
         {isAuthenticated ? (
-          <div className="flex items-center justify-end ">
+          <div className="flex items-center z-50 justify-end ">
             <button onClick={toggleTheme} className="mr-4">
               {themeValue === "light" ? (
                 <BsMoonFill color="#111827" />
@@ -186,12 +186,12 @@ export default function HeaderHome() {
               </button>
               {open && (
                 <div
-                  className={`absolute  z-20 mt-36 ml-[-150px] w-48 rounded ${
+                  className={`z-[100] mt-36 ml-[-150px] w-48 rounded ${
                     themeValue === "dark" ? "bg-light-back" : "bg-dark-back"
                   } py-2 shadow-xl`}
                 >
                   <div
-                    className={`flex mt-1 mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
+                    className={`flex relative z-50 mt-1 mb-4 items-center text-base gap-2 font-medium px-3 py-1 ${
                       themeValue === "dark"
                         ? "bg-light-back text-light-text hover:bg-gray-200"
                         : "bg-dark-back text-dark-text hover:bg-gray-900"
@@ -261,7 +261,7 @@ export default function HeaderHome() {
         } text-[14px]`}
       ></div>
       <div
-        className={`fixed z-50 ${
+        className={`fixed md:z-0 z-50 ${
           themeValue === "dark" ? "bg-dark-back" : "bg-light-back"
         } md:relative top-0 max-w-[1200px] m-auto w-full flex justify-around md:justify-between items-center h-[70px] px-8 xl:px-0`}
       >
@@ -383,7 +383,7 @@ export default function HeaderHome() {
               </div>
 
               {isAuthenticated ? (
-                <div className="flex flex-col items-center justify-end ">
+                <div className="flex  flex-col items-center justify-end ">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full cursor-pointer">
                     <button
                       className={`my-2 ${
@@ -405,7 +405,7 @@ export default function HeaderHome() {
                       Configurações
                     </button>
                   </div>
-                  <div className="w-10 mt-6 h-10 flex items-center justify-center rounded-full cursor-pointer">
+                  <div className="w-10  mt-6 h-10 flex items-center justify-center rounded-full cursor-pointer">
                     <button
                       className={`my-2 ${
                         themeValue === "dark"
