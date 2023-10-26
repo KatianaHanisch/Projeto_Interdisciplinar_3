@@ -82,7 +82,7 @@ export default function Sidebar() {
         themeValue === "light"
           ? "bg-light-dashboardLight"
           : "bg-dark-dashboardDark"
-      } 0`}
+      } `}
     >
       <div className="px-3 py-2 flex-1 ">
         <Link

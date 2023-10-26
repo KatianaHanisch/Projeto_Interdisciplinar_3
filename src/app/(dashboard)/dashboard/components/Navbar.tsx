@@ -57,7 +57,9 @@ export default function Navbar() {
         </h4>
         <div
           className={`w-10 h-10 ${
-            themeValue === "light" ? "bg-white" : "bg-gray-600"
+            themeValue === "light"
+              ? "bg-light-dashboardSecundaryColor"
+              : "bg-dark-dashboardSecundaryColor"
           } flex items-center justify-center rounded-full cursor-pointer`}
         >
           <button className="" onClick={abrirDropdown}>

@@ -68,53 +68,67 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <div className="bg-gray-100 h-full w-full rounded-lg shadow-md">
-        <main className="grid grid-cols-3 grid-rows-3 gap-7 h-full p-11">
-          <CardTotalizadorDashboard
-            IconeCard={BiSolidBookOpen}
-            tituloCard="Empréstimos Pedentes"
-            informacaoCard={
-              carregando ? (
-                <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-              ) : (
-                dados?.emprestimosPendentes
-              )
-            }
-          />
-          <CardTotalizadorDashboard
-            IconeCard={BiSolidBookOpen}
-            tituloCard="Empréstimos Finalizados"
-            informacaoCard={
-              carregando ? (
-                <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-              ) : (
-                dados?.emprestimosFinalizados
-              )
-            }
-          />
-          <CardTotalizadorDashboard
-            IconeCard={BiSolidBookOpen}
-            tituloCard="Livros Cadastrados"
-            informacaoCard={
-              carregando ? (
-                <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
-              ) : (
-                dados?.totalLivrosCadastrados
-              )
-            }
-          />
-          <CardFraseDashboard />
-          <CardImagemDashboard />
-
-          {abrirSnackBar && (
-            <SnackBar
-              mensagem={messagemSnackBar}
-              tipo={tipoSnackBar}
-              fecharSnackBar={fecharSnackBar}
+    <div
+      className={`w-full h-screen  ${
+        themeValue === "light"
+          ? "bg-light-dashboardLight"
+          : "bg-dark-dashboardDark"
+      }`}
+    >
+      <div className="w-full h-5/6 pt-4  pr-10 pl-2">
+        <div
+          className={` ${
+            themeValue === "light"
+              ? "bg-light-dashboardSecundaryColor"
+              : "bg-dark-dashboardSecundaryColor"
+          } h-full w-full rounded-lg shadow-md`}
+        >
+          <main className="grid grid-cols-3 grid-rows-3 gap-7 h-full p-11">
+            <CardTotalizadorDashboard
+              IconeCard={BiSolidBookOpen}
+              tituloCard="Empréstimos Pedentes"
+              informacaoCard={
+                carregando ? (
+                  <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+                ) : (
+                  dados?.emprestimosPendentes
+                )
+              }
             />
-          )}
-        </main>
+            <CardTotalizadorDashboard
+              IconeCard={BiSolidBookOpen}
+              tituloCard="Empréstimos Finalizados"
+              informacaoCard={
+                carregando ? (
+                  <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+                ) : (
+                  dados?.emprestimosFinalizados
+                )
+              }
+            />
+            <CardTotalizadorDashboard
+              IconeCard={BiSolidBookOpen}
+              tituloCard="Livros Cadastrados"
+              informacaoCard={
+                carregando ? (
+                  <span className="h-6 w-6 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
+                ) : (
+                  dados?.totalLivrosCadastrados
+                )
+              }
+            />
+            <CardFraseDashboard />
+            <CardImagemDashboard />
+
+            {abrirSnackBar && (
+              <SnackBar
+                mensagem={messagemSnackBar}
+                tipo={tipoSnackBar}
+                fecharSnackBar={fecharSnackBar}
+              />
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

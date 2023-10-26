@@ -23,13 +23,13 @@ export default function DashLayout({
         <ThemeProvider>
           <body>
             <div className="h-full relative">
-              <div className="hidden h-full md:flex md:flex-col md:fixed md:w-56 md:inset-y-0 z-[80] bg-gray-300">
+              <div className="hidden h-full md:flex md:flex-col md:fixed md:w-56 md:inset-y-0 z-[80] ">
                 <Sidebar />
               </div>
             </div>
-            <main className="md:pl-56 h-screen w-full bg-gray-300">
+            <main className="md:pl-56 h-screen w-full ">
               <Navbar />
-              <div className="w-full h-5/6 pt-4  pr-10 pl-2 ">{children}</div>
+              {children}
             </main>
           </body>
         </ThemeProvider>
