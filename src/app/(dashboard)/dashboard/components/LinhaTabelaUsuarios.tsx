@@ -1,8 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import { useTheme } from "@/app/context/ThemeContext";
+
 import { LinhaTabelaUsuariosProps } from "@/app/types/DashboardTypes";
 
 import Modal from "@/app/components/Modal";
@@ -41,6 +42,8 @@ export default function LinhaTabelaUsuarios({
   const [newName, setNewName] = useState(String);
   const [newRole, setNewRole] = useState(String);
   const [newPassword, setNewPassword] = useState(String);
+
+  const { themeValue } = useTheme();
 
   function abrirModal() {
     setAbrirModalRemover(!abrirModalRemover);
@@ -172,13 +175,22 @@ export default function LinhaTabelaUsuarios({
           fecharSnackBar={fecharSnack}
         />
       )}
-      <tr className="text-sm font-medium text-gray-700">
+      <tr
+        className={`${
+          themeValue === "light"
+            ? "text-light-dashboardText"
+            : "text-dark-dashboardText"
+        } text-sm font-medium `}
+      >
         <td className="px-6 py-3">{id}</td>
         <td className="px-6 py-3">{name}</td>
         <td className="px-6 py-3">{email}</td>
         <td className="px-6 py-3">
           <button onClick={abrirModalEditarUsuario} className="p-1">
-            <MdModeEditOutline size={21} color={"#374151"} />
+            <MdModeEditOutline
+              size={21}
+              color={`${themeValue === "light" ? "#374151" : "#f1f5f9"}`}
+            />
           </button>
         </td>
         <td className="px-6 py-3">
@@ -187,7 +199,10 @@ export default function LinhaTabelaUsuarios({
             disabled={id === Number(userId)}
             className="p-1"
           >
-            <BiSolidTrash size={21} color={"#374151"} />
+            <BiSolidTrash
+              size={21}
+              color={`${themeValue === "light" ? "#374151" : "#f1f5f9"}`}
+            />
           </button>
         </td>
       </tr>

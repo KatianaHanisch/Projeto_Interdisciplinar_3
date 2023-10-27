@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+import { useTheme } from "@/app/context/ThemeContext";
+
 import { ListaProps, DadosListaProps } from "@/app/types/DashboardTypes";
 
 import InputBusca from "./InputBusca";
@@ -23,6 +25,9 @@ export default function ListaDashboard({
   const [pagination, setPagination] = useState(false);
   const [tituloBusca, setTituloBusca] = useState("");
   const [quantidadePaginas, setQuantidadePaginas] = useState(0);
+
+  const { themeValue } = useTheme();
+
   const itemPorPagina = 5;
 
   function quatidadePaginasInicial() {
@@ -90,13 +95,36 @@ export default function ListaDashboard({
 
       {filteredData.length < 1 ? (
         <div className="w-full h-52 flex items-center justify-center flex-col  ">
-          <VscSearchStop size={40} color="#8a9099" />
-          <p className="text-gray-600 text-lg">Nenhum item encontrado</p>
+          <VscSearchStop
+            size={40}
+            color={`${themeValue === "light" ? "#1f2937" : "#f1f5f9"}`}
+          />
+          <p
+            className={`${
+              themeValue === "light"
+                ? "text-light-dashboardTextSecundary"
+                : "text-dark-dashboardTextSecundary"
+            } text-lg`}
+          >
+            Nenhum item encontrado
+          </p>
         </div>
       ) : (
         <div className=" flex items-start justify-center w-full  mt-1 shadow-md">
-          <table className="w-full divide-y bg-gray-200  divide-gray-200 text-left">
-            <thead className="text-base font-medium text-gray-700  ">
+          <table
+            className={`${
+              themeValue === "light"
+                ? "bg-gray-200  divide-gray-200"
+                : "bg-gray-800 divide-gray-400"
+            } w-full divide-y text-left rounded-md`}
+          >
+            <thead
+              className={`${
+                themeValue === "light"
+                  ? "text-light-dashboardText"
+                  : "text-dark-dashboardText"
+              } text-base font-medium`}
+            >
               <tr>
                 <th className="px-6 py-3">Nome</th>
                 <th className="px-6 py-3">Telefone</th>
@@ -104,7 +132,13 @@ export default function ListaDashboard({
                 <th className="px-6 py-3">Status</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody
+              className={`${
+                themeValue === "light"
+                  ? "bg-light-dashbardWhite divide-gray-200"
+                  : "bg-gray-700 divide-gray-400"
+              } divide-y`}
+            >
               {filteredData
                 .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
                 .map(({ nome, telefone, livro, id }, index) => (

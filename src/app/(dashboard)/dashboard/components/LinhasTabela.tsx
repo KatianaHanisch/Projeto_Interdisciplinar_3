@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { useTheme } from "@/app/context/ThemeContext";
+
 import { LinhasTabelaProps } from "@/app/types/DashboardTypes";
 
 import ButtonTabela from "./ButtonTabela";
@@ -24,6 +26,8 @@ export default function LinhasTabela({
   const [mensagemSnackBar, setMensagemSnackBar] = useState("");
   const [abrirSnackBar, setAbrirSnackBar] = useState(false);
   const [carregando, setCarregando] = useState(false);
+
+  const { themeValue } = useTheme();
 
   function abrirModalConfirmacao() {
     if (tipo === "finalizado" || tipo === "reserva") {
@@ -80,7 +84,13 @@ export default function LinhasTabela({
 
   return (
     <>
-      <tr className="text-sm font-medium text-gray-700">
+      <tr
+        className={`${
+          themeValue === "light"
+            ? "text-light-dashboardText"
+            : "text-dark-dashboardText"
+        } text-sm font-medium`}
+      >
         <td className="px-6 py-3">{nome}</td>
         <td className="px-6 py-3">{telefone}</td>
         <td className="px-6 py-3">{livro}</td>

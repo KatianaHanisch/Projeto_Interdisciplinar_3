@@ -51,7 +51,7 @@ const config: Config = {
           dashboardSecundaryColor: "#4b5563",
           dashboardLightGray: "#d1d5db",
           dashboardText: "#f1f5f9",
-          dashboardTextSecundary: "#e2e8f0",
+          dashboardTextSecundary: "#f9fafb",
         },
       },
     },

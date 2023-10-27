@@ -30,9 +30,9 @@ export default function Input({ title, type, name, value, onChange }: Props) {
       <label
         htmlFor="floating_outlined"
         className={`${
-          themeValue === "light"
-            ? "bg-light-dashbardWhite text-light-dashboardText"
-            : "bg-dark-dashboardSecundaryColor text-dark-dashboardText"
+          themeValue === "dark"
+            ? "bg-dark-dashboardSecundaryColor text-dark-dashboardText"
+            : "bg-light-dashbardWhite text-light-dashboardText"
         } absolute text-sm text-gray-4 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0]  px-2 peer-focus:px-2 peer-focus:text-gary-600 peer-focus:dark:text-gary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1`}
       >
         {title}

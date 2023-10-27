@@ -262,7 +262,7 @@ export default function Adicionar() {
           : "bg-dark-dashboardDark"
       }`}
     >
-      <div className="w-full h-5/6 pt-4  pr-10 pl-2">
+      <div className="w-full h-5/6 pt-4 pr-10 pl-2">
         <div
           className={`${
             themeValue === "light"

@@ -41,13 +41,21 @@ export default function Navbar() {
     >
       <MobileSidebar />
       <div className="flex w-full items-center justify-end px-10">
-        <button onClick={toggleTheme} className="mr-4 ">
-          {themeValue === "light" ? (
-            <BsMoonFill color="#111827" />
-          ) : (
-            <BsSunFill color="#f1f5f9" />
-          )}
-        </button>
+        <div
+          className={`w-10 h-10 ${
+            themeValue === "light"
+              ? "bg-light-dashboardSecundaryColor"
+              : "bg-dark-dashboardSecundaryColor"
+          } flex items-center justify-center rounded-full cursor-pointer mr-20`}
+        >
+          <button onClick={toggleTheme}>
+            {themeValue === "light" ? (
+              <BsMoonFill color="#111827" />
+            ) : (
+              <BsSunFill color="#f1f5f9" />
+            )}
+          </button>
+        </div>
         <h4
           className={`font-semibold text-xl mr-2 ${
             themeValue === "light" ? "text-light-text" : "text-dark-text"
@@ -68,18 +76,18 @@ export default function Navbar() {
               color={`${themeValue === "light" ? "#1f2937" : "#f1f5f9"}`}
             />
           </button>
-          {open && (
-            <div className="absolute  right-10 z-10 mt-24 w-48  rounded bg-white py-2 shadow-xl  focus:outline-none">
-              <button
-                onClick={() => logout()}
-                className=" w-full flex items-center text-base font-medium text-gray-700 px-3 py-1 bg-white hover:bg-gray-200"
-              >
-                <BiExit size={20} color="#263141" />
-                Sair
-              </button>
-            </div>
-          )}
         </div>
+        {open && (
+          <div className="absolute  right-10 z-10 mt-24 w-48  rounded bg-white py-2 shadow-xl  focus:outline-none">
+            <button
+              onClick={() => logout()}
+              className=" w-full flex items-center text-base font-medium text-gray-700 px-3 py-1 bg-white hover:bg-gray-200"
+            >
+              <BiExit size={20} color="#263141" />
+              Sair
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
