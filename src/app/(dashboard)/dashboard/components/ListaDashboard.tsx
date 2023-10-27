@@ -18,6 +18,7 @@ export default function ListaDashboard({
   corButton,
   Icone,
   tipo,
+  token,
   recarregarDados,
 }: ListaProps) {
   const [page, setPage] = useState(0);
@@ -145,6 +146,7 @@ export default function ListaDashboard({
                   <LinhasTabela
                     key={index}
                     id={id}
+                    token={token}
                     nome={nome}
                     livro={livro}
                     telefone={telefone}

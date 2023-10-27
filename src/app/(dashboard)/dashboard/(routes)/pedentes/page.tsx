@@ -16,7 +16,7 @@ import { VscSearchStop } from "react-icons/vsc";
 import ExportarPDF from "@/app/reports/ExportarPDF";
 
 export default function Retiradas() {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
   const { themeValue } = useTheme();
 
   const [dados, setDados] = useState<DadosListaProps[]>([]);
@@ -34,7 +34,13 @@ export default function Retiradas() {
   async function getEmprestimosPendentes() {
     setCarregando(true);
     try {
-      const res = await fetch("/api/dashboard/emprestimosPendentes");
+      const res = await fetch("/api/dashboard/emprestimosPendentes", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       const dadosFormatados = data.map((item: DadosListaProps) => ({
@@ -52,11 +58,8 @@ export default function Retiradas() {
   }
 
   useEffect(() => {
-    getEmprestimosPendentes();
-  }, []);
-
-  useEffect(() => {
     validateTokenRoleFunction();
+    getEmprestimosPendentes();
   }, [validateTokenRoleFunction]);
 
   if (!isAuthenticated) {
@@ -113,6 +116,7 @@ export default function Retiradas() {
                   </div>
                 ) : (
                   <ListaDashboard
+                    token={token}
                     dados={dados}
                     recarregarDados={getEmprestimosPendentes}
                     tituloButton="Devolvido"

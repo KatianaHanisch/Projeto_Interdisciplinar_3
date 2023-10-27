@@ -59,13 +59,8 @@ export default function Retiradas() {
   }
 
   useEffect(() => {
-    if (token) {
-      getEmprestimosFinalizados();
-    }
-  }, []);
-
-  useEffect(() => {
     validateTokenRoleFunction();
+    getEmprestimosFinalizados();
   }, [validateTokenRoleFunction]);
 
   if (!isAuthenticated) {

@@ -19,6 +19,7 @@ export default function LinhasTabela({
   corButton,
   Icone,
   tipo,
+  token,
   recarregarDados,
 }: LinhasTabelaProps) {
   const [abrirModal, setAbrirModal] = useState(false);
@@ -45,6 +46,10 @@ export default function LinhasTabela({
     try {
       const response = await fetch(`/api/dashboard/emprestimosFinalizados`, {
         method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       recarregarDados?.();

@@ -16,7 +16,7 @@ import { BsFiletypePdf } from "react-icons/bs";
 import { VscSearchStop } from "react-icons/vsc";
 
 export default function Retiradas() {
-  const { validateTokenRoleFunction, isAuthenticated } = useAuth();
+  const { validateTokenRoleFunction, isAuthenticated, token } = useAuth();
   const { themeValue } = useTheme();
 
   const [dados, setDados] = useState<DadosListaProps[]>([]);
@@ -34,7 +34,13 @@ export default function Retiradas() {
   async function getRetiradasPendentes() {
     setCarregando(true);
     try {
-      const res = await fetch("/api/dashboard/retiradasPendentes");
+      const res = await fetch("/api/dashboard/retiradasPendentes", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       const dadosFormatados = data.map((item: DadosListaProps) => ({
@@ -52,11 +58,8 @@ export default function Retiradas() {
   }
 
   useEffect(() => {
-    getRetiradasPendentes();
-  }, []);
-
-  useEffect(() => {
     validateTokenRoleFunction();
+    getRetiradasPendentes();
   }, [validateTokenRoleFunction]);
 
   if (!isAuthenticated) {
@@ -113,6 +116,7 @@ export default function Retiradas() {
                   </div>
                 ) : (
                   <ListaDashboard
+                    token={token}
                     recarregarDados={getRetiradasPendentes}
                     dados={dados}
                     tituloButton="Retirado"

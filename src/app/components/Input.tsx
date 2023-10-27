@@ -21,9 +21,11 @@ export default function Input({ title, type, name, value, onChange }: Props) {
         onChange={onChange}
         id="floating_outlined"
         className={`${
-          themeValue === "light"
-            ? "text-light-dashboardText"
-            : "text-dark-dashboardText"
+          themeValue
+            ? themeValue === "light"
+              ? "text-light-dashboardText"
+              : "text-dark-dashboardText"
+            : "text-gray-900"
         } block px-2.5 pb-2.5 pt-2 w-full text-sm  bg-transparent rounded border border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-gray-400 peer`}
         placeholder=" "
       />

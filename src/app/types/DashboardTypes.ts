@@ -19,6 +19,7 @@ export type DadosListaProps = {
 
 export type LinhasTabelaProps = {
   id?: number;
+  token?: any;
   nome: string;
   telefone?: string;
   livro: string;
@@ -70,6 +71,7 @@ export type ListaProps = {
   corButton: string;
   Icone: ReactNode;
   tipo?: string;
+  token?: any;
   recarregarDados?: () => void;
 };
 
