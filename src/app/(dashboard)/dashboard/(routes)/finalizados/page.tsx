@@ -20,7 +20,7 @@ export default function Retiradas() {
   const { themeValue } = useTheme();
 
   const [dados, setDados] = useState<DadosListaProps[]>([]);
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   function formatarTelefone(telefone: string) {
     const numeroLimpo = telefone.replace(/\D/g, "");
@@ -32,7 +32,6 @@ export default function Retiradas() {
   }
 
   async function getEmprestimosFinalizados() {
-    setCarregando(true);
     try {
       const res = await fetch("/api/dashboard/emprestimosFinalizados", {
         method: "GET",

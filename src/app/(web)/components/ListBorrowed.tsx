@@ -49,7 +49,7 @@ export default function ListBorrowed({ livros }: Props) {
 
   return (
     <div
-      className={`max-w-[1200px] m-auto mt-32 mb-32 px-2 ${
+      className={`max-w-[1200px] m-auto pt-32 pb-32 px-2 ${
         themeValue === "dark"
           ? "text-dark-text bg-dark-back"
           : "text-light-text bg-light-back"

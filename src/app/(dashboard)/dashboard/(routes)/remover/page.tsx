@@ -123,7 +123,7 @@ export default function Remover() {
               {carregando ? (
                 <span className="h-11 w-11 block rounded-full border-4 border-t-blue-600 animate-spin"></span>
               ) : (
-                <div className=" flex flex-row items-center gap-10 justify-start py-8  w-full">
+                <div className=" flex flex-row items-center gap-10 justify-center py-8  w-full">
                   {filteredData.length < 1 ? (
                     <div className="w-full h-52 flex items-center justify-center flex-col  ">
                       <VscSearchStop
