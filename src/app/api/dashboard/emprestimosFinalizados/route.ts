@@ -19,6 +19,7 @@ export async function PUT(request: Request) {
             connect: { id: emprestimo.userId },
           },
           status: emprestimo.status,
+          dataEmprestimo: emprestimo.dataEmprestimo,
           dataDevolucao: new Date(),
         },
       });
@@ -96,6 +97,7 @@ export async function GET(request: Request) {
         nome: emprestimo.user.name,
         telefone: emprestimo.user.phone,
         status: emprestimo.status === 3 ? "Devolvido" : emprestimo.status,
+        dataEmprestimo: emprestimo.dataEmprestimo,
         dataDevolucao: emprestimo.dataDevolucao,
       }));
 

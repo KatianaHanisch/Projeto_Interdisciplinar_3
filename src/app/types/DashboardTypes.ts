@@ -12,17 +12,18 @@ export type DadosListaProps = {
   id?: number;
   livro: string;
   nome: string;
-  telefone?: string | undefined; // Modificada para aceitar "undefined"
-  status?: string | number | undefined; // Modificada para aceitar "undefined"
-  dataEmprestimo: Date;
+  telefone?: string | undefined;
+  status?: string | number | undefined;
+  dataEmprestimo?: string;
+  dataVencimento?: string;
+  dataRetirada?: string;
+  dataDevolucao?: string;
 };
 
 export type LinhasTabelaProps = {
   id?: number;
   token?: any;
-  nome: string;
-  telefone?: string;
-  livro: string;
+  item: DadosListaProps;
   tituloButton: string;
   status?: string;
   corButton: string;

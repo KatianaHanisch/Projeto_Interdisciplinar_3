@@ -31,6 +31,20 @@ export default function Retiradas() {
     return numeroFormatado;
   }
 
+  function formatarData(data: string): string {
+    const date = new Date(data);
+    const dia = date.getDate().toString().padStart(2, "0");
+    const mes = (date.getMonth() + 1).toString().padStart(2, "0");
+    const ano = date.getFullYear().toString();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  function exportarPdf() {
+    if (dados.length > 0) {
+      ExportarPDF(dados, "pendentes");
+    }
+  }
+
   async function getRetiradasPendentes() {
     setCarregando(true);
     try {
@@ -46,6 +60,8 @@ export default function Retiradas() {
       const dadosFormatados = data.map((item: DadosListaProps) => ({
         ...item,
         telefone: formatarTelefone(item.telefone!),
+        dataEmprestimo: formatarData(item.dataEmprestimo!),
+        dataVencimento: formatarData(item.dataVencimento!),
       }));
 
       setDados(dadosFormatados);
@@ -87,7 +103,7 @@ export default function Retiradas() {
               tituloPagina="Livros não retirados"
               tituloButton="Gerar relatório"
               Icone={BsFiletypePdf}
-              gerarRelatorio={() => ExportarPDF(dados)}
+              gerarRelatorio={exportarPdf}
               tipoButton="relatorio"
             />
             {carregando ? (

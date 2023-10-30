@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useTheme } from "@/app/context/ThemeContext";
 
-import { AiOutlineHome, AiFillShopping } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { BiBookAdd } from "react-icons/bi";
 import { LuBookX } from "react-icons/lu";
 import { IoBagRemoveOutline } from "react-icons/io5";
@@ -32,12 +32,6 @@ const routes = [
     label: "Remover",
     Icone: LuBookX,
     href: "/dashboard/remover",
-  },
-
-  {
-    label: "Reservas",
-    Icone: AiFillShopping,
-    href: "/dashboard/reservas",
   },
   {
     label: "Retiradas",

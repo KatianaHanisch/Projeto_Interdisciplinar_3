@@ -31,6 +31,20 @@ export default function Retiradas() {
     return numeroFormatado;
   }
 
+  function formatarData(data: string): string {
+    const date = new Date(data);
+    const dia = date.getDate().toString().padStart(2, "0");
+    const mes = (date.getMonth() + 1).toString().padStart(2, "0");
+    const ano = date.getFullYear().toString();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  function exportarPdf() {
+    if (dados.length > 0) {
+      ExportarPDF(dados, "finalizado");
+    }
+  }
+
   async function getEmprestimosFinalizados() {
     try {
       const res = await fetch("/api/dashboard/emprestimosFinalizados", {
@@ -46,6 +60,8 @@ export default function Retiradas() {
       const dadosFormatados = data.map((item: DadosListaProps) => ({
         ...item,
         telefone: formatarTelefone(item.telefone!),
+        dataEmprestimo: formatarData(item.dataEmprestimo!),
+        dataDevolucao: formatarData(item.dataDevolucao!),
       }));
 
       setDados(dadosFormatados);
@@ -84,7 +100,7 @@ export default function Retiradas() {
         >
           <div className="w-full h-full p-10">
             <TituloPagina
-              gerarRelatorio={() => ExportarPDF(dados)}
+              gerarRelatorio={exportarPdf}
               tipoButton="relatorio"
               tituloPagina="Empréstimos finalizados"
               tituloButton="Gerar relatório"

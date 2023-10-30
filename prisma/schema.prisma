@@ -83,6 +83,7 @@ model Emprestimos {
   status Int   @default(1)
 
   dataEmprestimo DateTime @default(now())
+  dataRetirada DateTime @default(now())
   dataVencimento DateTime @default(now())
   }
 
@@ -106,5 +107,6 @@ model EmprestimosFinalizados {
   userId        Int
   user          Users    @relation(fields: [userId], references: [id])
   status        Int
+  dataEmprestimo DateTime 
   dataDevolucao DateTime
 }

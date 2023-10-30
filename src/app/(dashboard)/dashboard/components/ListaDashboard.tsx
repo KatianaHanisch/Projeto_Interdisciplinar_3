@@ -130,6 +130,14 @@ export default function ListaDashboard({
                 <th className="px-6 py-3">Nome</th>
                 <th className="px-6 py-3">Telefone</th>
                 <th className="px-6 py-3">Livro</th>
+                <th className="px-6 py-3">
+                  {tipo === "retirado" || tipo === "finalizado"
+                    ? "Emprestimo"
+                    : "Retirada"}
+                </th>
+                <th className="px-6 py-3">
+                  {tipo === "finalizado" ? "Devolução" : "Vencimento"}
+                </th>
                 <th className="px-6 py-3">Status</th>
               </tr>
             </thead>
@@ -142,14 +150,11 @@ export default function ListaDashboard({
             >
               {filteredData
                 .slice(page * itemPorPagina, (page + 1) * itemPorPagina)
-                .map(({ nome, telefone, livro, id }, index) => (
+                .map((item, index) => (
                   <LinhasTabela
                     key={index}
-                    id={id}
                     token={token}
-                    nome={nome}
-                    livro={livro}
-                    telefone={telefone}
+                    item={item}
                     recarregarDados={recarregarDados}
                     tituloButton={tituloButton}
                     corButton={corButton}

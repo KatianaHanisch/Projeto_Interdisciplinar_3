@@ -20,7 +20,7 @@ export default function Retiradas() {
   const { themeValue } = useTheme();
 
   const [dados, setDados] = useState<DadosListaProps[]>([]);
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   function formatarTelefone(telefone: string) {
     const numeroLimpo = telefone.replace(/\D/g, "");
@@ -29,6 +29,20 @@ export default function Retiradas() {
     const numeroFormatado = numeroLimpo.replace(formato, "($1) $2-$3");
 
     return numeroFormatado;
+  }
+
+  function formatarData(data: string): string {
+    const date = new Date(data);
+    const dia = date.getDate().toString().padStart(2, "0");
+    const mes = (date.getMonth() + 1).toString().padStart(2, "0");
+    const ano = date.getFullYear().toString();
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  function exportarPdf() {
+    if (dados.length > 0) {
+      ExportarPDF(dados, "pendentes");
+    }
   }
 
   async function getEmprestimosPendentes() {
@@ -46,9 +60,13 @@ export default function Retiradas() {
       const dadosFormatados = data.map((item: DadosListaProps) => ({
         ...item,
         telefone: formatarTelefone(item.telefone!),
+        dataRetirada: formatarData(item.dataRetirada!),
+        dataVencimento: formatarData(item.dataVencimento!),
       }));
 
       setDados(dadosFormatados);
+
+      console.log(dadosFormatados);
 
       setCarregando(false);
     } catch (error) {
@@ -87,7 +105,7 @@ export default function Retiradas() {
               tituloPagina="Empréstimos pedentes"
               tituloButton="Gerar relatório"
               Icone={BsFiletypePdf}
-              gerarRelatorio={() => ExportarPDF(dados)}
+              gerarRelatorio={exportarPdf}
               tipoButton="relatorio"
             />
             {carregando ? (

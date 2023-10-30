@@ -11,10 +11,7 @@ import Modal from "@/app/components/Modal";
 import SnackBar from "@/app/components/SnackBar";
 
 export default function LinhasTabela({
-  id,
-  nome,
-  telefone,
-  livro,
+  item,
   tituloButton,
   corButton,
   Icone,
@@ -64,9 +61,13 @@ export default function LinhasTabela({
 
     try {
       const response = await fetch(
-        `/api/dashboard/retiradasPendentes?id=${id}`,
+        `/api/dashboard/retiradasPendentes?id=${item.id}`,
         {
           method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
 
@@ -96,9 +97,17 @@ export default function LinhasTabela({
             : "text-dark-dashboardText"
         } text-sm font-medium`}
       >
-        <td className="px-6 py-3">{nome}</td>
-        <td className="px-6 py-3">{telefone}</td>
-        <td className="px-6 py-3">{livro}</td>
+        <td className="px-6 py-3">{item.nome}</td>
+        <td className="px-6 py-3">{item.telefone}</td>
+        <td className="px-6 py-3">{item.livro}</td>
+        <td className="px-6 py-3">
+          {tipo === "retirado" || tipo === "finalizado"
+            ? item.dataEmprestimo
+            : item.dataRetirada}
+        </td>
+        <td className="px-6 py-3">
+          {tipo === "finalizado" ? item.dataDevolucao : item.dataVencimento}
+        </td>
         <td className="px-6 py-3">
           <ButtonTabela
             tituloButton={tituloButton}
@@ -131,7 +140,10 @@ export default function LinhasTabela({
           <div className="relative py-3 px-6  flex flex-col gap-3 mb-2">
             <p className="text-gray-600 text-lg font-normal leading-relaxed">
               Você realmente deseja confirmar que o livro
-              <span className="font-semibold text-gray-700"> {livro} </span>
+              <span className="font-semibold text-gray-700">
+                {" "}
+                {item.livro}{" "}
+              </span>
               foi {tipo === "retirado" ? "retirado" : "devolvido"}?
             </p>
           </div>

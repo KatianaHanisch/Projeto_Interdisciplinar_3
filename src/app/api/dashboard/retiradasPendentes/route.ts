@@ -75,6 +75,7 @@ export async function PUT(request: Request) {
           },
           data: {
             status: novoStatus,
+            dataRetirada: new Date(),
           },
         });
       }
