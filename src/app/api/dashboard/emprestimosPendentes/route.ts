@@ -21,6 +21,7 @@ export async function GET(request: Request) {
             select: {
               name: true,
               phone: true,
+              email: true,
             },
           },
         },
@@ -33,6 +34,7 @@ export async function GET(request: Request) {
         id: emprestimo.id,
         livro: emprestimo.livro.titulo,
         nome: emprestimo.user.name,
+        email: emprestimo.user.email,
         telefone: emprestimo.user.phone,
         status: emprestimo.status === 2 ? "Não devolvido" : emprestimo.status,
         dataEmprestimo: emprestimo.dataEmprestimo,
