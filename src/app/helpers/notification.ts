@@ -75,6 +75,40 @@ async function verificarEmprestimosPendentes() {
   }
 }
 
+// async function verificarEmprestimosPendentes() {
+//   // console.log(process.env.TOKENUSER);
+//   try {
+//     const response = await fetch(
+//       "http://localhost:3000/api/dashboard/emprestimosPendentes",
+//       {
+//         method: "GET",
+//         headers: {
+//           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMxLCJlbWFpbCI6ImFkbWluQGFkbWluIiwibmFtZSI6IkFkbWluIiwicm9sZSI6MSwiaWF0IjoxNjk4NjcyMjA2fQ.Zouh7hqRnlODHTqmG5nteOtGl9MaoYvm6yoXWiQvyEM`,
+//         },
+//       }
+//     );
+
+//     const emprestimosPendentes = await response.json();
+//     const dataAtual = new Date();
+
+//     const emprestimosAtrasados = emprestimosPendentes.filter(
+//       (emprestimo: any) => {
+//         const dataEmprestimo = new Date(emprestimo.dataEmprestimo);
+//         const dataLimite = addDays(dataEmprestimo, 30);
+
+//         return isAfter(dataAtual, dataLimite);
+//       }
+//     );
+
+//     for (const emprestimo of emprestimosAtrasados) {
+//       const { email, livro } = emprestimo;
+//       enviarEmailAviso(email, livro);
+//     }
+//   } catch (error) {
+//     console.error(`Erro ao verificar empréstimos pendentes: ${error}`);
+//   }
+// }
+
 cron.schedule("0 0 * * *", () => {
   verificarEmprestimosPendentes();
 });
