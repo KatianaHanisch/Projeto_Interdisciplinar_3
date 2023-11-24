@@ -19,7 +19,7 @@ A aplicação consiste em um sistema de gerenciamento de biblioteca consiste em 
 No terminal, clone o projeto: 
 
 ```
-git clone https://github.com/KatianaHanisch/Projeto_Interdisciplinar_Mobile.git
+git clone https://github.com/KatianaHanisch/Projeto_Interdisciplinar_3.git
 ```
 
 Depois abra a pasta e instale as dependências do projeto, executando no terminal:
