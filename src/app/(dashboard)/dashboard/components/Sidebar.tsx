@@ -84,7 +84,9 @@ export default function Sidebar() {
           className="flex items-center justify-start mb-7 flex-col "
         >
           <div className=" relative w-14 h-12 ">
-            <Image fill alt="logo" src="/logo.png" />
+            {themeValue === "light" ? (
+              <Image fill alt="logo" src="/logo.png" />
+            ) : null}
           </div>
           <h1
             className={`${

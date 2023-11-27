@@ -30,7 +30,7 @@ export default function InputBusca({
           themeValue === "light"
             ? "bg-gray-50 border-gray-400"
             : "bg-gray-600 border-gray-200"
-        } w-11/12 flex items-center justify-center py-2 px-3 border rounded-md`}
+        } b w-11/12 flex items-center justify-center py-2 px-3 border rounded-md`}
       >
         <BsSearch
           color={`${themeValue === "light" ? "#89909b" : "#f3f4f6"}`}

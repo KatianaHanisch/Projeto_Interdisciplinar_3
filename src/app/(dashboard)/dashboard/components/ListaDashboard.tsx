@@ -84,7 +84,7 @@ export default function ListaDashboard({
   return (
     <div className="w-full h-full py-6 px-4 ">
       <div className="w-full flex items-center justify-end">
-        <div className="w-1/2 py-4 ">
+        <div className="w-1/2 py-4 flex items-center justify-end">
           <InputBusca
             placeholderInput="Digite o livro que procura"
             value={tituloBusca}

@@ -66,8 +66,6 @@ export default function Retiradas() {
 
       setDados(dadosFormatados);
 
-      console.log(dadosFormatados);
-
       setCarregando(false);
     } catch (error) {
       setCarregando(false);

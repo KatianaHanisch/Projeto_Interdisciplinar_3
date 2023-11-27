@@ -221,29 +221,29 @@ export default function Detalhes({ params }: { params: { id: string } }) {
                 className="shadow-lg"
               />
               {livro.quantidadeDisponivel !== undefined &&
-              livro.quantidadeDisponivel > 1 ? (
+              livro.quantidadeDisponivel > 0 ? (
                 <button
-                  onClick={cadastroReserva}
-                  className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}
+                  onClick={cadastroEmprestimo}
+                  className={`flex items-center text-slate-900 justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500`}
                 >
-                  {carregandoReserva ? (
-                    <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
+                  {carregandoEmprestimo ? (
+                    <span
+                      className={`h-6 w-6 block text-slate-900 rounded-full border-4 border-t-blue-500 animate-spin`}
+                    ></span>
                   ) : (
-                    "Avisar quando disponível"
+                    "Pegar Livro emprestado"
                   )}
                 </button>
               ) : (
                 <>
                   <button
-                    onClick={cadastroEmprestimo}
-                    className={`flex items-center text-slate-900 justify-center bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500`}
+                    onClick={cadastroReserva}
+                    className={`flex items-center justify-center text-slate-900 bg-green-400 w-[300px] mt-1 rounded p-2 hover:bg-green-500 `}
                   >
-                    {carregandoEmprestimo ? (
-                      <span
-                        className={`h-6 w-6 block text-slate-900 rounded-full border-4 border-t-blue-500 animate-spin`}
-                      ></span>
+                    {carregandoReserva ? (
+                      <span className="h-6 w-6 block rounded-full border-4 border-t-blue-500 animate-spin"></span>
                     ) : (
-                      "Pegar Livro emprestado"
+                      "Avisar quando disponível"
                     )}
                   </button>
                 </>

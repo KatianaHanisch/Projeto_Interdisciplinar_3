@@ -40,7 +40,7 @@ export default function Modal({
           {/*body*/}
           {children}
           {/*footer*/}
-          <div className="flex items-center justify-end py-4 px-6 border-t border-solid border-slate-200 rounded-b">
+          <div className="flex items-center justify-end py-4 px-6 border-t border-solid border-slate-200 z-50  rounded-b">
             <button
               className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"

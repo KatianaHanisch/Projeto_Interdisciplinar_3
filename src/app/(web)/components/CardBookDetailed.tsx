@@ -12,6 +12,8 @@ export default function CardBookDetailed({
   capaUrl,
   themeValue,
 }: LivroProps) {
+  const maxCaracteresSinopse = 220;
+
   return (
     <Link
       href={`/livros/${id}`}
@@ -28,10 +30,9 @@ export default function CardBookDetailed({
       >
         <h1 className="font-semibold text-2xl mb-2 capitalize">{titulo}</h1>
         <p className="mb-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-          cumque, adipisci quidem sapiente expedita incidunt culpa ut rerum
-          similique nesciunt doloribus temporibus, perspiciatis odio laboriosam
-          ab quos labore unde eum.
+          {sinopse && sinopse.length > maxCaracteresSinopse
+            ? `${sinopse.slice(0, maxCaracteresSinopse)}...`
+            : sinopse}
         </p>
         <h3 className="mt-[-5px]  font-semibold capitalize">{autor}</h3>
         <h3

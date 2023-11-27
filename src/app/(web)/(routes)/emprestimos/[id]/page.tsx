@@ -49,6 +49,8 @@ export default function Detalhes({ params }: { params: { id: string } }) {
     return diasRestantes;
   }
 
+  console.log(tempoRestante);
+
   async function getLivro() {
     try {
       const response = await fetch(`/api/filtroLivro?id=${idLivro}`, {

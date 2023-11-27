@@ -105,8 +105,6 @@ export async function POST(request: Request) {
   const data = await request.json();
   const authorization = request.headers.get("authorization");
 
-  console.log(authorization);
-
   const permissionResult = await ValidarPermissao(
     authorization!,
     "adicionar_usuario"
