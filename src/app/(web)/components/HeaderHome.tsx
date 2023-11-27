@@ -501,102 +501,101 @@ export default function HeaderHome() {
             </Link>
           )}
         </div>
+      </div>
+      {abrirModal && (
+        <Modal
+          title="Configurações"
+          textButton="Atualizar"
+          confirmarModal={handleChangeInfo}
+          loading={loading}
+          fecharModal={abrirModalConfig}
+          cancelarModal={abrirModalConfig}
+        >
+          <div className="relative p-6 flex-auto">
+            {error && <Toast text={error} />}
 
-        {abrirModal && (
-          <Modal
-            // abrirModal={abrirModalConfig}
-            title="Configurações"
-            textButton="Atualizar"
-            confirmarModal={handleChangeInfo}
-            loading={loading}
-            fecharModal={abrirModalConfig}
-            cancelarModal={abrirModalConfig}
-          >
-            <div className="relative p-6 flex-auto">
-              {error && <Toast text={error} />}
+            {success && <ToastSuccess text={success} />}
 
-              {success && <ToastSuccess text={success} />}
+            <p className="my-4 text-slate-500 text-lg leading-relaxed">
+              Suas informações:
+            </p>
 
-              <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                Suas informações:
-              </p>
-
-              <div className="flex flex-col gap-5">
-                <div>
-                  <span>Nome:</span>
-                  <div className="flex items-center gap-3">
-                    {isEditingName ? (
-                      <div className="flex w-full items-center gap-3">
-                        <Input
-                          type="text"
-                          value={newName}
-                          onChange={(e: any) => setNewName(e.target.value)}
-                        />
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingName(false)}
-                        >
-                          <IoClose color="red" size={28} />
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <h1 className="text-gray-800">{name}</h1>
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingName(true)}
-                        >
-                          <FaEdit color="#1f2937" size={20} />
-                        </span>
-                      </>
-                    )}
-                  </div>
+            <div className="flex flex-col gap-5">
+              <div>
+                <span>Nome:</span>
+                <div className="flex items-center gap-3">
+                  {isEditingName ? (
+                    <div className="flex w-full items-center gap-3">
+                      <Input
+                        type="text"
+                        value={newName}
+                        onChange={(e: any) => setNewName(e.target.value)}
+                      />
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingName(false)}
+                      >
+                        <IoClose color="red" size={28} />
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <h1 className="text-gray-800">{name}</h1>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingName(true)}
+                      >
+                        <FaEdit color="#1f2937" size={20} />
+                      </span>
+                    </>
+                  )}
                 </div>
-                <div>
-                  <span>Telefone:</span>
-                  <div className="flex items-center gap-3">
-                    {isEditingPhone ? (
-                      <div className="relative flex w-full gap-3">
-                        <input
-                          minLength={15}
-                          maxLength={15}
-                          required
-                          name="phone"
-                          type="text"
-                          value={newPhone}
-                          onChange={handlePhoneChange}
-                          id="floating_outlined"
-                          className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
-                          placeholder=" "
-                        />
+              </div>
+              <div>
+                <span>Telefone:</span>
+                <div className="flex items-center gap-3">
+                  {isEditingPhone ? (
+                    <div className="relative flex w-full gap-3">
+                      <input
+                        minLength={15}
+                        maxLength={15}
+                        required
+                        name="phone"
+                        type="text"
+                        value={newPhone}
+                        onChange={handlePhoneChange}
+                        id="floating_outlined"
+                        className="block px-2.5 pb-2.5 pt-2 w-full text-sm text-gray-900 bg-transparent rounded border border-gray-400 appearance-none dark:text-gray-900  dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-600 peer"
+                        placeholder=" "
+                      />
 
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingPhone(false)}
-                        >
-                          <IoClose color="red" size={28} />
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <h1 className="text-gray-800">
-                          {formatPhoneNumber(phone)}
-                        </h1>
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingPhone(true)}
-                        >
-                          <FaEdit color="#1f2937" size={20} />
-                        </span>
-                      </>
-                    )}
-                  </div>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingPhone(false)}
+                      >
+                        <IoClose color="red" size={28} />
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <h1 className="text-gray-800">
+                        {formatPhoneNumber(phone)}
+                      </h1>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingPhone(true)}
+                      >
+                        <FaEdit color="#1f2937" size={20} />
+                      </span>
+                    </>
+                  )}
                 </div>
+              </div>
 
-                <div>
-                  <span>E-mail</span>
-                  <div className="flex items-center gap-3">
-                    {/* {isEditingEmail ? (
+              <div>
+                <span>E-mail</span>
+                <div className="flex items-center gap-3">
+                  {/* {isEditingEmail ? (
                       <div className="flex w-full items-center gap-3">
                         <Input
                           type="e-mail"
@@ -611,53 +610,52 @@ export default function HeaderHome() {
                         </span>
                       </div>
                     ) : ( */}
-                    <>
-                      <h1 className="text-gray-800">{email}</h1>
-                      {/* <span
+                  <>
+                    <h1 className="text-gray-800">{email}</h1>
+                    {/* <span
                         className="cursor-pointer"
                         onClick={() => setIsEditingEmail(true)}
                       >
                         <FaEdit color="#1f2937" size={20} />
                       </span> */}
-                    </>
-                    {/* )} */}
-                  </div>
+                  </>
+                  {/* )} */}
                 </div>
-                <div>
-                  <span>Senha:</span>
-                  <div className="flex items-center gap-3">
-                    {isEditingPassword ? (
-                      <div className="flex w-full items-center gap-3">
-                        <Input
-                          type="password"
-                          value={newPassword}
-                          onChange={(e: any) => setNewPassword(e.target.value)}
-                        />
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingPassword(false)}
-                        >
-                          <IoClose color="red" size={28} />
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <h1 className="text-gray-800">********</h1>
-                        <span
-                          className="cursor-pointer"
-                          onClick={() => setIsEditingPassword(true)}
-                        >
-                          <FaEdit color="#1f2937" size={20} />
-                        </span>
-                      </>
-                    )}
-                  </div>
+              </div>
+              <div>
+                <span>Senha:</span>
+                <div className="flex items-center gap-3">
+                  {isEditingPassword ? (
+                    <div className="flex w-full items-center gap-3">
+                      <Input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e: any) => setNewPassword(e.target.value)}
+                      />
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingPassword(false)}
+                      >
+                        <IoClose color="red" size={28} />
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <h1 className="text-gray-800">********</h1>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => setIsEditingPassword(true)}
+                      >
+                        <FaEdit color="#1f2937" size={20} />
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
-          </Modal>
-        )}
-      </div>
+          </div>
+        </Modal>
+      )}
     </nav>
   );
 }
