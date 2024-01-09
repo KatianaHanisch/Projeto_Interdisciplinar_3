@@ -14,7 +14,7 @@ import Toast from "@/app/components/Toast";
 import ToastSuccess from "@/app/components/ToastSuccess";
 import imageBackground from "../../../../../public/banner-login.jpg";
 
-export default function Login(request: Request) {
+export default function Login() {
   const { validateToken, isAuthenticated } = useAuth();
 
   const [abrirModal, setAbrirModal] = useState(false);

@@ -11,7 +11,7 @@ import Input from "@/app/components/Input";
 import Toast from "@/app/components/Toast";
 import imageBackground from "../../../../../../public/banner-login.jpg";
 
-export default function Login(request: Request) {
+export default function Login() {
   const { validateIfExists } = useAuth();
   const [abrirModal, setAbrirModal] = useState(false);
   const router = useRouter();
