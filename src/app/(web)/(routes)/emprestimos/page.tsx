@@ -11,10 +11,6 @@ import SnackBar from "@/app/components/SnackBar";
 
 import { VscSearchStop } from "react-icons/vsc";
 
-export const metadata: Metadata = {
-  title: "Biblioteca - Empréstimos",
-};
-
 export default function Emprestimos() {
   const { themeValue } = useTheme();
 

@@ -1,19 +1,11 @@
 import "../../globals.css";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 
 import HeaderHome from "../components/HeaderHome";
 import Footer from "../components/Footer";
 import BannerPages from "../components/BannerPages";
 
 import { RiArrowUpDoubleFill } from "react-icons/ri";
-
-const roboto = Roboto({
-  weight: ["400", "500", "700"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Biblioteca",
@@ -27,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={`${roboto.className}`}>
+      <body>
         <HeaderHome />
         <BannerPages />
         {children}
