@@ -1,11 +1,5 @@
 // Não estava encontrando o caminho
-// import { prisma } from "@/app/utils/Prisma";
-
-import { PrismaClient } from "@prisma/client";
-
-import { LivroProps } from "@/app/types/Types";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/app/utils/Prisma";
 
 async function createLivro(data: any) {
   const livro = await prisma.livros.upsert({
